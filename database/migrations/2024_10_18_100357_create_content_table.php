@@ -36,7 +36,7 @@ return new class extends Migration
         });
 
         Schema::create('access', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('id_customer');
             $table->unsignedBigInteger('id_content');
             $table->timestamps();
 
