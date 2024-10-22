@@ -9,3 +9,7 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard/dashboard');
 });
+
+Route::get('/sidebar', function () {
+    return view('sidebar_admin/sidebar');
+});
