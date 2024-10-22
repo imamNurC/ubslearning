@@ -16,3 +16,7 @@ Route::get('/register', function () {
 Route::get('/demo', function () {
     return view('demo');
 });
+
+Route::get('/sidebar', function () {
+    return view('sidebar_admin/sidebar');
+});
