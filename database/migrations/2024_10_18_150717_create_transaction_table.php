@@ -12,16 +12,17 @@ return new class extends Migration
     public function up()
     {
         Schema::create('transaction', function (Blueprint $table) {
-            $table->bigIncrements('id_transaction');
-            $table->bigInteger('id_customer')->unsigned();
-            $table->string('name', 255);
+            $table->id('id_transaction'); 
+            $table->unsignedBigInteger('id_customer'); 
+            $table->string('name');
             $table->string('number_phone', 15);
-            $table->string('email', 255);
-            $table->bigInteger('id_content')->unsigned();
+            $table->string('email');
+            $table->unsignedBigInteger('id_content');
             $table->string('content_name', 100);
             $table->integer('price');
             $table->timestamps();
-
+            
+            //relasi
             $table->foreign('id_customer')->references('id_customer')->on('customers')->onDelete('cascade');
             $table->foreign('id_content')->references('id_content')->on('content')->onDelete('cascade');
         });
