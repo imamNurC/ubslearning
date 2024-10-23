@@ -15,7 +15,7 @@ class LoginController extends Controller
     }   
 
     public function authenticate(Request $request) {
-        // Validasi menggunakan objek $request
+
         $credentials = $request->validate([
             'email' => 'required|email:dns',
             'password' => 'required'
@@ -28,13 +28,6 @@ class LoginController extends Controller
 
         return back()->with('loginError', 'Login Failed!');
 
-        // if (Auth::attempt($credentials)) {
-        //     $request->session()->regenerate();
-
-        //     return redirect()->intended('/dashboard');
-        // }
-
-        // return back()->with('loginError', 'Login Failed');
     }
 }
 
