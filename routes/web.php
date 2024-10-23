@@ -16,5 +16,9 @@ Route::get('/demo', function () {
     return view('demo');
 });
 
+Route::get('/sidebar', function () {
+    return view('sidebar_admin/sidebar');
+});
+
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'authenticate']);
