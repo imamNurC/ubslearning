@@ -1,11 +1,11 @@
 <!DOCTYPE html>
     <html lang="en">
     <head>
-        @include('custom_layout.partials.head')
+        @include('custom_layout_admin.partials.head')
         
     </head>
     <body>
-        @include('custom_layout.partials.sides')
+        @include('custom_layout_admin.partials.sides')
 
 
 
@@ -17,12 +17,12 @@
 
 
                     
-        {{-- @include('custom_layout.partials.header') --}}
+        {{-- @include('custom_layout_admin.partials.header') --}}
         
         
-        {{-- @include('custom_layout.partials.footer')
+        {{-- @include('custom_layout_admin.partials.footer')
 
-        @include('custom_layout.partials.footer-scripts') --}}
+        @include('custom_layout_admin.partials.footer-scripts') --}}
 
 
 

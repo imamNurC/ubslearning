@@ -21,5 +21,9 @@ Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'authenticate']);
 
 Route::get('/dashboard', function () {
-    return view('dashboard/dashboard');
+    return view('dashboard_admin/dashboard');
+});
+
+Route::get('/analytics', function () {
+    return view('dashboard_admin/konten1');
 });
