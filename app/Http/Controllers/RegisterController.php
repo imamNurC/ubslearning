@@ -10,14 +10,16 @@ use Illuminate\Support\Facades\Hash;
 class RegisterController extends Controller
 {
 
-    public function index() {
+    public function index()
+    {
         return view('admin.register', [
             'title' => 'Register',
             'active' => 'register'
         ]);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'username' => 'required|string|min:3|max:255|unique:customers',
