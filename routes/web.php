@@ -24,6 +24,15 @@ Route::get('/dashboard', function () {
     return view('dashboard/dashboard');
 });
 
-Route::get('/uielement', function () {
-    return view('dashboard/dashboard_UIElement');
+Route::get('/content-manage', function () {
+    return view('dashboard/dashboard_content_manage');
 });
+
+Route::get('/user-manage', function () {
+    return view('dashboard/dashboard_user_manage');
+});
+
+Route::get('/analytic', function () {
+    return view('dashboard/dashboard_analytic');
+});
+

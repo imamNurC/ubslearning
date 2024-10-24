@@ -1,4 +1,4 @@
 @extends('custom_layout.bases.adminbase')
 @section('content')
-<h5> Hello World </h5>
+<h5> Ini Dashboard User Manage </h5>
 @endsection
