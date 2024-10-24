@@ -20,7 +20,7 @@
   <body class="h-full">
   ```
 -->
-@extends('custom_layout.adminlayout')
+@extends('custom_layout.bases.adminlayout')
 @section('content')
 <!-- component -->
 <style>

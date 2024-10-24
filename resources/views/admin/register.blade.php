@@ -1,5 +1,5 @@
 
-@extends('custom_layout.adminlayout')
+@extends('custom_layout.bases.adminlayout')
 @section('content')
 
 <style>
