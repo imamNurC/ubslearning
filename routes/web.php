@@ -23,3 +23,7 @@ Route::post('/login', [LoginController::class, 'authenticate']);
 Route::get('/dashboard', function () {
     return view('dashboard/dashboard');
 });
+
+Route::get('/Ui_element', function () {
+    return view('dashboard/dashboard_UIElement');
+});

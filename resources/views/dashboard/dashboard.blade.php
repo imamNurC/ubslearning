@@ -1,4 +1,4 @@
-@extends('custom_layout.adminbase')
+@extends('custom_layout.bases.adminbase')
 @section('content')
 
 <div class="container px-6 py-8 mx-auto">
