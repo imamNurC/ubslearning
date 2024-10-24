@@ -9,18 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('customers', function (Blueprint $table) {
-            $table->bigIncrements('id_customer');
-            $table->string('name', 255);
-            $table->string('phone_number', 255);
-            $table->string('email', 255)->unique();
-            $table->string('password', 255);
+            $table->id('id_customer');
+            $table->enum('type', ['admin', 'user'])->default('user');
+            $table->string('name');
+            $table->string('username');
+            $table->string('phone_number');
+            $table->string('email')->unique();
+            $table->string('password');
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.

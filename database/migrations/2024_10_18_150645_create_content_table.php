@@ -12,10 +12,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('content', function (Blueprint $table) {
-            $table->bigIncrements('id_content');
+            $table->id('id_content');
             $table->string('content_name', 100);
             $table->integer('price');
-            $table->string('youtube_url', 255)->nullable();
+            $table->string('youtube_url');
             $table->timestamps();
         });
     }
