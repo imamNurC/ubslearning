@@ -8,26 +8,27 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    public function index(Customer $customer) {
-        return view('admin.index', [
+    public function index()
+    {
+        return view('admin.index');
+    }
 
-        ]);    
-    }   
+    public function authenticate(Request $request)
+    {
 
-    public function authenticate(Request $request) {
+        // dd($request->all());
 
         $credentials = $request->validate([
             'email' => 'required|email:dns',
             'password' => 'required'
         ]);
 
-        if(Auth::attempt($credentials)) {
+
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended('/dashboard');
         }
 
         return back()->with('loginError', 'Login Failed!');
-
     }
 }
-
