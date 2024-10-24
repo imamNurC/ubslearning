@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id('id_customer');
+            $table->enum('type', ['admin', 'user'])->default('user');
             $table->string('name');
             $table->string('username');
             $table->string('phone_number');

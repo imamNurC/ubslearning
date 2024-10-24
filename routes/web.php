@@ -20,6 +20,33 @@ Route::get('/demo', function () {
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'authenticate']);
 
-Route::get('/dashboard', function () {
+//dashboard admin
+Route::get('/dashboardAdmin', function () {
     return view('dashboard/dashboard');
 });
+
+//dashboard user
+Route::get('/dashboard', function () {
+    return view('dashboard_user/dashboardUser');
+});
+
+Route::get('/content-manage', function () {
+    return view('dashboard/dashboard_content_manage');
+});
+
+Route::get('/user-manage', function () {
+    return view('dashboard/dashboard_user_manage');
+});
+
+Route::get('/analytic', function () {
+    return view('dashboard/dashboard_analytic');
+});
+
+Route::get('/my-content', function () {
+    return view('dashboard_user/dashboardUser_my_content');
+});
+
+Route::get('/my-profile', function () {
+    return view('dashboard_user/dashboardUser_my_profile');
+});
+
