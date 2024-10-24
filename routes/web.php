@@ -20,6 +20,12 @@ Route::get('/demo', function () {
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'authenticate']);
 
+//dashboard admin
+Route::get('/dashboardAdmin', function () {
+    return view('dashboard/dashboard');
+});
+
+//dashboard user
 Route::get('/dashboard', function () {
     return view('dashboard_user/dashboardUser');
 });
