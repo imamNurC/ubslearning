@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 
+use App\Http\Middleware\CheckUserType;
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -20,42 +24,48 @@ Route::get('/demo', function () {
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'authenticate']);
 
-<<<<<<< HEAD
-Route::get('/dashboard', function () {
-    return view('dashboard_admin/dashboard');
-});
 
-Route::get('/analytics', function () {
-    return view('dashboard_admin/konten1');
-=======
-//dashboard admin
-Route::get('/dashboardAdmin', function () {
-    return view('dashboard/dashboard');
->>>>>>> b263897a68dc414463928cc311f06dc5d2991d36
-});
 
-//dashboard user
-Route::get('/dashboard', function () {
-    return view('dashboard_user/dashboardUser');
-});
 
-Route::get('/content-manage', function () {
-    return view('dashboard/dashboard_content_manage');
-});
+// Protected Routes
+// Route::get('/dashboardAdmin', function () {
+//     return view('dashboard_admin/dashboard');
+// })->middleware(CheckUserType::class);
 
-Route::get('/user-manage', function () {
-    return view('dashboard/dashboard_user_manage');
-});
 
-Route::get('/analytic', function () {
-    return view('dashboard/dashboard_analytic');
-});
+// Protected Routes
+Route::group(['middleware' => ['auth']], function () {
+    // Admin Routes
+    Route::group(['middleware' => 'checkUserType:admin'], function () {
+        Route::get('/dashboardAdmin', function () {
+            return view('dashboard_admin/dashboard');
+        });
 
-Route::get('/my-content', function () {
-    return view('dashboard_user/dashboardUser_my_content');
-});
+        Route::get('/content-manage', function () {
+            return view('dashboard_admin/dashboard_content_manage');
+        });
 
-Route::get('/my-profile', function () {
-    return view('dashboard_user/dashboardUser_my_profile');
-});
+        Route::get('/user-manage', function () {
+            return view('dashboard_admin/dashboard_user_manage');
+        });
 
+        Route::get('/analytic', function () {
+            return view('dashboard_admin/dashboard_analytic');
+        });
+    });
+
+    // User Routes
+    Route::group(['middleware' => 'checkUserType:user'], function () {
+        Route::get('/home', function () {
+            return view('dashboard_user/dashboardUser');
+        });
+
+        Route::get('/my-content', function () {
+            return view('dashboard_user/dashboardUser_my_content');
+        });
+
+        Route::get('/my-profile', function () {
+            return view('dashboard_user/dashboardUser_my_profile');
+        });
+    });
+});
