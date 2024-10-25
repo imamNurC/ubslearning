@@ -1,7 +1,7 @@
 <!DOCTYPE html>
     <html lang="en">
     <head>
-        @include('custom_layout.partials.head')
+        @include('custom_layout_admin.partials.head')
         
     </head>
     <body>
