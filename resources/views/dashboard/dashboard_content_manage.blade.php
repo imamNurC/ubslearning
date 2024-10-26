@@ -75,12 +75,12 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
-                    {{-- <tbody class="bg-white divide-y divide-gray-200">
+                    <tbody class="bg-white divide-y divide-gray-200">
                         @foreach($data as $value)
                             <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $value->content_name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $value->price }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap"><a href="{{ $value->youtube_url }}" target="_blank" class="text-blue-600 hover:underline">{{ $content->youtube_url }}</a></td>
+                                <td class="px-6 py-4 whitespace-nowrap"><a href="{{ $value->youtube_url }}" target="_blank" class="text-blue-600 hover:underline">{{ $value->youtube_url }}</a></td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $value->kategori }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap max-w-sm max-h-20 overflow-y-auto">{{ $value->deskripsi }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap space-x-2">
@@ -89,7 +89,7 @@
                                 </td>
                             </tr>
                         @endforeach
-                    </tbody> --}}
+                    </tbody>
                 </table>
             </div>
             
@@ -114,12 +114,11 @@
 @push('scripts')
     <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
     <script>
-        // Inisialisasi Quill
+        
         var quill = new Quill('#editor-container', {
             theme: 'snow'
         });
 
-        // Menyimpan konten Quill di input hidden sebelum form dikirim
         document.querySelector('form').onsubmit = function() {
             document.querySelector('#deskripsi').value = quill.root.innerHTML;
         };

@@ -10,19 +10,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/coba', function() {
-    $contents = DB::table('content')->get();
-    dd($contents);
-    return view ('welcome');
-});
-
 
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
-
-//Rout Untuk Menu Content Manage
-
-// Route::get('/register', [RegisterController::class, 'store']);
 
 Route::get('/demo', function () {
     return view('demo');
@@ -37,33 +27,14 @@ Route::get('/dashboard', function () {
     return view('dashboard_user/dashboardUser');
 });
 
-//dashboard admin
-// Route::get('/dashboardAdmin', function () {
-//     return view('dashboard/dashboard');
-// })->middleware(['auth', 'admin']);
-
-// Route::get('/content-manage', function () {
-//     return view('dashboard/dashboard_content_manage');
-// })->middleware(['auth', 'admin']);
-
-// Route::get('/user-manage', function () {
-//     return view('dashboard/dashboard_user_manage');
-// })->middleware(['auth', 'admin']);
-
-// Route::get('/analytic', function () {
-//     return view('dashboard/dashboard_analytic');
-// })->middleware(['auth', 'admin']);
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboardAdmin', function () {
         return view('dashboard/dashboard');
     });
 
-    // Route::get('/content-manage', function () {
-    //     return view('dashboard/dashboard_content_manage');
-    // });
-
-    Route::get('/content-manage', [ContentManageController::class, 'dataView'])->name('dashboard.Dashboard_content_manage');
+    Route::get('/content-manage', [ContentManageController::class, 'index']);
+    
     Route::post('/content-manage', [ContentManageController::class, 'store']);
 
     Route::get('/user-manage', function () {
