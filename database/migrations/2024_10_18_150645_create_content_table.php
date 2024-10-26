@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('content_name', 100);
             $table->integer('price');
             $table->string('youtube_url');
+            $table->string('kategori');
+            $table->string('deskripsi');
             $table->timestamps();
         });
     }
