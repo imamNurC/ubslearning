@@ -21,8 +21,7 @@ Route::get('/register', [RegisterController::class, 'index'])->middleware('guest
 Route::post('/register', [RegisterController::class, 'store']);
 
 //Rout Untuk Menu Content Manage
-Route::get('/content-manage', [ContentManageController::class, 'dataView'])->name('dashboard.Dashboard_content_manage');
-Route::post('/content-manage', [ContentManageController::class, 'store']);
+
 // Route::get('/register', [RegisterController::class, 'store']);
 
 Route::get('/demo', function () {
@@ -60,9 +59,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
         return view('dashboard/dashboard');
     });
 
-    Route::get('/content-manage', function () {
-        return view('dashboard/dashboard_content_manage');
-    });
+    // Route::get('/content-manage', function () {
+    //     return view('dashboard/dashboard_content_manage');
+    // });
+
+    Route::get('/content-manage', [ContentManageController::class, 'dataView'])->name('dashboard.Dashboard_content_manage');
+    Route::post('/content-manage', [ContentManageController::class, 'store']);
 
     Route::get('/user-manage', function () {
         return view('dashboard/dashboard_user_manage');
@@ -88,5 +90,3 @@ Route::get('/my-profile', function () {
 
 
 });
-
-

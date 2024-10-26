@@ -12,7 +12,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Content extends Model
 {
-    public $table = 'content';
+    use HasFactory;
+
+    protected $table = 'content';
     protected $fillable = [
         'content_name',
         'price',
