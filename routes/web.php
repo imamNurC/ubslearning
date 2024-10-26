@@ -3,15 +3,26 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-
+use App\Http\Controllers\ContentManageController;
+use Illuminate\Support\Facades\DB;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/coba', function() {
+    $contents = DB::table('content')->get();
+    dd($contents);
+    return view ('welcome');
+});
+
 
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
+
+//Rout Untuk Menu Content Manage
+Route::get('/content-manage', [ContentManageController::class, 'dataView'])->name('dashboard.Dashboard_content_manage');
+Route::post('/content-manage', [ContentManageController::class, 'store']);
 // Route::get('/register', [RegisterController::class, 'store']);
 
 Route::get('/demo', function () {
