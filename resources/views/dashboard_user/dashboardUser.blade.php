@@ -1,18 +1,5 @@
 @extends('custom_layout_users.bases.userbase')
 @section('content')
-
-
-    @vite('resources/css/app.css')
-    <!-- FONTS POPPINS-->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Tambahkan link Font Awesome di bagian head -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet"
-    />
 <body class="font-poppins bg-gray-50">
         <div class="max-w-full h-[400px] mx-auto px-6 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500 py-10 rounded-b-3xl">
             <div class="flex flex-wrap justify-around items-center mt-auto">
