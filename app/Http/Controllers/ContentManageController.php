@@ -10,13 +10,15 @@ class ContentManageController extends Controller
 {
     public function index()
     {
-        return view('dashboard.dashboard_content_manage', compact('data')); // Mengirim data ke view
+        $data = Content::all(); // Ambil semua data dari tabel content
+        // dd($data);
+
+        if ($data->isEmpty()) {
+            return view('dashboard_admin.dashboard_content_manage', ['data' => []]);
+        }
+        return view('dashboard_admin.dashboard_content_manage', compact('data')); // Mengirim data ke view
     }
 
-    public function dataView(Content $data) {
-        $data = Content::all(); // Ambil semua data dari tabel content
-        return view('dashboard.Dashboard_content_manage', ['data'=>$data]);
-    }
 
     public function store(Request $request)
     {
@@ -30,5 +32,5 @@ class ContentManageController extends Controller
 
         Content::create($validatedData);
         return redirect('/content-manage')->with('success', 'Insert Successful!');
-    }   
+    }
 }

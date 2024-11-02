@@ -16,7 +16,7 @@
         <!-- Form Section -->
         <div class="bg-white rounded-lg shadow-md p-6 mb-8">
             <h2 class="text-2xl font-bold mb-6">Content Manage</h2>
-            <form id="recordForm" class="space-y-4" action="/content-manage" method="POST" >
+            <form id="recordForm" class="space-y-4" action="/content-manage" method="POST">
                 @csrf
                 <div class="grid md:grid-cols-2 gap-4">
                     <div>
@@ -42,16 +42,15 @@
                     </div>       
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Deskripsi</label>
-                        <div id="editor-container" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" 
-                             style="min-height: 150px;"></div>
+                        <textarea name="deskripsi" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Deskripsi" rows="4"></textarea>
                     </div>
-                    <input type="hidden" name="deskripsi" id="deskripsi" placeholder="Deskripsi">
                 </div>
                 <div class="flex justify-end space-x-3">
                     <button type="button" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Clear ❌</button>
                     <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">Save ✅</button>
                 </div>
             </form>
+            
         </div>
 
         <!-- Table Section -->
@@ -80,7 +79,9 @@
                             <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $value->content_name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $value->price }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap"><a href="{{ $value->youtube_url }}" target="_blank" class="text-blue-600 hover:underline">{{ $content->youtube_url }}</a></td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <a href="{{ $value->youtube_url }}" target="_blank" class="text-blue-600 hover:underline">{{ $value->youtube_url }}</a>
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $value->kategori }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap max-w-sm max-h-20 overflow-y-auto">{{ $value->deskripsi }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap space-x-2">
