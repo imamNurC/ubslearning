@@ -140,7 +140,7 @@
             document.getElementById('recordForm').action = `/content-manage/update/${id_content}`;
             
             // Ubah teks tombol menjadi 'Update'
-            document.querySelector('button[type="submit"]').textContent = 'Update';
+            document.querySelector('button[type="submit"]').textContent = 'Update ✏️';
 }
 
         function confirmDelete(id_content) {
