@@ -15,13 +15,15 @@ class Content extends Model
     use HasFactory;
 
     protected $table = 'content';
+    protected $primaryKey = 'id_content';
     protected $fillable = [
         'content_name',
         'price',
         'youtube_url',
         'kategori',
-        'deskripsi'
+        'deskripsi',
     ];
+
 
     public function accesses()
     {

@@ -27,4 +27,15 @@ class ContentManageController extends Controller
     Content::create($validatedData);
     return redirect('/content-manage')->with('success', 'Insert Successful!');
 }
+
+    public function delete($id_content)
+    {
+        $content = Content::where('id_content', $id_content)->firstOrFail();
+
+        if ($content) {
+            $content->delete();
+            return redirect()->back()->with('success', 'Record berhasil dihapus.');
+        }
+        return redirect()->back()->with('error', 'Record tidak ditemukan.');
+    }
 }

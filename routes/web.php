@@ -37,6 +37,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     
     Route::post('/content-manage', [ContentManageController::class, 'store']);
 
+    Route::delete('/content-manage/delete/{id_content}', [ContentManageController::class, 'delete'])->name('content.delete');
+
     Route::get('/user-manage', function () {
         return view('dashboard/dashboard_user_manage');
     });
