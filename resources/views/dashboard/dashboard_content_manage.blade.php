@@ -52,9 +52,9 @@
     <div class="bg-white rounded-lg shadow-md p-6">
         <div class="flex flex-col md:flex-row justify-between items-center mb-6">
             <h2 class="text-2xl font-bold mb-4 md:mb-0">Records</h2>
-            <div class="w-full md:w-64">
-                <input type="search" placeholder="🔍 Search records..." class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-            </div>
+            <form action="/content-manage" method="GET" class="w-full md:w-64">
+                <input type="search" name="search" placeholder="🔍 Search records..." class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            </form>
         </div>
 
         <div class="overflow-x-auto">
@@ -156,5 +156,24 @@
                 form.submit();
             }
         }
+
+
+        //searching
+        $(document).ready(function() {
+            $('input[name="search"]').on('input', function() {
+                let query = $(this).val();
+
+                $.ajax({
+                    url: '/content-manage',
+                    method: 'GET',
+                    data: { search: query },
+                    success: function(data) {
+                        $('tbody').html(data);
+                    }
+                });
+            });
+        });
+
+
     </script>
 @endpush

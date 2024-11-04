@@ -8,11 +8,25 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class ContentManageController extends Controller
 {
-    public function index()
-    {
-        $data = Content::paginate(5);
-        return view('dashboard.dashboard_content_manage', compact('data'));
+    public function index(Request $request)
+{
+    $search = $request->get('search');
+    $data = Content::query()
+        ->when($search, function ($query) use ($search) {
+            return $query->where('content_name', 'like', "%{$search}%")
+                         ->orWhere('kategori', 'like', "%{$search}%");
+        })
+        ->paginate(5);
+
+    if ($request->ajax()) {
+        return view('dashboard.dashboard_content_manage', compact('data'))->render();
     }
+
+    return view('dashboard.dashboard_content_manage', compact('data'));
+}
+
+
+
 
     public function store(Request $request)
 {

@@ -34,7 +34,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     });
 
     Route::get('/content-manage', [ContentManageController::class, 'index']);
-    
+
     Route::post('/content-manage', [ContentManageController::class, 'store']);
     Route::post('/content-manage/update/{id_content}', [ContentManageController::class, 'update'])->name('content.update');
 
