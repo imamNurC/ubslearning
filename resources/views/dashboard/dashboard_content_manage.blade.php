@@ -81,7 +81,6 @@
                             <td class="px-6 py-4 whitespace-nowrap max-w-sm max-h-20 overflow-y-auto">{{ $value->deskripsi }}</td>
                             <td class="px-6 py-4 whitespace-nowrap space-x-2">
                                 <button class="text-blue-600 hover:text-blue-800" onclick="editRecord({{ $value->id_content }}, '{{ $value->content_name }}', '{{ $value->price }}', '{{ $value->youtube_url }}', '{{ $value->kategori }}', '{{ $value->deskripsi }}')">✏️</button>
-
                                 <button class="text-red-600 hover:text-red-800" onclick="confirmDelete({{ $value->id_content }})">🗑️</button>
                             </td>
                         </tr>
@@ -92,14 +91,13 @@
         
         <div class="flex justify-between items-center mt-4">
             <div class="text-sm text-gray-700">
-                Showing 1 to 1 of 1 entries
+                Showing {{ $data->firstItem() }} to {{ $data->lastItem() }} of {{ $data->total() }} entries  
             </div>
             <div class="space-x-2">
-                <button class="px-3 py-1 border rounded-md hover:bg-gray-50 disabled:opacity-50">Previous</button>
-                <button class="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700">1</button>
-                <button class="px-3 py-1 border rounded-md hover:bg-gray-50 disabled:opacity-50">Next</button>
+                {{ $data->links() }}
             </div>
         </div>
+        
     </div>
 </div>
 
@@ -118,31 +116,32 @@
         };
 
         document.getElementById('clearButton').onclick = function() {
+
             // Clear the input fields
             document.getElementById('content_name').value = '';
             document.getElementById('price').value = '';
             document.getElementById('youtube_url').value = '';
-            document.getElementById('kategori').value = 'Makanan'; // Reset to default
-            quill.setText(''); // Clear the Quill editor
-            document.getElementById('deskripsi').value = ''; // Clear hidden input
-            document.getElementById('editId').value = ''; // Clear edit ID
-            document.getElementById('saveButton').innerText = 'Save ✅'; // Reset button text
+            document.getElementById('kategori').value = 'Makanan';
+            quill.setText('');
+            document.getElementById('deskripsi').value = '';
+            document.getElementById('editId').value = '';
+            document.getElementById('saveButton').innerText = 'Save ✅';
         };
 
         function editRecord(id_content, content_name, price, youtube_url, kategori, deskripsi) {
-        document.getElementById('content_name').value = content_name;
-        document.getElementById('price').value = price;
-        document.getElementById('youtube_url').value = youtube_url;
-        document.getElementById('kategori').value = kategori;
-        quill.root.innerHTML = deskripsi; // Setel isi Quill editor dengan deskripsi
-        document.getElementById('deskripsi').value = deskripsi; // Setel nilai hidden input
-        // Ubah form action untuk update
-        document.getElementById('recordForm').action = `/content-manage/update/${id_content}`;
-        // Ubah teks tombol menjadi 'Update'
-        document.querySelector('button[type="submit"]').textContent = 'Update';
+            document.getElementById('content_name').value = content_name;
+            document.getElementById('price').value = price;
+            document.getElementById('youtube_url').value = youtube_url;
+            document.getElementById('kategori').value = kategori;
+            quill.root.innerHTML = deskripsi;
+            document.getElementById('deskripsi').value = deskripsi;
+
+            // Ubah form action untuk update
+            document.getElementById('recordForm').action = `/content-manage/update/${id_content}`;
+            
+            // Ubah teks tombol menjadi 'Update'
+            document.querySelector('button[type="submit"]').textContent = 'Update';
 }
-
-
 
         function confirmDelete(id_content) {
             if (confirm('Apakah Anda yakin ingin menghapus record ini?')) {

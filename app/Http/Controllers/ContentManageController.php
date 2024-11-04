@@ -10,7 +10,7 @@ class ContentManageController extends Controller
 {
     public function index()
     {
-        $data = Content::all();
+        $data = Content::paginate(5);
         return view('dashboard.dashboard_content_manage', compact('data'));
     }
 
@@ -50,13 +50,9 @@ class ContentManageController extends Controller
             'deskripsi' => 'required|string|max:255',
         ]);
 
-        // Temukan konten berdasarkan ID
         $content = Content::findOrFail($id_content);
-
-        // Perbarui konten
         $content->update($validatedData);
 
-        // Redirect dengan notifikasi
         return redirect()->back()->with('success', 'Konten berhasil diperbarui.');
     }
 }
