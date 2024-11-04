@@ -28,9 +28,9 @@ Route::post('/login', [LoginController::class, 'authenticate']);
 
 Route::get('/logout', [LoginController::class, 'logout']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard_user/dashboardUser');
-});
+// Route::get('/dashboard', function () {
+//     return view('dashboard_user/dashboardUser');
+// });
 
 //dashboard admin
 // Route::get('/dashboardAdmin', function () {
