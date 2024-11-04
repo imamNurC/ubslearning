@@ -38,4 +38,25 @@ class ContentManageController extends Controller
         }
         return redirect()->back()->with('error', 'Record tidak ditemukan.');
     }
+
+    public function update(Request $request, $id_content)
+    {
+        // Validasi input
+        $validatedData = $request->validate([
+            'content_name' => 'required|max:255',
+            'price' => 'required|integer',
+            'youtube_url' => 'required|string|max:255',
+            'kategori' => 'required|string|max:255',
+            'deskripsi' => 'required|string|max:255',
+        ]);
+
+        // Temukan konten berdasarkan ID
+        $content = Content::findOrFail($id_content);
+
+        // Perbarui konten
+        $content->update($validatedData);
+
+        // Redirect dengan notifikasi
+        return redirect()->back()->with('success', 'Konten berhasil diperbarui.');
+    }
 }
