@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('youtube_url');
             $table->string('kategori');
             $table->string('deskripsi');
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

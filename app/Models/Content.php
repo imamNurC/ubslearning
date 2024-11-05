@@ -22,6 +22,7 @@ class Content extends Model
         'youtube_url',
         'kategori',
         'deskripsi',
+        'image_path',
     ];
 
 

@@ -9,7 +9,7 @@
     <!-- Form Section -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-8">
         <h2 class="text-2xl font-bold mb-6">Content Manage</h2>
-        <form id="recordForm" class="space-y-4" action="/content-manage" method="POST">
+        <form id="recordForm" class="space-y-4" action="/content-manage" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" id="editId" name="id_content">
             <div class="grid md:grid-cols-2 gap-4">
@@ -40,6 +40,12 @@
                          style="min-height: 150px;"></div>
                 </div>
                 <input type="hidden" name="deskripsi" id="deskripsi" placeholder="Deskripsi">
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Upload Gambar</label>
+                    <input type="file" id="image" name="image" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                </div>
+                
             </div>
             <div class="flex justify-end space-x-3">
                 <button type="button" id="clearButton" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Clear ❌</button>
@@ -67,6 +73,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Youtube Url</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Kategori</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Deskripsi</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
@@ -79,6 +86,14 @@
                             <td class="px-6 py-4 whitespace-nowrap"><a href="{{ $value->youtube_url }}" target="_blank" class="text-blue-600 hover:underline">{{ $value->youtube_url }}</a></td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $value->kategori }}</td>
                             <td class="px-6 py-4 whitespace-nowrap max-w-sm max-h-20 overflow-y-auto">{{ $value->deskripsi }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if($value->image_path)
+                                    <img src="{{ asset('storage/' . $value->image_path) }}" alt="Content Image" class="w-16 h-16 object-cover rounded">
+                                @else
+                                    <span>No Image</span>
+                                @endif
+                            </td>
+                            
                             <td class="px-6 py-4 whitespace-nowrap space-x-2">
                                 <button class="text-blue-600 hover:text-blue-800" onclick="editRecord({{ $value->id_content }}, '{{ $value->content_name }}', '{{ $value->price }}', '{{ $value->youtube_url }}', '{{ $value->kategori }}', '{{ $value->deskripsi }}')">✏️</button>
                                 <button class="text-red-600 hover:text-red-800" onclick="confirmDelete({{ $value->id_content }})">🗑️</button>
