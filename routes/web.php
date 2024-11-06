@@ -74,9 +74,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
 //dashboard user
 Route::middleware(['auth', 'user'])->group(function () {
 
-    Route::get('/home', function () {
-        return view('dashboard_user/dashboardUser');
-    });
+    // Route::get('/home', function () {
+    //     return view('dashboard_user/dashboardUser');
+    // });
+
+    Route::get('/home', [ContentManageController::class, 'products']);
+
 
     Route::get('/my-content', function () {
         return view('dashboard_user/dashboardUser_my_content');

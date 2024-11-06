@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Content;
+use Illuminate\Support\Facades\DB;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class ContentManageController extends Controller
@@ -32,5 +33,13 @@ class ContentManageController extends Controller
 
         Content::create($validatedData);
         return redirect('/content-manage')->with('success', 'Insert Successful!');
+    }
+
+    public function products()
+    {
+        // Fetch all products from the Content model
+        $data = Content::all();
+
+        return view('dashboard_user.dashboardUser', compact('data'));
     }
 }

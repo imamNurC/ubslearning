@@ -52,58 +52,32 @@
             </div>
           </div>
 
-    <div class="container mx-auto px-6 py-10">
-        
-          
-          
-        <h2 class="text-center text-3xl font-bold mb-10 "> PILIHAN KELAS</h2>
-        <div class="flex flex-wrap justify-center gap-4">
-            <div class="w-full max-w-48 sm:w-1/5 p-4 text-center hover:transform hover:-translate-y-2 transition-transform shadow-2xl rounded-lg bg-white">
-                <a href="product_details.html"><img src="https://i.ibb.co/47Sk9QL/product-1.jpg" alt="" class="w-full rounded-lg"></a>
-                <a href="product_details.html">
-                    <h4 class="text-gray-700 font-semibold mt-2">Tukang Ketik</h4>
-                </a>
-                <p class="text-orange-600 cursor-pointer hover:text-red-600 font-semibold">Rp. 10.000</p>
-                <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModal()">
-                    Beli Konten
-                </button>
-            </div>
-      
-            <div class="w-full max-w-48 sm:w-1/5 p-4 text-center hover:transform hover:-translate-y-2 transition-transform shadow-2xl rounded-lg bg-white">
-                <img src="https://i.ibb.co/b7ZVzYr/product-2.jpg" alt="" class="w-full rounded-lg">
-                <h4 class="text-gray-700 font-semibold mt-2">Tukang Desain</h4>
-                <p class="text-orange-600 cursor-pointer hover:text-red-600 font-semibold">Rp.10.000</p>
-                <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModal()">
-                    Beli Konten
-                </button>
-            </div>
-      
-            <div class="w-full max-w-48 sm:w-1/5 p-4 text-center hover:transform hover:-translate-y-2 transition-transform shadow-2xl rounded-lg bg-white">
-                <img src="https://i.ibb.co/KsMVr26/product-3.jpg" alt="" class="w-full rounded-lg">
-                <h4 class="text-gray-700 font-semibold mt-2">Tukang Ager</h4>
-                <p class="text-orange-600 cursor-pointer hover:text-red-600 font-semibold">Rp.10.000</p>
-                <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModal()">
-                    Beli Konten
-                </button>
-            </div>
-            <div class="w-full max-w-48 sm:w-1/5 p-4 text-center hover:transform hover:-translate-y-2 transition-transform shadow-2xl rounded-lg bg-white">
-                <img src="https://i.ibb.co/KsMVr26/product-3.jpg" alt="" class="w-full rounded-lg">
-                <h4 class="text-gray-700 font-semibold mt-2">Tukang Ager</h4>
-                <p class="text-orange-600 cursor-pointer hover:text-red-600 font-semibold">Rp.10.000</p>
-                <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModal()">
-                    Beli Konten
-                </button>
-            </div>
-            <div class="w-full max-w-48 sm:w-1/5 p-4 text-center hover:transform hover:-translate-y-2 transition-transform shadow-2xl rounded-lg bg-white">
-                <img src="https://i.ibb.co/KsMVr26/product-3.jpg" alt="" class="w-full rounded-lg">
-                <h4 class="text-gray-700 font-semibold mt-2">Tukang Ager</h4>
-                <p class="text-orange-600 cursor-pointer hover:text-red-600 font-semibold">Rp.10.000</p>
-                <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModal()">
-                    Beli Konten
-                </button>
+    <!-- dashboard_user.dashboardUser.blade.php -->
+
+        <div class="container mx-auto px-6 py-10">
+            <h2 class="text-center text-3xl font-bold mb-10">PILIHAN KELAS</h2>
+            <div class="flex flex-wrap justify-center gap-4">
+                @foreach($data as $product)
+                    <div class="w-full max-w-48 sm:w-1/5 p-4 text-center hover:transform hover:-translate-y-2 transition-transform shadow-2xl rounded-lg bg-white">
+                        <!-- Display product content details -->
+                        <h3 class="text-xl font-semibold">{{ $product->content_name }}</h3>
+                        <p class="text-gray-600">{{ $product->kategori }}</p>
+                        <p class="text-lg font-bold text-green-500">Rp. {{ number_format($product->price) }}</p>
+
+                        <!-- You can add more product details like youtube_url or deskripsi -->
+                        <div class="my-2">
+                            <a href="{{ $product->youtube_url }}" target="_blank" class="text-blue-500">Watch on YouTube</a>
+                        </div>
+
+                        <p class="text-sm text-gray-500">{{ Str::limit($product->deskripsi, 100) }}</p>
+                        <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModal()">
+                            Beli Konten
+                        </button>
+                    </div>
+                @endforeach
             </div>
         </div>
-    </div>
+
 
     <div class="container mx-auto px-6 pt-0 pb-10">
         <h2 class="text-center text-3xl font-bold mb-10"> MATERI TERPOPULER</h2>
