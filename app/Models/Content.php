@@ -7,9 +7,6 @@ use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-
-
-
 class Content extends Model
 {
     use HasFactory;
@@ -31,6 +28,7 @@ class Content extends Model
         return $this->hasMany(Access::class, 'id_content', 'id_content');
     }
 
+    // Define the relationship with the Transaction model
     public function transactions()
     {
         return $this->hasMany(Transaction::class, 'id_content', 'id_content');

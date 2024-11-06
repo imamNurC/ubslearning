@@ -1,4 +1,4 @@
-@extends('custom_layout.bases.adminbase')
+@extends('custom_layout_admin.bases.adminbase')
 @section('content')
 
 <head>
@@ -61,6 +61,7 @@
             <form action="/content-manage" method="GET" class="w-full md:w-64">
                 <input type="search" name="search" placeholder="🔍 Search records..." class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
             </form>
+            
         </div>
 
         <div class="overflow-x-auto">

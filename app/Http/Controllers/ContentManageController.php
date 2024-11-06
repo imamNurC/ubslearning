@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Content;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class ContentManageController extends Controller
@@ -21,13 +23,11 @@ class ContentManageController extends Controller
         ->paginate(5);
 
     if ($request->ajax()) {
-        return view('dashboard.dashboard_content_manage', compact('data'))->render();
+        return view('dashboard_admin.dashboard_content_manage', compact('data'))->render();
     }
 
-    return view('dashboard.dashboard_content_manage', compact('data'));
+    return view('dashboard_admin.dashboard_content_manage', compact('data'));
 }
-
-
 
 
 public function store(Request $request)
@@ -52,6 +52,18 @@ public function store(Request $request)
     Content::create($validatedData);
     return redirect('/content-manage')->with('success', 'Insert Successful!');
 }
+
+public function products($id_customer)
+{
+    // Fetch all products from the Content model
+    $data = Content::all();
+
+    // Anda juga bisa memuat data customer jika diperlukan
+    $customer = Customer::findOrFail($id_customer);
+
+    return view('dashboard_user.dashboardUser', compact('data', 'customer'));
+}
+
 
 
 

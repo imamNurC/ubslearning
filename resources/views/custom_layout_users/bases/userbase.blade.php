@@ -12,7 +12,7 @@
 
         @yield('content')
 
-        
+        @include('custom_layout_users.partials.footer') 
 
 
 

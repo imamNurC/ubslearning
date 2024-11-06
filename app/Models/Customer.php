@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Customer extends Authenticatable 
+class Customer extends Authenticatable
 {
 
     use HasFactory;
@@ -17,16 +17,21 @@ class Customer extends Authenticatable
 
 
     protected $fillable = [
-        'name', 
-        'username', 
-        'phone_number', 
-        'email', 
+        'name',
+        'username',
+        'phone_number',
+        'email',
         'password',
         'created_at',
         'updated_at',
     ];
 
     protected $primaryKey = 'id_customer';
+
+    public function getRoleAttribute()
+    {
+        return $this->attributes['type'];
+    }
 
     public function accesses()
     {

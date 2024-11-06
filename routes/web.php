@@ -1,18 +1,24 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ContentManageController;
-use Illuminate\Support\Facades\DB;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 
+
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
+
+//Rout Untuk Menu Content Manage
+
+// Route::get('/register', [RegisterController::class, 'store']);
 
 Route::get('/demo', function () {
     return view('demo');
@@ -21,16 +27,16 @@ Route::get('/demo', function () {
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate']);
 
-Route::get('/logout',[LoginController::class, 'logout']);
+Route::get('/logout', [LoginController::class, 'logout']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard_user/dashboardUser');
-});
+// Route::get('/dashboard', function () {
+//     return view('dashboard_user/dashboardUser');
+// });
 
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboardAdmin', function () {
-        return view('dashboard/dashboard');
+        return view('dashboard_admin/dashboard');
     });
 
     Route::get('/content-manage', [ContentManageController::class, 'index']);
@@ -39,13 +45,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/content-manage/update/{id_content}', [ContentManageController::class, 'update'])->name('content.update');
 
     Route::delete('/content-manage/delete/{id_content}', [ContentManageController::class, 'delete'])->name('content.delete');
+    // Route::get('/content-manage', function () {
+    //     return view('dashboard_admin/dashboard_content_manage');
+    // });
 
     Route::get('/user-manage', function () {
-        return view('dashboard/dashboard_user_manage');
+        return view('dashboard_admin/dashboard_user_manage');
     });
 
     Route::get('/analytic', function () {
-        return view('dashboard/dashboard_analytic');
+        return view('dashboard_admin/dashboard_analytic');
     });
 });
 
@@ -54,13 +63,22 @@ Route::middleware(['auth', 'admin'])->group(function () {
 //dashboard user
 Route::middleware(['auth', 'user'])->group(function () {
 
-Route::get('/my-content', function () {
-    return view('dashboard_user/dashboardUser_my_content');
-});
+    // Route::get('/home', function () {
+    //     return view('dashboard_user/dashboardUser');
+    // });
 
-Route::get('/my-profile', function () {
-    return view('dashboard_user/dashboardUser_my_profile');
-});
+    Route::get('/home/{id_customer}', [ContentManageController::class, 'products'])->name('home');
 
 
+    Route::get('/my-content', function () {
+        return view('dashboard_user/dashboardUser_my_content');
+    });
+
+    // Route::get('/my-profile', function () {
+    //     return view('dashboard_user/dashboardUser_my_profile');
+    // });
+    Route::get('/my-profile/{id_customer}', [CustomerController::class, 'showProfile'])->name('profile.show');
+    
+
 });
+
