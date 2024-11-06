@@ -16,41 +16,41 @@
         <!-- Form Section -->
         <div class="bg-white rounded-lg shadow-md p-6 mb-8">
             <h2 class="text-2xl font-bold mb-6">Content Manage</h2>
-            <form id="recordForm" class="space-y-4">
+            <form id="recordForm" class="space-y-4" action="/content-manage" method="POST">
+                @csrf
                 <div class="grid md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Judul</label>
-                        <input type="text" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Judul">
+                        <label class="block text-sm font-medium text-gray-700">Judul Konten</label>
+                        <input type="text" name="content_name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Judul">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Harga</label>
-                        <input type="text" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Harga">
+                        <label class="block text-sm font-medium text-gray-700">Price</label>
+                        <input type="text" name="price" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Harga">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Youtube Url</label>
-                        <input type="text" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Youtube Url">
+                        <input type="text" name="youtube_url" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Youtube Url">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Kategori</label>
-                        <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <select name="kategori" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                             <option>Makanan</option>
                             <option>Traveling</option>
                             <option>Edukasi</option>
                             <option>Hobi</option>
                         </select>
-                    </div>
+                    </div>       
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Deskripsi</label>
-                        <div id="editor-container" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" 
-                             style="min-height: 150px;"></div>
+                        <textarea name="deskripsi" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Deskripsi" rows="4"></textarea>
                     </div>
-                    <input type="hidden" name="description" id="description" placeholder="Deskripsi">
                 </div>
                 <div class="flex justify-end space-x-3">
                     <button type="button" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Clear ❌</button>
                     <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">Save ✅</button>
                 </div>
             </form>
+            
         </div>
 
         <!-- Table Section -->
@@ -66,27 +66,36 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Name ↕️</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Email ↕️</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Phone ↕️</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Department ↕️</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Content Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Price</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Youtube Url</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Kategori</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Deskripsi</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap">John Doe</td>
-                            <td class="px-6 py-4 whitespace-nowrap">john@example.com</td>
-                            <td class="px-6 py-4 whitespace-nowrap">123-456-7890</td>
-                            <td class="px-6 py-4 whitespace-nowrap">IT</td>
-                            <td class="px-6 py-4 whitespace-nowrap space-x-2">
-                                <button class="text-blue-600 hover:text-blue-800">✏️</button>
-                                <button class="text-red-600 hover:text-red-800">🗑️</button>
-                            </td>
-                        </tr>
+                        @foreach($data as $value)
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $value->content_name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $value->price }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <a href="{{ $value->youtube_url }}" target="_blank" class="text-blue-600 hover:underline">{{ $value->youtube_url }}</a>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $value->kategori }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap max-w-sm max-h-20 overflow-y-auto">{{ $value->deskripsi }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-800">✏️</button>
+                                    <button class="text-red-600 hover:text-red-800">🗑️</button>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
+            
+            </div>
+            
 
             <div class="flex justify-between items-center mt-4">
                 <div class="text-sm text-gray-700">
@@ -113,7 +122,7 @@
 
         // Menyimpan konten Quill di input hidden sebelum form dikirim
         document.querySelector('form').onsubmit = function() {
-            document.querySelector('#description').value = quill.root.innerHTML;
+            document.querySelector('#deskripsi').value = quill.root.innerHTML;
         };
     </script>
 @endpush

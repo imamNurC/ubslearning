@@ -3,15 +3,20 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-
+use App\Http\Controllers\ContentManageController;
+use Illuminate\Support\Facades\DB;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 
+
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
+
+//Rout Untuk Menu Content Manage
+
 // Route::get('/register', [RegisterController::class, 'store']);
 
 Route::get('/demo', function () {
@@ -23,9 +28,9 @@ Route::post('/login', [LoginController::class, 'authenticate']);
 
 Route::get('/logout', [LoginController::class, 'logout']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard_user/dashboardUser');
-});
+// Route::get('/dashboard', function () {
+//     return view('dashboard_user/dashboardUser');
+// });
 
 //dashboard admin
 // Route::get('/dashboardAdmin', function () {
@@ -49,9 +54,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
         return view('dashboard_admin/dashboard');
     });
 
-    Route::get('/content-manage', function () {
-        return view('dashboard_admin/dashboard_content_manage');
-    });
+    // Route::get('/content-manage', function () {
+    //     return view('dashboard_admin/dashboard_content_manage');
+    // });
+    Route::get('/content-manage', [ContentManageController::class, 'index']);
+    Route::post('/content-manage', [ContentManageController::class, 'store']);
 
     Route::get('/user-manage', function () {
         return view('dashboard_admin/dashboard_user_manage');
@@ -67,9 +74,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
 //dashboard user
 Route::middleware(['auth', 'user'])->group(function () {
 
-    Route::get('/home', function () {
-        return view('dashboard_user/dashboardUser');
-    });
+    // Route::get('/home', function () {
+    //     return view('dashboard_user/dashboardUser');
+    // });
+
+    Route::get('/home', [ContentManageController::class, 'products']);
+
 
     Route::get('/my-content', function () {
         return view('dashboard_user/dashboardUser_my_content');
