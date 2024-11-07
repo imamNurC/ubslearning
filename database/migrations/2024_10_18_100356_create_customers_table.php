@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

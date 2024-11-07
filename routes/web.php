@@ -75,7 +75,8 @@ Route::middleware(['auth', 'user'])->group(function () {
     //     return view('dashboard_user/dashboardUser_my_profile');
     // });
     Route::get('/my-profile/{username}', [CustomerController::class, 'showProfile'])->name('profile.show');
-    
+    Route::post('/my-profile/{username}/update', [CustomerController::class, 'updateProfile'])->name('profile.update');
+    Route::post('/profile/{username}/change-password', [CustomerController::class, 'changePassword'])->name('profile.changePassword');
 
 });
 
