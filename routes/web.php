@@ -67,17 +67,14 @@ Route::middleware(['auth', 'user'])->group(function () {
     //     return view('dashboard_user/dashboardUser');
     // });
 
-    Route::get('/home/{id_customer}', [ContentManageController::class, 'products'])->name('home');
+    Route::get('/home/{username}', [ContentManageController::class, 'products'])->name('home');
 
 
-    Route::get('/my-content', function () {
-        return view('dashboard_user/dashboardUser_my_content');
-    });
-
+    Route::get('/my-content/{username}', [CustomerController::class, 'showMyContent'])->name('my-content');
     // Route::get('/my-profile', function () {
     //     return view('dashboard_user/dashboardUser_my_profile');
     // });
-    Route::get('/my-profile/{id_customer}', [CustomerController::class, 'showProfile'])->name('profile.show');
+    Route::get('/my-profile/{username}', [CustomerController::class, 'showProfile'])->name('profile.show');
     
 
 });

@@ -53,13 +53,12 @@ public function store(Request $request)
     return redirect('/content-manage')->with('success', 'Insert Successful!');
 }
 
-public function products($id_customer)
+public function products($username)
 {
     // Fetch all products from the Content model
     $data = Content::all();
 
-    // Anda juga bisa memuat data customer jika diperlukan
-    $customer = Customer::findOrFail($id_customer);
+    $customer = Customer::where('username', $username)->firstOrFail();
 
     return view('dashboard_user.dashboardUser', compact('data', 'customer'));
 }

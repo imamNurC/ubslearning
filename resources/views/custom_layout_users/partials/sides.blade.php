@@ -18,7 +18,7 @@
                 </div>
         
                 <nav class="mt-10">
-                    <a class="flex items-center px-6 py-2 mt-4 {{ Request::is('home') ? 'text-gray-100 bg-gray-700 bg-opacity-25' : 'text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100' }}" href="{{ route('home', ['id_customer' => $customer->id_customer]) }}">
+                    <a class="flex items-center px-6 py-2 mt-4 {{ Request::is('home') ? 'text-gray-100 bg-gray-700 bg-opacity-25' : 'text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100' }}" href="{{ route('home', ['username' => $customer->username]) }}">
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9l9-7 9 7 0 11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 22V12h6v10"></path>                
@@ -27,7 +27,7 @@
                         <span class="mx-3">Dashboard</span>
                     </a>
         
-                    <a class="flex items-center px-6 py-2 mt-4 {{ Request::is('my-content') ? 'text-gray-100 bg-gray-700 bg-opacity-25' : 'text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100' }}" href="/my-content">
+                    <a class="flex items-center px-6 py-2 mt-4 {{ Request::is('my-content') ? 'text-gray-100 bg-gray-700 bg-opacity-25' : 'text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100' }}" href="{{ route('my-content', ['username' => $customer->username]) }}">
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
@@ -35,7 +35,7 @@
                         <span class="mx-3">My Content</span>
                     </a>
         
-                    <a class="flex items-center px-6 py-2 mt-4 {{ Request::is('my-profile') ? 'text-gray-100 bg-gray-700 bg-opacity-25' : 'text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100' }}" href="{{ route('profile.show', ['id_customer' => $customer->id_customer]) }}">
+                    <a class="flex items-center px-6 py-2 mt-4 {{ Request::is('my-profile') ? 'text-gray-100 bg-gray-700 bg-opacity-25' : 'text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100' }}" href="{{ route('profile.show', ['username' => $customer->username]) }}">
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A8.978 8.978 0 0112 15a8.978 8.978 0 016.879 2.804M15 12a3 3 0 11-6 0 3 3 0 016 0zM19 20.945C18.32 21.65 16.14 23 12 23c-4.14 0-6.32-1.35-7-2.055A8.978 8.978 0 015.121 17.8"></path>
                         </svg>
