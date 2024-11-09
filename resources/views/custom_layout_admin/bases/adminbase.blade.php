@@ -15,6 +15,7 @@
         
 
 
+        @include('custom_layout_admin.partials.footer-scripts')
 
                     
         {{-- @include('custom_layout_admin.partials.header') --}}
@@ -22,7 +23,6 @@
         
         {{-- @include('custom_layout_admin.partials.footer')
 
-        @include('custom_layout_admin.partials.footer-scripts') --}}
 
 
 
