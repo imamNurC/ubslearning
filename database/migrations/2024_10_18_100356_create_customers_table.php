@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id('id_customer');
             $table->enum('type', ['admin', 'user'])->default('user');
             $table->string('name');
-            $table->string('username');
+            $table->string('username')->unique();
             $table->string('phone_number');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

@@ -18,6 +18,7 @@
         @include('custom_layout_user.partials.footer')
 
         @include('custom_layout_user.partials.footer-scripts')
+        
 
 
 

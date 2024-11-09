@@ -16,7 +16,7 @@
                     <button class="w-[475px] bg-blue-400 text-white px-5 py-2 rounded-2xl hover:bg-orange-400 font-semibold">Daftar!</button>
                 </div>
                 <div class="w-full md:w-1/2">
-                    <img src="image/geda.jpeg" alt="Pencitraan" class="w-full rounded-xl">
+                    <img src="{{ asset('image/geda.jpeg') }}" alt="Pencitraan" class="w-full rounded-xl">
                 </div>
             </div>
         </div>
@@ -58,23 +58,34 @@
             <h2 class="text-center text-3xl font-bold mb-10">PILIHAN KELAS</h2>
             <div class="flex flex-wrap justify-center gap-4">
                 @foreach($data as $product)
-                    <div class="w-full max-w-48 sm:w-1/5 p-4 text-center hover:transform hover:-translate-y-2 transition-transform shadow-2xl rounded-lg bg-white">
-                        <!-- Display product content details -->
-                        <h3 class="text-xl font-semibold">{{ $product->content_name }}</h3>
-                        <p class="text-gray-600">{{ $product->kategori }}</p>
-                        <p class="text-lg font-bold text-green-500">Rp. {{ number_format($product->price) }}</p>
-
-                        <!-- You can add more product details like youtube_url or deskripsi -->
-                        <div class="my-2">
-                            <a href="{{ $product->youtube_url }}" target="_blank" class="text-blue-500">Watch on YouTube</a>
-                        </div>
-
-                        <p class="text-sm text-gray-500">{{ Str::limit($product->deskripsi, 100) }}</p>
-                        <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModal()">
-                            Beli Konten
-                        </button>
+                <div class="w-full max-w-48 sm:w-1/5 p-4 text-center hover:transform hover:-translate-y-2 transition-transform shadow-2xl rounded-lg bg-white">
+                    <!-- Menampilkan gambar produk -->
+                    <div class="w-full h-48 aspect-w-1 aspect-h-1">
+                        <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->content_name }}" class="w-full h-full object-cover rounded-lg">
                     </div>
-                @endforeach
+
+                    <!-- Display product content details -->
+                    <h3 class="text-xl font-semibold">{{ $product->content_name }}</h3>
+                    <p class="text-gray-600">{{ $product->kategori }}</p>
+                    <p class="text-lg font-bold text-green-500">Rp. {{ number_format($product->price) }}</p>
+
+                    <!-- Link YouTube -->
+                    <div class="my-2">
+                        <a href="{{ $product->youtube_url }}" target="_blank" class="text-blue-500">Watch on YouTube</a>
+                    </div>
+
+                    <!-- Deskripsi Produk -->
+                    <p class="text-sm text-gray-500">{!! Str::limit($product->deskripsi, 100) !!}</p>
+
+                    
+                    <!-- Tombol Beli -->
+                    <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModal()">
+                        Beli Konten
+                    </button>
+                </div>
+            @endforeach
+
+
             </div>
         </div>
 
@@ -129,36 +140,8 @@
         </div>
     </div>
 
-        <div class=" px-6 max-w-full bg-gray-900">
-            <div class="flex justify-center mb-6">
-                <div class="text-center sm:w-1/3">
-                    <img src="image/Malaz_Solutions.png" alt="logo" class="w-32 bg-white mt-1 rounded-md">
-                    <p class="text-left text-white">PT. PT Ceban </br>
-                    Jl. Jalanin Aja Dulu No.99, Desa Gacor, Zeus, Bekasi 17510 
-                    </p>
-                </div>
-                <div class="text-center sm:w-1/3">
-                    <h3 class="text-white text-lg font-semibold mb-2">Pusat Bantuan</h3>
-                    <ul class="space-y-2">
-                        <li class="text-white hover:text-red-500 cursor-pointer font-semibold">FAQ</li>
-                        <li class="text-white hover:text-red-500 cursor-pointer font-semibold">Hubungi Kami</li>
-                        <li class="text-white hover:text-red-500 cursor-pointer font-semibold">Kebijakan Privasi</li>
-                        <li class="text-white hover:text-red-500 cursor-pointer font-semibold">Syarat & Ketentuan</li>
-                    </ul>
-                </div>
-                <div class="text-center sm:w-1/3">
-                    <h3 class="text-white text-lg font-semibold mb-2">Follow us</h3>
-                    <ul class="space-y-2">
-                        <li class="text-white hover:text-red-500 cursor-pointer font-semibold">Facebook</li>
-                        <li class="text-white hover:text-red-500 cursor-pointer font-semibold">Twitter</li>
-                        <li class="text-white hover:text-red-500 cursor-pointer font-semibold">Instagram</li>
-                        <li class="text-white hover:text-red-500 cursor-pointer font-semibold">YouTube</li>
-                    </ul>
-                </div>
-            </div>
-            <hr class="border-gray-400 w-full">
-            <p class="text-center text-gray-200">Copyright &copy; 2024 - Malaz Solutions</p>
-        </div>
+
+        {{-- footer --}}
 </body>
 
 
