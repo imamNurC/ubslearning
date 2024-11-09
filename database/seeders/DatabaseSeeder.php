@@ -71,7 +71,6 @@ class DatabaseSeeder extends Seeder
             'phone_number' => '087884529504',
             'email' => 'meli123@gmail.com',
             'password' => bcrypt('meli123'),
-
         
         ]);
     }
