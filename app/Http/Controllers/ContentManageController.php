@@ -4,42 +4,115 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Content;
+use App\Models\Customer;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class ContentManageController extends Controller
 {
-    public function index()
-    {
-        $data = Content::all(); // Ambil semua data dari tabel content
-        // dd($data);
+    public function index(Request $request)
+{
+    $search = $request->get('search');
+    $data = Content::query()
+        ->when($search, function ($query) use ($search) {
+            return $query->where('content_name', 'like', "%{$search}%")
+                         ->orWhere('kategori', 'like', "%{$search}%");
+        })
+        ->paginate(5);
 
-        if ($data->isEmpty()) {
-            return view('dashboard_admin.dashboard_content_manage', ['data' => []]);
+    if ($request->ajax()) {
+        return view('dashboard_admin.dashboard_content_manage', compact('data'))->render();
+    }
+
+    return view('dashboard_admin.dashboard_content_manage', compact('data'));
+}
+
+
+public function store(Request $request)
+{
+    $validatedData = $request->validate([
+        'content_name' => 'required|max:255',
+        'price' => 'required|integer',
+        'youtube_url' => 'required|string|max:255',
+        'kategori' => 'required|string|max:255',
+        'deskripsi' => 'required|string|max:255',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    $imagePath = null;
+
+    if ($request->hasFile('image')) {
+        $image = $request->file('image');
+        $imagePath = $image->store('content-images', 'public');
+        $validatedData['image_path'] = $imagePath;
+    }
+
+    Content::create($validatedData);
+    return redirect('/content-manage')->with('success', 'Insert Successful!');
+}
+
+public function products($username)
+{
+    // Fetch all products from the Content model
+    $data = Content::all();
+
+    $customer = Customer::where('username', $username)->firstOrFail();
+
+    return view('dashboard_user.dashboardUser', compact('data', 'customer'));
+}
+
+
+
+
+public function delete($id_content)
+{
+    $content = Content::where('id_content', $id_content)->firstOrFail();
+
+    if ($content) {
+        // Hapus file gambar dari storage jika ada
+        if ($content->image_path) {
+            Storage::disk('public')->delete($content->image_path);
         }
-        return view('dashboard_admin.dashboard_content_manage', compact('data')); // Mengirim data ke view
+
+        $content->delete();
+        return redirect()->back()->with('success', 'Record berhasil dihapus.');
+    }
+    return redirect()->back()->with('error', 'Record tidak ditemukan.');
+}
+
+public function update(Request $request, $id_content)
+{
+    // Validasi input
+    $validatedData = $request->validate([
+        'content_name' => 'required|max:255',
+        'price' => 'required|integer',
+        'youtube_url' => 'required|string|max:255',
+        'kategori' => 'required|string|max:255',
+        'deskripsi' => 'required|string|max:255',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // tambahkan validasi untuk gambar baru
+    ]);
+
+    $content = Content::findOrFail($id_content);
+
+    // Cek apakah ada gambar baru yang diupload
+    if ($request->hasFile('image')) {
+        // Hapus file gambar lama jika ada
+        if ($content->image_path) {
+            Storage::disk('public')->delete($content->image_path);
+        }
+
+        // Simpan gambar baru
+        $image = $request->file('image');
+        $imagePath = $image->store('content-images', 'public');
+        $validatedData['image_path'] = $imagePath;
     }
 
+    // Update konten dengan data baru
+    $content->update($validatedData);
 
-    public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'content_name' => 'required|max:255',
-            'price' => 'required|string|max:255',
-            'youtube_url' => 'required|string|max:13',
-            'kategori' => 'required|string|max:255',
-            'deskripsi' => 'required|string|min:5|max:12',
-        ]);
+    return redirect()->back()->with('success', 'Konten berhasil diperbarui.');
+}
 
-        Content::create($validatedData);
-        return redirect('/content-manage')->with('success', 'Insert Successful!');
-    }
-
-    public function products()
-    {
-        // Fetch all products from the Content model
-        $data = Content::all();
-
-        return view('dashboard_user.dashboardUser', compact('data'));
-    }
 }

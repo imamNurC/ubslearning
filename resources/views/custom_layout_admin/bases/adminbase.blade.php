@@ -15,6 +15,7 @@
         
 
 
+        @include('custom_layout_admin.partials.footer-scripts')
 
                     
         {{-- @include('custom_layout_admin.partials.header') --}}
@@ -22,7 +23,6 @@
         
         {{-- @include('custom_layout_admin.partials.footer')
 
-        @include('custom_layout_admin.partials.footer-scripts') --}}
 
 
 
@@ -33,4 +33,5 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script> --}}
         {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
     </body>
+    @stack('scripts')
 </html>

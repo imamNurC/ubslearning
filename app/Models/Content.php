@@ -9,19 +9,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Content extends Model
 {
-    use HasFactory; // Use the HasFactory trait if you're using factories for testing
+    use HasFactory;
 
-    protected $table = 'content'; // Explicitly define the table name
-
+    protected $table = 'content';
+    protected $primaryKey = 'id_content';
     protected $fillable = [
         'content_name',
         'price',
         'youtube_url',
         'kategori',
         'deskripsi',
+        'image_path',
     ];
 
-    // Define the relationship with the Access model
+
     public function accesses()
     {
         return $this->hasMany(Access::class, 'id_content', 'id_content');

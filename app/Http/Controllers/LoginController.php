@@ -32,7 +32,7 @@ class LoginController extends Controller
             if ($user->type == 'admin') {
                 return redirect()->intended('/dashboardAdmin');
             } elseif ($user->type == 'user') {
-                return redirect()->intended('/home');
+                return redirect()->route('home', ['username' => $user->username]);
             }
         }
 
