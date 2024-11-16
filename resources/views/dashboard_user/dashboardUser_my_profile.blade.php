@@ -2,15 +2,23 @@
 
 @section('content')
 
+<style>
+/* efek transisi pesan  */
+#error-message, #success-message {
+    transition: opacity 0.5s ease-in-out;
+}
+
+</style>
+
 <div class="container mx-auto px-4 py-8">
     @if ($errors->any())
-        <div class="bg-red-500 text-white p-4 mb-4 rounded">
+        <div id="error-message" class="bg-red-500 text-white p-4 mb-4 rounded">
             @foreach ($errors->all() as $error)
                 <p>{{ $error }}</p>
             @endforeach
         </div>
     @elseif (session('success'))
-        <div class="bg-green-500 text-white p-4 mb-4 rounded">
+        <div id="success-message" class="bg-green-500 text-white p-4 mb-4 rounded">
             {{ session('success') }}
         </div>
     @endif
@@ -186,8 +194,27 @@
     // Sembunyikan gambar preview dan reset input file
     imgPreview.style.display = 'none'; // Menyembunyikan gambar preview
     inputFile.value = '';  // Reset file input
-}
+    }
 
+    // Script untuk menghilangkan pesan setelah 3 detik
+    setTimeout(() => {
+        const errorMessage = document.getElementById('error-message');
+        const successMessage = document.getElementById('success-message');
+
+        if (errorMessage) {
+            errorMessage.style.opacity = '0'; // Buat elemen memudar
+            setTimeout(() => {
+                errorMessage.style.display = 'none'; // Hilangkan elemen sepenuhnya
+            }, 500); // Waktu untuk animasi memudar
+        }
+
+        if (successMessage) {
+            successMessage.style.opacity = '0'; // Buat elemen memudar
+            setTimeout(() => {
+                successMessage.style.display = 'none'; // Hilangkan elemen sepenuhnya
+            }, 500); // Waktu untuk animasi memudar
+        }
+    }, 3000);
 
 </script>
 
