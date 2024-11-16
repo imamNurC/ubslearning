@@ -19,7 +19,10 @@ class Content extends Model
         'youtube_url',
         'kategori',
         'deskripsi',
+        'deskripsi_panjang',
         'image_path',
+        'count_view',
+        'count_buy',
     ];
 
 

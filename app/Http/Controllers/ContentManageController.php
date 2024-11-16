@@ -32,26 +32,49 @@ class ContentManageController extends Controller
 
 public function store(Request $request)
 {
-    $validatedData = $request->validate([
-        'content_name' => 'required|max:255',
-        'price' => 'required|integer',
-        'youtube_url' => 'required|string|max:255',
-        'kategori' => 'required|string|max:255',
-        'deskripsi' => 'required|string|max:255',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
+    // dd($request->all());
+    Log::info('Eksekusi fungsi store dimulai', ['input' => $request->all()]);
+
+    try {
+        $validatedData = $request->validate([
+            'content_name' => 'required|max:255',
+            'price' => 'required|integer',
+            'youtube_url' => 'required|string|max:255',
+            'kategori' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'deskripsi_panjang' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        Log::info('Validasi berhasil dilalui', ['validatedData' => $validatedData]);
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        Log::error('Validasi gagal', ['errors' => $e->errors()]);
+        return redirect()->back()->withErrors($e->errors())->withInput();
+    }
 
     $imagePath = null;
 
     if ($request->hasFile('image')) {
+        Log::info('Gambar ditemukan, memulai proses upload');
         $image = $request->file('image');
         $imagePath = $image->store('content-images', 'public');
         $validatedData['image_path'] = $imagePath;
+        Log::info('Gambar berhasil diunggah', ['path' => $imagePath]);
+    } else {
+        Log::info('Tidak ada gambar yang diunggah');
     }
 
-    Content::create($validatedData);
+    try {
+        Content::create($validatedData);
+        Log::info('Data berhasil diinsert ke dalam database', ['data' => $validatedData]);
+    } catch (\Exception $e) {
+        Log::error('Gagal menginsert data', ['error' => $e->getMessage()]);
+        return redirect('/content-manage')->with('error', 'Insert Gagal!');
+    }
+
     return redirect('/content-manage')->with('success', 'Insert Successful!');
 }
+
+
 
 public function products($username)
 {
@@ -90,7 +113,8 @@ public function update(Request $request, $id_content)
         'price' => 'required|integer',
         'youtube_url' => 'required|string|max:255',
         'kategori' => 'required|string|max:255',
-        'deskripsi' => 'required|string|max:255',
+        'deskripsi' => 'required|string',
+        'deskripsi_panjang' => 'required|string',
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // tambahkan validasi untuk gambar baru
     ]);
 

@@ -5,6 +5,11 @@
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 
+{{-- <style>
+    #editorDeskripsiPanjang {
+    height: 200px;
+}
+</style> --}}
 <div class="max-w-7xl mx-auto">
     <!-- Form Section -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-8">
@@ -41,7 +46,14 @@
                 </div>
                 <input type="hidden" name="deskripsi" id="deskripsi" placeholder="Deskripsi">
 
-                <div>
+                <div id="editorDeskripsiPanjang">
+                    <label class="block text-sm font-medium text-gray-700">Deskripsi Panjang</label>
+                        <div id="editor-container-panjang" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" 
+                            style="min-height: 150px;"></div>
+                </div>
+                <input type="hidden" name="deskripsi_panjang" id="deskripsiPanjang" placeholder="Deskripsi Panjang">
+
+                <div class="mt-20">
                     <label class="block text-sm font-medium text-gray-700">Upload Gambar</label>
                     <input type="file" id="image" name="image" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 </div>
@@ -71,9 +83,12 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 hidden">Id Content</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Content Name</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Price</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Count View</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Count Buy</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Youtube Url</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Kategori</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Deskripsi</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">Deskripsi Panjang</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
@@ -84,9 +99,12 @@
                             <td class="px-6 py-4 whitespace-nowrap" hidden>{{ $value->id_content }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $value->content_name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $value->price }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $value->count_view }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $value->count_buy }}</td>
                             <td class="px-6 py-4 whitespace-nowrap"><a href="{{ $value->youtube_url }}" target="_blank" class="text-blue-600 hover:underline">{{ $value->youtube_url }}</a></td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $value->kategori }}</td>
                             <td class="px-6 py-4 whitespace-nowrap max-w-sm max-h-20 overflow-y-auto">{{ $value->deskripsi }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap max-w-sm max-h-20 overflow-y-auto">{{ $value->deskripsi_panjang }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if($value->image_path)
                                     <img src="{{ asset('storage/' . $value->image_path) }}" alt="Content Image" class="w-16 h-16 object-cover rounded">
@@ -96,7 +114,7 @@
                             </td>
                             
                             <td class="px-6 py-4 whitespace-nowrap space-x-2">
-                                <button class="text-blue-600 hover:text-blue-800" onclick="editRecord({{ $value->id_content }}, '{{ $value->content_name }}', '{{ $value->price }}', '{{ $value->youtube_url }}', '{{ $value->kategori }}', '{{ $value->deskripsi }}')">✏️</button>
+                                <button class="text-blue-600 hover:text-blue-800" onclick="editRecord({{ $value->id_content }}, '{{ $value->content_name }}', '{{ $value->price }}', '{{ $value->youtube_url }}', '{{ $value->kategori }}', '{{ $value->deskripsi }}', '{{ $value->deskripsi_panjang }}')">✏️</button>
                                 <button class="text-red-600 hover:text-red-800" onclick="confirmDelete({{ $value->id_content }})">🗑️</button>
                             </td>
                         </tr>
@@ -127,9 +145,17 @@
             theme: 'snow'
         });
 
+        var quillDeskripsiPanjang = new Quill('#editor-container-panjang', {
+            theme: 'snow'
+        });
+
         document.querySelector('form').onsubmit = function() {
             document.querySelector('#deskripsi').value = quill.root.innerHTML;
-        };
+            document.querySelector('#deskripsiPanjang').value = quillDeskripsiPanjang.root.innerHTML;
+
+            console.log('Deskripsi:', document.querySelector('#deskripsi').value);
+            console.log('Deskripsi Panjang:', document.querySelector('#deskripsi_panjang').value);
+};
 
         document.getElementById('clearButton').onclick = function() {
 
@@ -139,25 +165,35 @@
             document.getElementById('youtube_url').value = '';
             document.getElementById('kategori').value = 'Makanan';
             quill.setText('');
+            quillDeskripsiPanjang.setText('');
             document.getElementById('deskripsi').value = '';
+            document.getElementById('deskripsiPanjang').value = '';
             document.getElementById('editId').value = '';
             document.getElementById('saveButton').innerText = 'Save ✅';
         };
 
-        function editRecord(id_content, content_name, price, youtube_url, kategori, deskripsi) {
-            document.getElementById('content_name').value = content_name;
-            document.getElementById('price').value = price;
-            document.getElementById('youtube_url').value = youtube_url;
-            document.getElementById('kategori').value = kategori;
-            quill.root.innerHTML = deskripsi;
-            document.getElementById('deskripsi').value = deskripsi;
+        function editRecord(id_content, content_name, price, youtube_url, kategori, deskripsi, deskripsiPanjang) {
+    // Update input fields dengan nilai yang sudah ada
+    document.getElementById('content_name').value = content_name;
+    document.getElementById('price').value = price;
+    document.getElementById('youtube_url').value = youtube_url;
+    document.getElementById('kategori').value = kategori;
 
-            // Ubah form action untuk update
-            document.getElementById('recordForm').action = `/content-manage/update/${id_content}`;
-            
-            // Ubah teks tombol menjadi 'Update'
-            document.querySelector('button[type="submit"]').textContent = 'Update ✏️';
+    // Update Quill editor dengan nilai yang ada
+    quill.root.innerHTML = deskripsi;  // Deskripsi pendek
+    document.getElementById('deskripsi').value = deskripsi; // Pastikan untuk menyimpan nilai ke hidden input
+
+    quillDeskripsiPanjang.root.innerHTML = deskripsiPanjang;  // Deskripsi panjang
+    document.getElementById('deskripsiPanjang').value = deskripsiPanjang;  // Pastikan untuk menyimpan nilai ke hidden input
+
+    // Update form action untuk update
+    document.getElementById('recordForm').action = `/content-manage/update/${id_content}`;
+    
+    // Ubah teks tombol menjadi 'Update'
+    document.querySelector('button[type="submit"]').textContent = 'Update ✏️';
 }
+
+
 
         function confirmDelete(id_content) {
             if (confirm('Apakah Anda yakin ingin menghapus record ini?')) {
