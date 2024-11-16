@@ -5,10 +5,6 @@
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 
-{{-- <style>
-    #editorDeskripsiPanjang {
-    height: 200px;
-}
 </style> --}}
 <div class="max-w-7xl mx-auto">
     <!-- Form Section -->
@@ -173,24 +169,19 @@
         };
 
         function editRecord(id_content, content_name, price, youtube_url, kategori, deskripsi, deskripsiPanjang) {
-    // Update input fields dengan nilai yang sudah ada
-    document.getElementById('content_name').value = content_name;
-    document.getElementById('price').value = price;
-    document.getElementById('youtube_url').value = youtube_url;
-    document.getElementById('kategori').value = kategori;
+            document.getElementById('content_name').value = content_name;
+            document.getElementById('price').value = price;
+            document.getElementById('youtube_url').value = youtube_url;
+            document.getElementById('kategori').value = kategori;
 
-    // Update Quill editor dengan nilai yang ada
-    quill.root.innerHTML = deskripsi;  // Deskripsi pendek
-    document.getElementById('deskripsi').value = deskripsi; // Pastikan untuk menyimpan nilai ke hidden input
+            quill.root.innerHTML = deskripsi; 
+            document.getElementById('deskripsi').value = deskripsi;
 
-    quillDeskripsiPanjang.root.innerHTML = deskripsiPanjang;  // Deskripsi panjang
-    document.getElementById('deskripsiPanjang').value = deskripsiPanjang;  // Pastikan untuk menyimpan nilai ke hidden input
+            quillDeskripsiPanjang.root.innerHTML = deskripsiPanjang;
+            document.getElementById('deskripsiPanjang').value = deskripsiPanjang;
 
-    // Update form action untuk update
-    document.getElementById('recordForm').action = `/content-manage/update/${id_content}`;
-    
-    // Ubah teks tombol menjadi 'Update'
-    document.querySelector('button[type="submit"]').textContent = 'Update ✏️';
+            document.getElementById('recordForm').action = `/content-manage/update/${id_content}`;
+            document.querySelector('button[type="submit"]').textContent = 'Update ✏️';
 }
 
 
