@@ -81,6 +81,10 @@ public function products($username)
     // Fetch all products from the Content model
     $data = Content::all();
 
+    foreach ($data as $product) {
+        $product->deskripsi = strip_tags($product->deskripsi, '<a><b><i><u>');
+    }
+
     $customer = Customer::where('username', $username)->firstOrFail();
 
     return view('dashboard_user.dashboardUser', compact('data', 'customer'));
@@ -115,7 +119,7 @@ public function update(Request $request, $id_content)
         'kategori' => 'required|string|max:255',
         'deskripsi' => 'required|string',
         'deskripsi_panjang' => 'required|string',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // tambahkan validasi untuk gambar baru
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
     $content = Content::findOrFail($id_content);
