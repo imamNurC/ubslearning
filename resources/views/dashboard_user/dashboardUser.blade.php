@@ -15,42 +15,13 @@
                     </p>
                     <button class="w-[475px] bg-blue-400 text-white px-5 py-2 rounded-2xl hover:bg-orange-400 font-semibold">Daftar!</button>
                 </div>
-                <div class="w-full md:w-1/2">
+                <div class="w-1/2 md:w-1/4">
                     <img src="{{ asset('image/geda.jpeg') }}" alt="Pencitraan" class="w-full rounded-xl">
                 </div>
             </div>
         </div>
 
-        <div id="modal-overlay" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[70]"></div>
-        <div id="hs-scale-animation-modal" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="hs-scale-animation-modal-label">
-            <div class="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
-              <div class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto">
-                <div class="items-center py-3 px-4 border-b">
-                  <h3 id="hs-scale-animation-modal-label" class="font-bold text-gray-800 text-center">
-                    Deskripsi Produk
-                  </h3>
-                </div>
-                <div class="p-4 overflow-y-auto">
-                    <img src="image/geda.jpeg" alt="Pencitraan" class="w-full rounded-xl">
-                  <p class="mt-1 text-gray-800">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas alias esse corrupti, animi labore reprehenderit doloremque impedit ipsum autem. Enim alias illum totam minus dolorem obcaecati. Neque sint blanditiis provident.</br>
-                    -lorem</br>
-                    -lorem</br>
-                    -lorem</br>
-                    -lorem</br>
-                    -lorem</br>
-                </div>
-                <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t">
-                    <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-red-500 text-white shadow-sm hover:bg-red-600 focus:outline-none focus:bg-gray-50" onclick="closeModal()">
-                        Close
-                    </button>
-                    <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700">
-                        Beli Konten
-                    </button>
-                </div>
-              </div>
-            </div>
-          </div>
+       
 
     <!-- dashboard_user.dashboardUser.blade.php -->
 
@@ -58,31 +29,31 @@
             <h2 class="text-center text-3xl font-bold mb-10">PILIHAN KELAS</h2>
             <div class="flex flex-wrap justify-center gap-4">
                 @foreach($data as $product)
-                <div class="w-full max-w-48 sm:w-1/5 p-4 text-center hover:transform hover:-translate-y-2 transition-transform shadow-2xl rounded-lg bg-white">
-                    <!-- Menampilkan gambar produk -->
-                    <div class="w-full h-48 aspect-w-1 aspect-h-1">
-                        <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->content_name }}" class="w-full h-full object-cover rounded-lg">
+                    <div class="w-full max-w-48 sm:w-1/5 p-4 text-center hover:transform hover:-translate-y-2 transition-transform shadow-2xl rounded-lg bg-white">
+                        <!-- Menampilkan gambar produk -->
+                        <div class="w-full h-48 aspect-w-1 aspect-h-1">
+                            <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->content_name }}" class="w-full h-full object-cover rounded-lg">
+                        </div>
+
+                        <!-- Display product content details -->
+                        <h3 class="text-xl font-semibold">{{ $product->content_name }}</h3>
+                        <p class="text-gray-600">{{ $product->kategori }}</p>
+                        <p class="text-lg font-bold text-green-500">Rp. {{ number_format($product->price) }}</p>
+
+                        <!-- Link YouTube -->
+                        <div class="my-2">
+                            <a href="{{ $product->youtube_url }}" target="_blank" class="text-blue-500">Watch on YouTube</a>
+                        </div>
+
+                        <!-- Deskripsi Produk -->
+                        <p class="text-sm text-gray-500">{!! Str::limit($product->deskripsi, 100) !!}</p>
+
+                        
+                        <!-- Tombol Beli -->
+                        <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModalBeli()">
+                            Beli Konten
+                        </button>
                     </div>
-
-                    <!-- Display product content details -->
-                    <h3 class="text-xl font-semibold">{{ $product->content_name }}</h3>
-                    <p class="text-gray-600">{{ $product->kategori }}</p>
-                    <p class="text-lg font-bold text-green-500">Rp. {{ number_format($product->price) }}</p>
-
-                    <!-- Link YouTube -->
-                    <div class="my-2">
-                        <a href="{{ $product->youtube_url }}" target="_blank" class="text-blue-500">Watch on YouTube</a>
-                    </div>
-
-                    <!-- Deskripsi Produk -->
-                    <p class="text-sm text-gray-500">{!! Str::limit($product->deskripsi, 100) !!}</p>
-
-                    
-                    <!-- Tombol Beli -->
-                    <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModal()">
-                        Beli Konten
-                    </button>
-                </div>
             @endforeach
 
 
@@ -99,7 +70,7 @@
                     <h4 class="text-gray-700 font-semibold mt-2">Tukang Ketik</h4>
                 </a>
                 <p class="text-orange-600 cursor-pointer hover:text-red-600 font-semibold">Rp. 10.000</p>
-                <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModal()">
+                <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModalBeli()">
                     Beli Konten
                 </button>
             </div>
@@ -108,7 +79,7 @@
                 <img src="https://i.ibb.co/b7ZVzYr/product-2.jpg" alt="" class="w-full rounded-lg">
                 <h4 class="text-gray-700 font-semibold mt-2">Tukang Desain</h4>
                 <p class="text-orange-600 cursor-pointer hover:text-red-600 font-semibold">Rp.10.000</p>
-                <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModal()">
+                <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModalBeli()">
                     Beli Konten
                 </button>
             </div>
@@ -117,7 +88,7 @@
                 <img src="https://i.ibb.co/KsMVr26/product-3.jpg" alt="" class="w-full rounded-lg">
                 <h4 class="text-gray-700 font-semibold mt-2">Tukang Ager</h4>
                 <p class="text-orange-600 cursor-pointer hover:text-red-600 font-semibold">Rp.10.000</p>
-                <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModal()">
+                <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModalBeli()">
                     Beli Konten
                 </button>
             </div>
@@ -125,7 +96,7 @@
                 <img src="https://i.ibb.co/KsMVr26/product-3.jpg" alt="" class="w-full rounded-lg">
                 <h4 class="text-gray-700 font-semibold mt-2">Tukang Ager</h4>
                 <p class="text-orange-600 cursor-pointer hover:text-red-600 font-semibold">Rp.10.000</p>
-                <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModal()">
+                <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModalBeli()">
                     Beli Konten
                 </button>
             </div>
@@ -133,7 +104,7 @@
                 <img src="https://i.ibb.co/KsMVr26/product-3.jpg" alt="" class="w-full rounded-lg">
                 <h4 class="text-gray-700 font-semibold mt-2">Tukang Ager</h4>
                 <p class="text-orange-600 cursor-pointer hover:text-red-600 font-semibold">Rp.10.000</p>
-                <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModal()">
+                <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" onclick="openModalBeli()">
                     Beli Konten
                 </button>
             </div>
@@ -145,33 +116,6 @@
 </body>
 
 
-<script>
-    function openModal() {
-        const modal = document.getElementById('hs-scale-animation-modal');
-        const overlay = document.getElementById('modal-overlay');
-
-        // Show the modal
-        modal.classList.remove('hidden');
-        modal.classList.add('pointer-events-auto', 'opacity-100');
-        modal.querySelector('.hs-overlay-animation-target').classList.remove('scale-95', 'opacity-0');
-
-        // Show the overlay
-        overlay.classList.remove('hidden');
-    }
-
-    function closeModal() {
-        const modal = document.getElementById('hs-scale-animation-modal');
-        const overlay = document.getElementById('modal-overlay');
-
-        // Hide the modal
-        modal.classList.add('hidden');
-        modal.classList.remove('pointer-events-auto', 'opacity-100');
-        modal.querySelector('.hs-overlay-animation-target').classList.add('scale-95', 'opacity-0');
-
-        // Hide the overlay
-        overlay.classList.add('hidden');
-    }
-</script>
 
 @endsection
 
