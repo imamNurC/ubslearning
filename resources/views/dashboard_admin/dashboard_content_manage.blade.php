@@ -5,7 +5,7 @@
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 
-</style> --}}
+</style> 
 <div class="max-w-7xl mx-auto">
     <!-- Form Section -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-8">

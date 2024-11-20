@@ -82,7 +82,7 @@ public function products($username)
     $data = Content::all();
 
     foreach ($data as $product) {
-        $product->deskripsi = strip_tags($product->deskripsi, '<a><b><i><u>');
+        $product->deskripsi = strip_tags($product->deskripsi, '<a><b><i><u><br>');
     }
 
     $customer = Customer::where('username', $username)->firstOrFail();
@@ -119,7 +119,7 @@ public function update(Request $request, $id_content)
         'kategori' => 'required|string|max:255',
         'deskripsi' => 'required|string',
         'deskripsi_panjang' => 'required|string',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // tambahkan validasi untuk gambar baru
     ]);
 
     $content = Content::findOrFail($id_content);
