@@ -203,6 +203,12 @@
     function closeModal() {
         const modal = document.getElementById('hs-scale-animation-modal');
         const overlay = document.getElementById('modal-overlay');
+        const videoContainer = document.getElementById('video-container');
+
+        const iframe = videoContainer.querySelector('iframe');
+        if (iframe) {
+            iframe.src = 'about:blank'; // This will stop the video playback
+        }
 
         // Hide the modal
         modal.classList.add('hidden');
