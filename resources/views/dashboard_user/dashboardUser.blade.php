@@ -7,6 +7,10 @@
     white-space: pre-wrap;
 }
 
+.absolute {
+    position: absolute;
+    z-index: 10;
+}
 </style>
 
 <body class="font-poppins bg-gray-50">
@@ -67,41 +71,46 @@
             <h2 class="text-center text-3xl font-bold mb-10">PILIHAN KELAS</h2>
             <div class="flex flex-wrap justify-center gap-4">
                 @foreach($data as $product)
-                    <div class="w-full sm:w-1/4 p-4 text-center hover:transform hover:-translate-y-2 transition-transform shadow-2xl rounded-lg bg-white">
-                        <!-- Menampilkan gambar produk -->
+                    <div class="w-full sm:w-1/3 p-4 text-center hover:transform hover:-translate-y-2 transition-transform shadow-2xl rounded-lg bg-white relative flex flex-col justify-between">
                         <div class="w-full aspect-w-4 aspect-h-3">
                             <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->content_name }}" class="w-full h-full object-cover rounded-lg">
                         </div>
 
-                        <!-- Display product content details -->
-                        <h3 class="text-lg sm:text-xl font-semibold mt-4">{{ $product->content_name }}</h3>
-                        <p class="text-gray-600">{{ $product->kategori }}</p>
-                        <p class="text-lg font-bold text-green-500">Rp. {{ number_format($product->price) }}</p>
+                        <div class="mt-4 text-center">
+                            <h3 class="text-lg sm:text-xl font-semibold">{{ $product->content_name }}</h3>
+                        </div>
 
-                        <!-- Link YouTube -->
-                        {{-- <div class="my-2">
-                            <a href="{{ $product->youtube_url }}" target="_blank" class="text-blue-500 underline">Watch on YouTube</a>
-                        </div> --}}
+                        <div class="mt-auto text-center">
+                            <p class="text-gray-600">{{ $product->kategori }}</p>
+                        </div>
 
-                        <!-- Deskripsi Produk -->
-                        <p class="text-sm text-gray-500">{!! Str::limit($product->deskripsi, 100) !!}</p>
+                        <div class="absolute bottom-3 left-2 text-sm text-gray-500">
+                            <p class="text-lg font-bold text-green-500">Rp. {{ number_format($product->price) }}</p>
+                        </div>
 
-                        <!-- Tombol Beli -->
-                        <button 
-                            type="button" 
-                            class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 mt-4" 
-                            onclick="openModal(this)"
-                            data-id="{{ $product->id }}"
-                            data-name="{{ $product->content_name }}"
-                            data-price="{{ number_format($product->price) }}"
-                            data-category="{{ $product->kategori }}"
-                            data-description="{!! $product->deskripsi !!}"
-                            data-image="{{ asset('storage/' . $product->image_path) }}"
-                            data-youtube="{{ $product->youtube_url }}"
-                        >
-                            Beli Konten
-                        </button>
+                        <div class="absolute bottom-10 left-2 text-sm text-gray-500">
+                            Views: {{ $product->count_view }}
+                        </div>
+                        <div class="absolute bottom-10 right-2 text-sm text-gray-500">
+                            Purchases: {{ $product->count_buy }}
+                        </div>
 
+                        <div class="mt-auto mb-20">
+                            <button 
+                                type="button" 
+                                class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 w-full" 
+                                onclick="openModal(this)"
+                                data-id="{{ $product->id }}"
+                                data-name="{{ $product->content_name }}"
+                                data-price="{{ number_format($product->price) }}"
+                                data-category="{{ $product->kategori }}"
+                                data-description="{!! $product->deskripsi !!}"
+                                data-image="{{ asset('storage/' . $product->image_path) }}"
+                                data-youtube="{{ $product->youtube_url }}"
+                            >
+                                Beli Konten
+                            </button>
+                        </div>
                     </div>
                 @endforeach
             </div>
