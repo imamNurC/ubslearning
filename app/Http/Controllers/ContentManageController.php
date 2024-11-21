@@ -78,17 +78,24 @@ public function store(Request $request)
 
 public function products($username)
 {
-    // Fetch all products from the Content model
-    $data = Content::all();
+    $popularContent = $this->showPopularContent(); 
+    $data = Content::latest()->paginate(5);
 
     foreach ($data as $product) {
         $product->deskripsi = strip_tags($product->deskripsi, '<a><b><i><u><br>');
     }
 
     $customer = Customer::where('username', $username)->firstOrFail();
-
-    return view('dashboard_user.dashboardUser', compact('data', 'customer'));
+    return view('dashboard_user.dashboardUser', compact('data', 'customer', 'popularContent'));
 }
+
+// Fungsi untuk show konten terpopuler
+public function showPopularContent()
+{
+    $popularContent = Content::orderBy('count_view', 'desc')->take(5)->get();
+    return $popularContent;
+}
+
 
 
 

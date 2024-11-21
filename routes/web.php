@@ -75,9 +75,19 @@ Route::middleware(['auth', 'user'])->group(function () {
     //     return view('dashboard_user/dashboardUser_my_profile');
     // });
     Route::post('/update-view-count/{id}', [CustomerController::class, 'updateViewCount'])->name('update.view.count');
+    Route::get('/popular-content', [CustomerController::class, 'showPopularContent'])->name('popular.content');
+    Route::get('/product/{id}', [CustomerController::class, 'showProductDetails'])->name('product.details');
     Route::get('/my-profile/{username}', [CustomerController::class, 'showProfile'])->name('profile.show');
     Route::post('/my-profile/{username}/update', [CustomerController::class, 'updateProfile'])->name('profile.update');
     Route::post('/profile/{username}/change-password', [CustomerController::class, 'changePassword'])->name('profile.changePassword');
 
+
+    Route::get('/get-content-description/{id}', function ($id) {
+        $product = App\Models\Content::find($id);
+        return response()->json([
+            'description' => $product->deskripsi,
+        ]);
+    });
+    
 });
 
