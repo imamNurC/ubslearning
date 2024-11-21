@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+Use App\Models\Content;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -77,6 +78,19 @@ public function updateProfile(Request $request, $username)
 
     return redirect()->route('profile.show', $username)->with('success', 'Password updated successfully!');
 }
+
+    //function menambah count view
+    public function updateViewCount($id)
+{
+    try {
+        $product = Content::findOrFail($id);
+        $product->increment('count_view');
+        return response()->json(['success' => true, 'message' => 'View count updated.']);
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => 'Failed to update view count.'], 500);
+    }
+}
+
 
 
 }

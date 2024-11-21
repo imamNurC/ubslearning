@@ -74,6 +74,7 @@ Route::middleware(['auth', 'user'])->group(function () {
     // Route::get('/my-profile', function () {
     //     return view('dashboard_user/dashboardUser_my_profile');
     // });
+    Route::post('/update-view-count/{id}', [CustomerController::class, 'updateViewCount'])->name('update.view.count');
     Route::get('/my-profile/{username}', [CustomerController::class, 'showProfile'])->name('profile.show');
     Route::post('/my-profile/{username}/update', [CustomerController::class, 'updateProfile'])->name('profile.update');
     Route::post('/profile/{username}/change-password', [CustomerController::class, 'changePassword'])->name('profile.changePassword');

@@ -12,6 +12,9 @@
     z-index: 10;
 }
 </style>
+<head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
 
 <body class="font-poppins bg-gray-50">
         <div class="max-w-full h-[400px] mx-auto px-6 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500 py-10 rounded-b-3xl">
@@ -99,8 +102,7 @@
                             <button 
                                 type="button" 
                                 class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 w-full" 
-                                onclick="openModal(this)"
-                                data-id="{{ $product->id }}"
+                                data-id="{{ $product->id_content }}"
                                 data-name="{{ $product->content_name }}"
                                 data-price="{{ number_format($product->price) }}"
                                 data-category="{{ $product->kategori }}"
@@ -173,7 +175,11 @@
 
 
 <script>
+    let isViewCountUpdated = false;
+    const updatedViewCounts = new Set();
+
     function openModal(button) {
+        const id = button.getAttribute('data-id');
         const modal = document.getElementById('hs-scale-animation-modal');
         const overlay = document.getElementById('modal-overlay');
         const videoContainer = document.getElementById('video-container');
@@ -197,8 +203,26 @@
         document.getElementById('content-name').textContent = name;
         document.getElementById('content-price').textContent = `Rp. ${price}`;
         document.getElementById('content-category').textContent = category;
+        // console.log(description);
         document.getElementById('content-description').innerHTML = description;
         document.getElementById('content-image').src = image;
+
+        //Menambah view count
+        if (!updatedViewCounts.has(id)) {
+        fetch(`/update-view-count/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Pastikan CSRF token
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('View count updated:', data);
+            updatedViewCounts.add(id);
+        })
+        .catch(error => console.error('Error updating view count:', error));
+    }
 
         // Show the modal
         modal.classList.remove('hidden');
