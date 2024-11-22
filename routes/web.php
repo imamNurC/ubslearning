@@ -80,7 +80,10 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/my-profile/{username}', [CustomerController::class, 'showProfile'])->name('profile.show');
     Route::post('/my-profile/{username}/update', [CustomerController::class, 'updateProfile'])->name('profile.update');
     Route::post('/profile/{username}/change-password', [CustomerController::class, 'changePassword'])->name('profile.changePassword');
+    Route::get('/purchase-form/{username}', [CustomerController::class, 'showPurchaseForm'])->name('purchaseForm.show');
+    Route::post('/purchase', [CustomerController::class, 'store'])->name('purchase.store');
 
+    Route::post('/save-product-to-session', [CustomerController::class, 'saveProductToSession']);
 
     Route::get('/get-content-description/{id}', function ($id) {
         $product = App\Models\Content::find($id);

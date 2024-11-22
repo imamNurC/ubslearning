@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 Use App\Models\Content;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -92,8 +93,72 @@ public function updateProfile(Request $request, $username)
 }
 
     
+    //function purchase form
+    public function showPurchaseForm ($username) 
+    {
+        $customer = Customer::where('username', $username)->firstOrFail();
+        $content = session('content_data');
+        return view('dashboard_user.dashboardUser_purchase_form', compact('customer'));
+    }
 
+    //function untuk menampilkan data secara otomatis
+    public function saveProductToSession(Request $request)
+    {
+        $data = $request->all();
+        
+        // Menyimpan detail produk ke dalam session
+        session([
+            //customer data
+            // 'id_customer' => $request->input('idCustomer'),
+            // 'name' => $request->input('name'),
+            // 'number_phone' => $request->input('numberPhone'),
+            // 'email' => $request->input('email'),
+            'customer' => $data['customer'],
 
+            //content data
+            'id_content' => $request->input('idContent'),
+            'content_name' => $request->input('name'),
+            'price' => $request->input('price'),
+            'category' => $request->input('category'),
+            'description' => $request->input('description'),
+            'image' => $request->input('image'),
+            
+        ]);
 
+        return response()->json(['message' => 'Product saved to session']);
+    }
+
+    //function untuk purchase store
+    public function PurchaseStore(Request $request, $username)
+{
+    $customer = Customer::where('username', $username)->firstOrFail();
+    
+    // Validasi data
+    $request->validate([
+        'id_customer' => 'required|exists:customers,id_customer',
+        'name' => 'required|string',
+        'number_phone' => 'required|string',
+        'email' => 'required|email',
+        'id_content' => 'required|exists:content,id_content',
+        'content_name' => 'required|string',
+        'price' => 'required|integer',
+    ]);
+
+    // Simpan transaksi
+    $transaction = new Transaction();
+    $transaction->id_customer = $request->id_customer;
+    $transaction->name = $request->name;
+    $transaction->number_phone = $request->number_phone;
+    $transaction->email = $request->email;
+    $transaction->id_content = $request->id_content;
+    $transaction->content_name = $request->content_name;
+    $transaction->price = $request->price;
+    $transaction->save();
+
+    session()->forget(['product_name', 'product_price', 'product_category', 'product_description', 'product_image']);
+
+    // Redirect atau return response
+    return view('dashboard_user.dashboardUser_purchase_form', compact('customer'));
+}
 
 }

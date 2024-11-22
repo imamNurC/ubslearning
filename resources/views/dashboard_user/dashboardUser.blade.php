@@ -60,9 +60,15 @@
                 <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-red-500 text-white shadow-sm hover:bg-red-600 focus:outline-none" onclick="closeModal()">
                     Close
                 </button>
-                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700">
+                <button 
+                    type="button" 
+                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" 
+                >
+                    <a href="{{ route('purchaseForm.show', ['username' => Auth::user()->username]) }}">
                     Beli Konten
+                    </a>
                 </button>
+
             </div>
         </div>
     </div>
@@ -197,6 +203,14 @@
         const overlay = document.getElementById('modal-overlay');
         const videoContainer = document.getElementById('video-container');
 
+        //ambil data customer
+        const customerData = {
+            id_customer: "{{ auth()->user()->id_customer }}",
+            name: "{{ auth()->user()->name }}",
+            number_phone: "{{ auth()->user()->phone_number }}",
+            email: "{{ auth()->user()->email }}"
+        };
+
 
         // Ambil data dari tombol
         const name = button.getAttribute('data-name');
@@ -246,6 +260,25 @@
         })
         .catch(error => console.error('Error updating view count:', error));
     }
+
+
+        // Menyimpan data produk ke session
+        fetch('/save-product-to-session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({
+                idContent: id,
+                name: name,
+                price: price,
+                category: category,
+                description: description,
+                image: image,
+                customer: customerData,
+            })
+        });
 
         // Show the modal
         modal.classList.remove('hidden');
