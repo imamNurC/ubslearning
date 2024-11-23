@@ -229,7 +229,8 @@
         const contentData = {
             id: button.getAttribute('data-id'),
             name: button.getAttribute('data-name'),
-            price: button.getAttribute('data-price')
+            price: button.getAttribute('data-price'),
+            image: button.getAttribute('data-image')
         };
 
 
@@ -285,22 +286,22 @@
 
         // Menyimpan data produk ke session
         fetch('/save-product-to-session', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-    },
-    body: JSON.stringify({
-        contentData: contentData,
-        customer: customerData,
-    })
-})
-.then(response => response.json()) // Parse response as JSON
-.then(data => {
-    console.log('Response from server:', data.message); // Akses data yang diterima
-    // alert(data.message); // Tampilkan pesan jika diperlukan
-})
-.catch(error => console.error('Error:', error));
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({
+                contentData: contentData,
+                customer: customerData,
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response from server:', data.message);
+                // alert(data.message); // Tampilkan pesan jika diperlukan
+        })
+            .catch(error => console.error('Error:', error));
 
 
 
@@ -320,7 +321,7 @@
 
         const iframe = videoContainer.querySelector('iframe');
         if (iframe) {
-            iframe.src = 'about:blank'; // This will stop the video playback
+            iframe.src = 'about:blank';
         }
 
         // Hide the modal
