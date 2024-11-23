@@ -48,7 +48,6 @@
               name="id_transaction"
               id="id-transaction"
               placeholder=" "
-              required
               readonly
               class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
             />
@@ -121,7 +120,7 @@
             type="text"
             name="id_content"
             id="id-content"
-            value="{{  session('id_content') }}"
+            value="{{  session('contentData.id') }}"
             placeholder=" "
             required
             readonly
@@ -136,7 +135,7 @@
               type="text"
               name="content_name"
               id="content-name"
-              value="{{ session('content_name') }}"
+              value="{{ session('contentData.name') }}"
               placeholder=" "
               required
               readonly
@@ -151,7 +150,7 @@
               type="text"
               name="price"
               id="price"
-              value="{{ session('price') }}"
+              value="{{ session('contentData.price') }}"
               placeholder=" "
               required
               readonly
@@ -199,10 +198,9 @@
                 class="pt-3 pb-2 pr-12 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:text-gray-700 file:cursor-pointer"
             />
             <label for="image" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Upload Gambar</label>
-            <span class="text-sm text-red-600 hidden" id="error">Gambar wajib diunggah</span>
+            <span class="text-sm text-red-600 hidden" id="image-error">Gambar wajib diunggah</span>
         </div>
         
-  
         <button
           id="button"
           type="button"
@@ -214,34 +212,64 @@
     </div>
   </div>
   
-  <script>
-    'use strict'
-  
-    document.getElementById('button').addEventListener('click', toggleError)
-    const errMessages = document.querySelectorAll('#error')
-  
-    function toggleError() {
-      // Show error message
-      errMessages.forEach((el) => {
-        el.classList.toggle('hidden')
-      })
-  
-      // Highlight input and label with red
-      const allBorders = document.querySelectorAll('.border-gray-200')
-      const allTexts = document.querySelectorAll('.text-gray-500')
-      allBorders.forEach((el) => {
-        el.classList.toggle('border-red-600')
-      })
-      allTexts.forEach((el) => {
-        el.classList.toggle('text-red-600')
-      })
+<script>
+'use strict'
+
+document.getElementById('button').addEventListener('click', toggleError)
+
+function toggleError() {
+  const inputs = document.querySelectorAll('input[required]')
+  const imageInput = document.getElementById('image')
+  const imageErrorMessage = document.getElementById('image-error')
+  let hasError = false
+
+  inputs.forEach((input) => {
+    const label = input.nextElementSibling
+    const errorMessage = input.nextElementSibling.nextElementSibling
+
+    // // Debugging log untuk melihat input dan nilai-nya
+    console.log(`Input: ${input.name}, Value: '${input.value.trim()}'`)
+
+    if (input.id === 'id-transaction') {
+      return;
     }
 
-    // Set waktu lokal pada input time
-    const timeInput = document.getElementById('time');
-    const currentTime = new Date();
-    const hours = String(currentTime.getHours()).padStart(2, '0');
-    const minutes = String(currentTime.getMinutes()).padStart(2, '0');
-    timeInput.value = `${hours}:${minutes}`;
-  </script>
-  @endsection
+    if (input.value.trim() === '') {
+      errorMessage.classList.remove('hidden')
+      input.classList.add('border-red-600')
+      label.classList.add('text-red-600')
+      hasError = true
+    } else {
+      errorMessage.classList.add('hidden')
+      input.classList.remove('border-red-600')
+      label.classList.remove('text-red-600')
+    }
+  })
+
+  // Validasi untuk gambar
+  if (!imageInput.files.length) {
+    imageErrorMessage.classList.remove('hidden')
+    imageInput.classList.add('border-red-600')
+    hasError = true
+  } else {
+    imageErrorMessage.classList.add('hidden')
+    imageInput.classList.remove('border-red-600')
+  }
+
+  // Debugging log untuk melihat apakah ada error
+  if (hasError) {
+    console.log('Ada error, periksa input yang kosong atau tidak valid.')
+  } else {
+    console.log('Form sudah valid, tidak ada error.')
+  }
+}
+
+// Set waktu lokal pada input time
+const timeInput = document.getElementById('time');
+const currentTime = new Date();
+const hours = String(currentTime.getHours()).padStart(2, '0');
+const minutes = String(currentTime.getMinutes()).padStart(2, '0');
+timeInput.value = `${hours}:${minutes}`;
+
+</script>
+@endsection

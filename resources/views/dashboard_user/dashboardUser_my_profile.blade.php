@@ -56,7 +56,7 @@
                     <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500">Password</dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-between items-center">
-                            <span id="password-display">{{ str_repeat('*', strlen($customer->password)) }}</span>
+                            <span id="password-display">{{ str_repeat('*', min(10, strlen($customer->password))) }}</span>
                             <!-- Tombol Change Password -->
                             <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded" onclick="openChangePassword()">Change Password</button>
                         </dd>

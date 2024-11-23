@@ -96,6 +96,11 @@ public function updateProfile(Request $request, $username)
     //function purchase form
     public function showPurchaseForm ($username) 
     {
+        $productData = session('contentData');
+
+        if (!$productData) {
+            return redirect()->back()->withErrors(['message' => 'Data konten tidak ditemukan. Silakan coba lagi.']);
+        }
         $customer = Customer::where('username', $username)->firstOrFail();
         $content = session('content_data');
         return view('dashboard_user.dashboardUser_purchase_form', compact('customer'));
@@ -116,15 +121,11 @@ public function updateProfile(Request $request, $username)
             'customer' => $data['customer'],
 
             //content data
-            'id_content' => $request->input('idContent'),
-            'content_name' => $request->input('name'),
-            'price' => $request->input('price'),
-            'category' => $request->input('category'),
-            'description' => $request->input('description'),
-            'image' => $request->input('image'),
+            'contentData' => $data['contentData'],
             
         ]);
-
+        session()->forget('product_data');
+        session()->put('product_data', $request->all());
         return response()->json(['message' => 'Product saved to session']);
     }
 

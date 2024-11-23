@@ -17,21 +17,30 @@
 </head>
 
 <body class="font-poppins bg-gray-50">
-    <div class="max-w-full h-[400px] mx-auto px-6 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500 py-10 rounded-b-3xl">
-        <div class="flex flex-wrap justify-around items-center mt-auto">
-            <div class="w-full md:w-1/2">
-                <h1 class="text-5xl font-bold mb-4 text-white">Jangan Semangat!<br> Teruslah Malas!</h1>
-                <p class="text-white mb-6 font-semibold">
+    <div class="max-w-full h-auto mx-auto px-6 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500 py-10 rounded-b-3xl">
+        <div class="flex flex-wrap justify-between items-center">
+            <!-- Teks -->
+            <div class="w-full md:w-1/2 mb-6 md:mb-0">
+                <h1 class="text-3xl md:text-5xl font-bold mb-4 text-white text-center md:text-left">
+                    Jangan Semangat!<br> Teruslah Malas!
+                </h1>
+                <p class="text-white mb-6 font-semibold text-center md:text-left">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, dolorum. Vitae corrupti, quam atque laudantium fugiat veniam quo iure sed sit doloribus perspiciatis unde eaque ab nam assumenda. Non, ipsa!
                 </p>
-                <button class="w-[475px] bg-blue-400 text-white px-5 py-2 rounded-2xl hover:bg-orange-400 font-semibold">Daftar!</button>
+                <div class="flex justify-center md:justify-start">
+                    <button class="w-full max-w-xs bg-blue-400 text-white px-5 py-2 rounded-2xl hover:bg-orange-400 font-semibold">
+                        Daftar!
+                    </button>
+                </div>
             </div>
-            <div class="w-full md:w-1/2 relative">
-                <!-- Gambar dengan ukuran tetap dan tidak responsive -->
-                <img src="{{ asset('image/geda.jpeg') }}" alt="Pencitraan" class="w-full h-full object-cover rounded-xl mx-auto">
+    
+            <!-- Gambar -->
+            <div class="w-full md:w-1/2">
+                <img src="{{ asset('image/geda.jpeg') }}" alt="Pencitraan" class="w-full h-auto object-cover rounded-xl">
             </div>
         </div>
     </div>
+    
 
     {{-- Ini Modal --}}
     <div id="modal-overlay" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[70]"></div>
@@ -198,6 +207,12 @@
     const updatedViewCounts = new Set();
 
     function openModal(button) {
+        document.getElementById('content-name').textContent = '';
+        document.getElementById('content-price').textContent = '';
+        document.getElementById('content-category').textContent = '';
+        document.getElementById('content-description').textContent = '';
+        document.getElementById('content-image').src = '';
+        
         const id = button.getAttribute('data-id');
         const modal = document.getElementById('hs-scale-animation-modal');
         const overlay = document.getElementById('modal-overlay');
@@ -209,6 +224,12 @@
             name: "{{ auth()->user()->name }}",
             number_phone: "{{ auth()->user()->phone_number }}",
             email: "{{ auth()->user()->email }}"
+        };
+
+        const contentData = {
+            id: button.getAttribute('data-id'),
+            name: button.getAttribute('data-name'),
+            price: button.getAttribute('data-price')
         };
 
 
@@ -264,21 +285,24 @@
 
         // Menyimpan data produk ke session
         fetch('/save-product-to-session', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({
-                idContent: id,
-                name: name,
-                price: price,
-                category: category,
-                description: description,
-                image: image,
-                customer: customerData,
-            })
-        });
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    },
+    body: JSON.stringify({
+        contentData: contentData,
+        customer: customerData,
+    })
+})
+.then(response => response.json()) // Parse response as JSON
+.then(data => {
+    console.log('Response from server:', data.message); // Akses data yang diterima
+    // alert(data.message); // Tampilkan pesan jika diperlukan
+})
+.catch(error => console.error('Error:', error));
+
+
 
         // Show the modal
         modal.classList.remove('hidden');
@@ -316,6 +340,8 @@
                 openModal(this);
             });
         });
+
+        
 </script>
 
 @endsection
