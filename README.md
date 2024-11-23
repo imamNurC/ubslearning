@@ -1,10 +1,6 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-
-![alt text](https://raw.githubusercontent.com/imamNurC/ubslearning/refs/heads/imam_dev/public/image/Malaz_Solutions.png)
-
-</p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/imamNurC/ubslearning/refs/heads/imam_dev/public/image/Malaz_Solutions.png" width="400" alt="Company Logo"></a></p>
 
 <p align="center">
 <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
@@ -15,11 +11,7 @@
 
 ## Our System Design
 
-<p align="center">
-
-![alt text](https://raw.githubusercontent.com/imamNurC/ubslearning/refs/heads/imam_dev/public/image/%5BSYSTEM%20DESIGN%5D.png)
-
-</p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/imamNurC/ubslearning/refs/heads/imam_dev/public/image/%5BSYSTEM%20DESIGN%5D.png" width="400" alt="Company Logo"></a></p>
 
 ## About Laravel
 
