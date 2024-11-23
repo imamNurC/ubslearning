@@ -27,7 +27,7 @@ Route::get('/demo', function () {
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate']);
 
-Route::get('/logout', [LoginController::class, 'logout']);
+Route::get('/logoutMentor', [LoginController::class, 'logout']);
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard_user/dashboardUser');
@@ -77,6 +77,4 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/my-profile/{username}', [CustomerController::class, 'showProfile'])->name('profile.show');
     Route::post('/my-profile/{username}/update', [CustomerController::class, 'updateProfile'])->name('profile.update');
     Route::post('/profile/{username}/change-password', [CustomerController::class, 'changePassword'])->name('profile.changePassword');
-
 });
-
