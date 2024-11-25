@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\ContentManageController;
 
 Route::get('/', function () {
@@ -56,6 +57,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/analytic', function () {
         return view('dashboard_admin/dashboard_analytic');
     });
+
+    Route::get('/analytic', [AnalyticsController::class, 'index']);
 });
 
 

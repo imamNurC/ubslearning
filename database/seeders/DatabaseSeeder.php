@@ -62,5 +62,16 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('imam123'),
 
         ]);
+
+        //data meli
+        Customer::create([
+            'type' => 'admin',
+            'name' => 'Meliana Azhara',
+            'username' => 'meli123',
+            'phone_number' => '087884529504',
+            'email' => 'meli123@gmail.com',
+            'password' => bcrypt('meli123'),
+        
+        ]);
     }
 }

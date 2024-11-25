@@ -42,3 +42,89 @@
        var chart = new ApexCharts(document.querySelector("#chart"), options);
        chart.render();
 </script>
+
+
+{{-- <script>
+    document.addEventListener('DOMContentLoaded', function (){
+    const chartData = @json($chartData);
+
+    const options = {
+       series: [{
+           name: 'Transactions',
+           data: chartData.totals
+       }],
+       chart: {
+        height: 350,
+        type: 'line',
+        zoom: {
+           enabled: false
+        }
+       },
+       dataLabels: {
+        enabled: false
+        },
+       stroke: {
+        curve: 'straight'
+       },
+       title: {
+       text: 'Transaction Over the Last 7 Days',
+       align: 'center'
+       },
+       grid: {
+       row: {
+           colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+           opacity: 0.5
+            },
+       },
+       xaxis: {
+        categories: chartData.dates,
+        title: {
+            text:'Date'
+        },
+       },
+       yaxis: {
+        title: {
+            text: 'Number of Transaction'
+        },
+       },
+    };
+
+       const chart = new ApexCharts(document.querySelector("#saleschart"), options);
+       chart.render();
+});
+</script> --}}
+
+{{-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+    const labels = {!!  json_encode($transaction_count->pluck('tanggal')) !!};
+    const data = {!!  json_encode($transaction_count->pluck('sold_count')) !!};
+
+    const options = {
+        chart: {
+            type: 'line',
+            height: 400
+        },
+        series: [{
+            name: 'Transaction per Week'
+            data: data
+        }],
+        xaxis: {
+            categories: labels,
+            title: {
+                text: 'Day'
+            }
+        },
+        yaxis: {
+            title: {
+                text: 'Transaction'
+            }
+        },
+        title: {
+            text: 'Transaction per Day on Week'
+            align: 'center'
+        }
+    };
+
+    const chart = new ApexCharts(document.querySelector("#chart"),options);
+    chart.render();
+</script> --}}
