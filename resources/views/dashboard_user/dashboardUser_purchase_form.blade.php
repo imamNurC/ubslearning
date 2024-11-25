@@ -36,6 +36,8 @@
       left: 0px;
     }
   </style>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   
   <div class="min-h-screen bg-gray-100 p-0 sm:p-12">
     <div class="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
@@ -205,7 +207,7 @@
         
         <button
           id="button"
-          type="button"
+          type="submit"
           class="w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-pink-500 hover:bg-pink-600 hover:shadow-lg focus:outline-none"
         >
           Konfirmasi Pembelian
@@ -335,6 +337,39 @@ function showModal() {
     clearInterval(countdownInterval); // Hentikan hitung mundur jika modal ditutup
   });
 }
+
+  //mekanisme melempar data form purchase ke notifikasi admin
+  document.getElementById('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+
+    const priceInput = document.getElementById('price');
+    const priceValue = parseInt(priceInput.value.trim(), 10);
+
+    formData.set('price', priceValue);
+
+    $.ajax({
+        url: '{{ route('purchase.store') }}',
+        method: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            console.log(response);
+            if (response.success) {
+                alert('Transaksi berhasil!');
+            } else {
+                alert('Terjadi kesalahan.');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log(xhr.responseText); // Tampilkan error yang diterima dari server
+        }
+    });
+});
+
+
 
 </script>
 @endsection

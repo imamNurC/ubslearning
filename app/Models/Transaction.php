@@ -15,4 +15,10 @@ class Transaction extends Model
     {
         return $this->belongsTo(Content::class, 'id_content', 'id_content');
     }
+
+    protected $fillable = [
+        'id_customer', 'name', 'number_phone', 'email',
+        'id_content', 'content_name', 'price'
+    ];
+    
 }

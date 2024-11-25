@@ -130,34 +130,49 @@ public function updateProfile(Request $request, $username)
     }
 
     //function untuk purchase store
-    public function PurchaseStore(Request $request, $username)
+    public function PurchaseStore(Request $request)
 {
-    $customer = Customer::where('username', $username)->firstOrFail();
+    // $customer = Customer::where('username', $username)->firstOrFail();
     
     // Validasi data
-    $request->validate([
+    $validated = $request->validate([
         'id_customer' => 'required|exists:customers,id_customer',
-        'name' => 'required|string',
-        'number_phone' => 'required|string',
+        'name' => 'required|string|max:255',
+        'number_phone' => 'required|string|max:15',
         'email' => 'required|email',
         'id_content' => 'required|exists:content,id_content',
-        'content_name' => 'required|string',
+        'content_name' => 'required|string|max:100',
         'price' => 'required|integer',
+        // 'date' => 'required|date',
+        // 'time' => 'required|date_format:H:i',
+        // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
+
+    // $path = $request->file('image')->store('transactions', 'public');
+
+    // if ($request->hasFile('image')) {
+    //     $imagePath = $request->file('image')->store('public/images');
+    // } else {
+    //     $imagePath = null; // Jika tidak ada gambar, simpan null
+    // }
 
     // Simpan transaksi
     $transaction = new Transaction();
-    $transaction->id_customer = $request->id_customer;
-    $transaction->name = $request->name;
-    $transaction->number_phone = $request->number_phone;
-    $transaction->email = $request->email;
-    $transaction->id_content = $request->id_content;
-    $transaction->content_name = $request->content_name;
-    $transaction->price = $request->price;
-    $transaction->save();
+        $transaction->id_customer = $request->id_customer;
+        $transaction->name = $request->name;
+        $transaction->number_phone = $request->number_phone;
+        $transaction->email = $request->email;
+        $transaction->id_content = $request->id_content;
+        $transaction->content_name = $request->content_name;
+        $transaction->price = $request->price;
+        $transaction->status = 'pending'; // status default
+        // $transaction->date = $request->date;
+        // $transaction->time = $request->time;
+        // $transaction->image_path = $imagePath; // jika gambar diupload
+        $transaction->save();
 
     session()->forget(['product_name', 'product_price', 'product_category', 'product_description', 'product_image']);
-
+    return response()->json(['success' => true, 'data' => $transaction]);
     // Redirect atau return response
     return view('dashboard_user.dashboardUser_purchase_form', compact('customer'));
 }

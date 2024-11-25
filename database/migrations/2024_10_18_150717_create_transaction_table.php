@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('transaction', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id('id_transaction'); 
             $table->unsignedBigInteger('id_customer'); 
             $table->string('name');
@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_content');
             $table->string('content_name', 100);
             $table->integer('price');
+            $table->enum('status', ['pending', 'confirmed', 'rejected'])->default('pending');
             $table->timestamps();
             
             //relasi
