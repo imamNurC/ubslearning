@@ -17,8 +17,11 @@ return new class extends Migration
             $table->integer('price');
             $table->string('youtube_url');
             $table->string('kategori');
-            $table->string('deskripsi');
+            $table->text('deskripsi');
+            $table->text('deskripsi_panjang')->nullable();
             $table->string('image_path')->nullable();
+            $table->integer('count_view')->nullable()->default(0);
+            $table->integer('count_buy')->nullable()->default(0);            
             $table->timestamps();
 
             // // Pastikan tipe data sesuai dengan tipe di tabel kelas dan kta

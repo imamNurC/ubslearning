@@ -7,6 +7,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\ContentManageController;
+use App\Http\Controllers\UserManageController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -50,9 +51,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     //     return view('dashboard_admin/dashboard_content_manage');
     // });
 
-    Route::get('/user-manage', function () {
-        return view('dashboard_admin/dashboard_user_manage');
-    });
+    Route::get('/user-manage', [UserManageController::class, 'index'])->name('customers.index');
+    Route::post('/confirm-purchase/{id}', [UserManageController::class, 'confirmPurchase'])->name('confirm.purchase');
+    Route::post('/reject-purchase/{id}', [UserManageController::class, 'rejectPurchase'])->name('reject.purchase');
+    Route::post('/admin/transactions/{transaction}/confirm', [UserManageController::class, 'confirmPurchase'])->name('confirm.purchase');
+    Route::put('/transactions/{id}', [UserManageController::class, 'update'])->name('admin.transactions.update');
+
 
     Route::get('/analytic', function () {
         return view('dashboard_admin/dashboard_analytic');
@@ -71,13 +75,21 @@ Route::middleware(['auth', 'user'])->group(function () {
     // });
 
     Route::get('/home/{username}', [ContentManageController::class, 'products'])->name('home');
-
-
     Route::get('/my-content/{username}', [CustomerController::class, 'showMyContent'])->name('my-content');
-    // Route::get('/my-profile', function () {
-    //     return view('dashboard_user/dashboardUser_my_profile');
-    // });
+    Route::post('/update-view-count/{id}', [CustomerController::class, 'updateViewCount'])->name('update.view.count');
+    Route::get('/popular-content', [CustomerController::class, 'showPopularContent'])->name('popular.content');
+    Route::get('/product/{id}', [CustomerController::class, 'showProductDetails'])->name('product.details');
     Route::get('/my-profile/{username}', [CustomerController::class, 'showProfile'])->name('profile.show');
     Route::post('/my-profile/{username}/update', [CustomerController::class, 'updateProfile'])->name('profile.update');
     Route::post('/profile/{username}/change-password', [CustomerController::class, 'changePassword'])->name('profile.changePassword');
+    Route::get('/purchase-form/{username}', [CustomerController::class, 'showPurchaseForm'])->name('purchaseForm.show');
+    Route::post('/purchase', [CustomerController::class, 'PurchaseStore'])->name('purchase.store');
+    Route::post('/save-product-to-session', [CustomerController::class, 'saveProductToSession']);
+
+    Route::get('/get-content-description/{id}', function ($id) {
+        $product = App\Models\Content::find($id);
+        return response()->json([
+            'description' => $product->deskripsi,
+        ]);
+    });
 });

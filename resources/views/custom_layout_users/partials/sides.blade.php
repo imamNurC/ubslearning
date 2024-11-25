@@ -1,10 +1,36 @@
-    <div>
+   <style>
+    .absolute {
+    position: absolute;
+}
+
+.top-4 {
+    top: 1rem; /* Jarak dari atas */
+}
+
+.right-4 {
+    right: 1rem; /* Jarak dari kanan */
+}
+
+.text-gray-500:hover {
+    color: #fff;
+}
+
+    </style>
+   
+   <div>
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer=""></script>
         
         <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-200">
             <div :class="sidebarOpen ? 'block' : 'hidden'" @click="sidebarOpen = false" class="fixed inset-0 z-20 transition-opacity bg-black opacity-50 lg:hidden hidden"></div>
         
             <div :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'" class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition duration-300 transform bg-gray-900 lg:translate-x-0 lg:static lg:inset-0 -translate-x-full ease-in">
+                
+                <button @click="sidebarOpen = false" class="absolute top-4 right-4 text-gray-500 focus:outline-none lg:hidden">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 18L18 6M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+
                 <div class="flex items-center justify-center mt-8">
                     <div class="flex items-center">
                         <img src="{{ asset('image/logo.png') }}" alt="" class="w-36">
@@ -66,13 +92,14 @@
                         <div class="relative mx-4 lg:mx-0">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                                 <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24" fill="none">
-                                    <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    </path>
+                                    <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg>
                             </span>
-        
-                            <input class="w-max pl-10 pr-4 rounded-md form-input sm:w-64 focus:border-indigo-600" type="text" placeholder="Search">
+                        
+                            <input style="max-width: 400px; width: 100%;" class="pl-10 pr-4 rounded-md form-input focus:border-indigo-600" type="text" placeholder="Search">
+
                         </div>
+                        
                     </div>
         
                     <div class="flex items-center">
