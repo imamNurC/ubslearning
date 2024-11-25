@@ -20,8 +20,16 @@ return new class extends Migration
             $table->string('deskripsi');
             $table->string('image_path')->nullable();
             $table->timestamps();
+
+            // // Pastikan tipe data sesuai dengan tipe di tabel kelas dan kta
+            // $table->unsignedBigInteger('kelas_id')->nullable();  // Menggunakan unsignedBigInteger
+            // $table->foreign('kelas_id')->references('id_kelas')->on('kelas')->onDelete('cascade');
+
+            // $table->unsignedBigInteger('kta_id')->nullable();  // Menggunakan unsignedBigInteger
+            // $table->foreign('kta_id')->references('id_kta')->on('kta')->onDelete('cascade');
         });
     }
+
 
 
     /**

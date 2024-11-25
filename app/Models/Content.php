@@ -22,6 +22,23 @@ class Content extends Model
         'image_path',
     ];
 
+    // public function kelas()
+    // {
+    //     return $this->hasMany(Kelas::class, 'content_id');
+    // }
+
+    // public function kta()
+    // {
+    //     return $this->hasMany(Kta::class, 'content_id');
+    // }
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class, 'kelas_id');
+    }
+    public function kta()
+    {
+        return $this->belongsTo(Kta::class, 'kta_id');
+    }
 
     public function accesses()
     {
