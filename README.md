@@ -11,7 +11,7 @@
 
 ## System Design kami
 
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/imamNurC/ubslearning/refs/heads/imam_dev/public/image/%5BSYSTEM%20DESIGN%5D.png" width="400" alt="Company Logo"></a></p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/imamNurC/ubslearning/refs/heads/imam_dev/public/image/Logo.png" width="400" alt="Company Logo"></a></p>
 
 ## Tentang LMS ubslearning
 
