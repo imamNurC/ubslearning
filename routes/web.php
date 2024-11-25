@@ -68,12 +68,7 @@ Route::middleware(['auth', 'user'])->group(function () {
     // });
 
     Route::get('/home/{username}', [ContentManageController::class, 'products'])->name('home');
-
-
     Route::get('/my-content/{username}', [CustomerController::class, 'showMyContent'])->name('my-content');
-    // Route::get('/my-profile', function () {
-    //     return view('dashboard_user/dashboardUser_my_profile');
-    // });
     Route::post('/update-view-count/{id}', [CustomerController::class, 'updateViewCount'])->name('update.view.count');
     Route::get('/popular-content', [CustomerController::class, 'showPopularContent'])->name('popular.content');
     Route::get('/product/{id}', [CustomerController::class, 'showProductDetails'])->name('product.details');
@@ -82,7 +77,6 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::post('/profile/{username}/change-password', [CustomerController::class, 'changePassword'])->name('profile.changePassword');
     Route::get('/purchase-form/{username}', [CustomerController::class, 'showPurchaseForm'])->name('purchaseForm.show');
     Route::post('/purchase', [CustomerController::class, 'store'])->name('purchase.store');
-
     Route::post('/save-product-to-session', [CustomerController::class, 'saveProductToSession']);
 
     Route::get('/get-content-description/{id}', function ($id) {

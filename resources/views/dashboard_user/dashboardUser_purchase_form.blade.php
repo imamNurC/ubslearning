@@ -213,11 +213,43 @@
       </form>
     </div>
   </div>
+
+  {{-- Ini modal untuk menunggu konfirmasi --}}
+  <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-800 bg-opacity-50">
+    <div class="bg-white rounded-lg shadow-lg w-96 p-6">
+        <h2 class="text-xl font-semibold mb-4 text-center">Konfirmasi Pembelian</h2>
+        <p class="text-gray-700 mb-6 text-center">
+            Silahkan Scan QRIS Dibawah Ini Lalu Lakukan Pembayaran Dalam :
+            <span id="countdown" class="font-bold text-red-500"></span>
+        </p>
+        <div class="flex justify-center mb-6">
+            <img src="{{ asset('image/contoh qris.jpg') }}" alt="Pencitraan QRIS" 
+                 class="w-auto h-48 object-contain rounded-xl">
+        </div>
+        <button
+            id="close-modal"
+            class="w-full px-4 py-2 text-white bg-pink-500 rounded hover:bg-pink-600"
+        >
+            Tutup
+        </button>
+    </div>
+</div>
+
   
+
+
 <script>
 'use strict'
 
-document.getElementById('button').addEventListener('click', toggleError)
+document.getElementById('button').addEventListener('click', function () {
+  toggleError(); // Fungsi validasi
+  const hasError = document.querySelectorAll('.text-red-600:not(.hidden)').length > 0;
+
+  // Jika tidak ada error, tampilkan modal
+  if (!hasError) {
+    showModal();
+  }
+});
 
 function toggleError() {
   const inputs = document.querySelectorAll('input[required]')
@@ -272,6 +304,37 @@ const currentTime = new Date();
 const hours = String(currentTime.getHours()).padStart(2, '0');
 const minutes = String(currentTime.getMinutes()).padStart(2, '0');
 timeInput.value = `${hours}:${minutes}`;
+
+//function untuk show modal
+function showModal() {
+  const modal = document.getElementById('modal');
+  const countdownElement = document.getElementById('countdown');
+  let countdownTime = 5 * 60; // 5 menit dalam detik
+
+  // Tampilkan modal
+  modal.classList.remove('hidden');
+
+  // Mulai hitung mundur
+  const countdownInterval = setInterval(() => {
+    const minutes = Math.floor(countdownTime / 60);
+    const seconds = countdownTime % 60;
+
+    countdownElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+    if (countdownTime <= 0) {
+      clearInterval(countdownInterval);
+      countdownElement.textContent = '00:00';
+    } else {
+      countdownTime--;
+    }
+  }, 1000);
+
+  // Tombol untuk menutup modal
+  document.getElementById('close-modal').addEventListener('click', () => {
+    modal.classList.add('hidden');
+    clearInterval(countdownInterval); // Hentikan hitung mundur jika modal ditutup
+  });
+}
 
 </script>
 @endsection
