@@ -8,24 +8,32 @@
                         <div class="flex items-center h-10 intro-y">
                             <h2 class="mr-5 text-lg font-medium truncate">Dashboard</h2>
                         </div>
-                        <div class="grid grid-cols-12 gap-6 mt-5">
+                        <div class="grid grid-cols-9 gap-7 mt-5">
                             <a class="transform  hover:scale-105 transition duration-300 shadow-xl rounded-lg col-span-12 sm:col-span-6 xl:col-span-3 intro-y bg-white"
                                 href="#">
                                 <div class="p-5">
                                     <div class="flex justify-between">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-blue-400" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" preserveAspectRatio="xMidYMid meet">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M6 20c0-3 4-5 6-5s6 2 6 5v1H6v-1z" />
+                                        </svg>
+
+                                        {{-- <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-blue-400" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                                        </svg>
-                                        <div
+                                        </svg> --}}
+                                        {{-- <div
                                             class="bg-green-500 rounded-full h-6 px-2 flex justify-items-center text-white font-semibold text-sm">
                                             <span class="flex items-center">30%</span>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="ml-2 w-full flex-1">
                                         <div>
-                                            <div class="mt-3 text-3xl font-bold leading-8">{{$user_count}}</div>
+                                            <div class="mt-3 text-3xl font-bold leading-8">{{ $user_count }}</div>
 
                                             <div class="mt-1 text-base text-gray-600">User</div>
                                         </div>
@@ -39,17 +47,20 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-yellow-400"
                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                                                d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z">
                                             </path>
+                                            {{-- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                                            </path> --}}
                                         </svg>
-                                        <div
+                                        {{-- <div
                                             class="bg-red-500 rounded-full h-6 px-2 flex justify-items-center text-white font-semibold text-sm">
                                             <span class="flex items-center">30%</span>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="ml-2 w-full flex-1">
                                         <div>
-                                            <div class="mt-3 text-3xl font-bold leading-8">{{$content_count}}</div>
+                                            <div class="mt-3 text-3xl font-bold leading-8">{{ $content_count }}</div>
 
                                             <div class="mt-1 text-base text-gray-600">Content</div>
                                         </div>
@@ -63,25 +74,29 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-pink-600" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                                            </path>
+                                            {{-- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                                                d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path> --}}
                                         </svg>
-                                        <div
+                                        {{-- <div
                                             class="bg-yellow-500 rounded-full h-6 px-2 flex justify-items-center text-white font-semibold text-sm">
                                             <span class="flex items-center">30%</span>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="ml-2 w-full flex-1">
                                         <div>
-                                            <div class="mt-3 text-3xl font-bold leading-8">4.015</div>
+                                            <div class="mt-3 text-3xl font-bold leading-8">{{ $sold_count }}</div>
 
                                             <div class="mt-1 text-base text-gray-600">Transaction</div>
+                                            
                                         </div>
                                     </div>
                                 </div>
                             </a>
-                            <a class="transform  hover:scale-105 transition duration-300 shadow-xl rounded-lg col-span-12 sm:col-span-6 xl:col-span-3 intro-y bg-white"
+                            {{-- <a class="transform  hover:scale-105 transition duration-300 shadow-xl rounded-lg col-span-12 sm:col-span-6 xl:col-span-3 intro-y bg-white"
                                 href="#">
                                 <div class="p-5">
                                     <div class="flex justify-between">
@@ -104,7 +119,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
 
@@ -114,9 +129,12 @@
 
                         {{-- LINECHART --}}
                         <div class="grid gap-2 grid-cols-1 lg:grid-cols-2">
-                            <div class="bg-white shadow-lg p-4" id="chartline" style="min-height: 365px;">
+                            {{-- <div id="salesChart"></div>
+                             --}}
+                            {{-- <div class="bg-white shadow-lg p-4" id="chartline" style="min-height: 365px;">
                                 <div id="apexcharts78g4scc" class="apexcharts-canvas apexcharts78g4scc apexcharts-theme-"
-                                    style="width: 452px; height: 350px;"><svg xmlns="http://www.w3.org/2000/svg"
+                                    style="width: 452px; height: 350px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
                                         version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" class="apexcharts-svg"
                                         xmlns:data="ApexChartsNS" transform="translate(0, 0)" width="452" height="350">
                                         <foreignObject x="0" y="0" width="452" height="350">
@@ -124,46 +142,59 @@
                                                 xmlns="http://www.w3.org/1999/xhtml"
                                                 style="right: 0px; position: absolute; left: 0px; top: 325px; max-height: 175px;">
                                                 <div class="apexcharts-legend-series" rel="1" seriesname="TEAMxA"
-                                                    data:collapsed="false" style="margin: 4px 5px;"><span
+                                                    data:collapsed="false" style="margin: 4px 5px;">
+                                                    <span
                                                         class="apexcharts-legend-marker" rel="1"
                                                         data:collapsed="false"
-                                                        style="height: 16px; width: 16px; left: 0px; top: 0px;"><svg
+                                                        style="height: 16px; width: 16px; left: 0px; top: 0px;">
+                                                        <svg
                                                             xmlns="http://www.w3.org/2000/svg" version="1.1"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="100%"
                                                             height="100%">
                                                             <path d="M 0, 0
-                                            m -7, 0
-                                            a 7,7 0 1,0 14,0
-                                            a 7,7 0 1,0 -14,0" fill="#008ffb" fill-opacity="1" stroke="#ffffff"
+                                                                    m -7, 0
+                                                                    a 7,7 0 1,0 14,0
+                                                                    a 7,7 0 1,0 -14,0" fill="#008ffb" fill-opacity="1" stroke="#ffffff"
                                                                 stroke-opacity="0.9" stroke-linecap="butt"
                                                                 stroke-width="1" stroke-dasharray="0" cx="0"
                                                                 cy="0" shape="circle"
                                                                 class="apexcharts-legend-marker apexcharts-marker apexcharts-marker-circle"
-                                                                style="transform: translate(50%, 50%);"></path>
-                                                        </svg></span><span class="apexcharts-legend-text" rel="1"
+                                                                style="transform: translate(50%, 50%);">
+                                                            </path>
+                                                        </svg>
+                                                    </span>
+                                                    <span class="apexcharts-legend-text" rel="1"
                                                         i="0" data:default-text="TEAM%20A" data:collapsed="false"
                                                         style="color: rgb(55, 61, 63); font-size: 12px; font-weight: 400; font-family: Helvetica, Arial, sans-serif;">TEAM
-                                                        A</span></div>
+                                                        A
+                                                    </span>
+                                                </div>
                                                 <div class="apexcharts-legend-series" rel="2" seriesname="TEAMxB"
-                                                    data:collapsed="false" style="margin: 4px 5px;"><span
+                                                    data:collapsed="false" style="margin: 4px 5px;">
+                                                    <span
                                                         class="apexcharts-legend-marker" rel="2"
                                                         data:collapsed="false"
-                                                        style="height: 16px; width: 16px; left: 0px; top: 0px;"><svg
+                                                        style="height: 16px; width: 16px; left: 0px; top: 0px;">
+                                                        <svg
                                                             xmlns="http://www.w3.org/2000/svg" version="1.1"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="100%"
                                                             height="100%">
                                                             <path d="M 0, 0
-                                            m -7, 0 a 7,7 0 1,0 14,0 a 7,7 0 1,0 -14,0" fill="#00e396" fill-opacity="1"
+                                                                m -7, 0 a 7,7 0 1,0 14,0 a 7,7 0 1,0 -14,0" fill="#00e396" fill-opacity="1"
                                                                 stroke="#ffffff" stroke-opacity="0.9"
                                                                 stroke-linecap="butt" stroke-width="1"
                                                                 stroke-dasharray="0" cx="0" cy="0"
                                                                 shape="circle"
                                                                 class="apexcharts-legend-marker apexcharts-marker apexcharts-marker-circle"
                                                                 style="transform: translate(50%, 50%);"></path>
-                                                        </svg></span><span class="apexcharts-legend-text" rel="2"
+                                                        </svg>
+                                                    </span>
+                                                    <span class="apexcharts-legend-text" rel="2"
                                                         i="1" data:default-text="TEAM%20B" data:collapsed="false"
                                                         style="color: rgb(55, 61, 63); font-size: 12px; font-weight: 400; font-family: Helvetica, Arial, sans-serif;">TEAM
-                                                        B</span></div>
+                                                        B
+                                                    </span>
+                                                </div>
                                             </div>
                                             <style type="text/css">
                                                 .apexcharts-flip-y {
@@ -257,56 +288,64 @@
                                         <g class="apexcharts-datalabels-group" transform="translate(0, 0) scale(1)"></g>
                                         <g class="apexcharts-yaxis" rel="0"
                                             transform="translate(35.08333333333333, 0)">
-                                            <g class="apexcharts-yaxis-texts-g"><text x="20" y="33.666666666666664"
+                                            <g class="apexcharts-yaxis-texts-g">
+                                                <text x="20" y="33.666666666666664"
                                                     text-anchor="end" dominant-baseline="auto" font-size="11px"
                                                     font-family="Helvetica, Arial, sans-serif" font-weight="400"
                                                     fill="#373d3f" class="apexcharts-text apexcharts-yaxis-label "
                                                     style="font-family: Helvetica, Arial, sans-serif;">
                                                     <tspan>55</tspan>
                                                     <title>55</title>
-                                                </text><text x="20" y="71.16556140814887" text-anchor="end"
+                                                </text>
+                                                <text x="20" y="71.16556140814887" text-anchor="end"
                                                     dominant-baseline="auto" font-size="11px"
                                                     font-family="Helvetica, Arial, sans-serif" font-weight="400"
                                                     fill="#373d3f" class="apexcharts-text apexcharts-yaxis-label "
                                                     style="font-family: Helvetica, Arial, sans-serif;">
                                                     <tspan>50</tspan>
                                                     <title>50</title>
-                                                </text><text x="20" y="108.66445614963108" text-anchor="end"
+                                                </text>
+                                                <text x="20" y="108.66445614963108" text-anchor="end"
                                                     dominant-baseline="auto" font-size="11px"
                                                     font-family="Helvetica, Arial, sans-serif" font-weight="400"
                                                     fill="#373d3f" class="apexcharts-text apexcharts-yaxis-label "
                                                     style="font-family: Helvetica, Arial, sans-serif;">
                                                     <tspan>45</tspan>
                                                     <title>45</title>
-                                                </text><text x="20" y="146.16335089111328" text-anchor="end"
+                                                </text>
+                                                <text x="20" y="146.16335089111328" text-anchor="end"
                                                     dominant-baseline="auto" font-size="11px"
                                                     font-family="Helvetica, Arial, sans-serif" font-weight="400"
                                                     fill="#373d3f" class="apexcharts-text apexcharts-yaxis-label "
                                                     style="font-family: Helvetica, Arial, sans-serif;">
                                                     <tspan>40</tspan>
                                                     <title>40</title>
-                                                </text><text x="20" y="183.6622456325955" text-anchor="end"
+                                                </text>
+                                                <text x="20" y="183.6622456325955" text-anchor="end"
                                                     dominant-baseline="auto" font-size="11px"
                                                     font-family="Helvetica, Arial, sans-serif" font-weight="400"
                                                     fill="#373d3f" class="apexcharts-text apexcharts-yaxis-label "
                                                     style="font-family: Helvetica, Arial, sans-serif;">
                                                     <tspan>35</tspan>
                                                     <title>35</title>
-                                                </text><text x="20" y="221.16114037407772" text-anchor="end"
+                                                </text>
+                                                <text x="20" y="221.16114037407772" text-anchor="end"
                                                     dominant-baseline="auto" font-size="11px"
                                                     font-family="Helvetica, Arial, sans-serif" font-weight="400"
                                                     fill="#373d3f" class="apexcharts-text apexcharts-yaxis-label "
                                                     style="font-family: Helvetica, Arial, sans-serif;">
                                                     <tspan>30</tspan>
                                                     <title>30</title>
-                                                </text><text x="20" y="258.66003511555994" text-anchor="end"
+                                                </text>
+                                                <text x="20" y="258.66003511555994" text-anchor="end"
                                                     dominant-baseline="auto" font-size="11px"
                                                     font-family="Helvetica, Arial, sans-serif" font-weight="400"
                                                     fill="#373d3f" class="apexcharts-text apexcharts-yaxis-label "
                                                     style="font-family: Helvetica, Arial, sans-serif;">
                                                     <tspan>25</tspan>
                                                     <title>25</title>
-                                                </text></g>
+                                                </text>
+                                            </g>
                                             <g class="apexcharts-yaxis-title"><text x="18.025390625" y="142.4966842244466"
                                                     text-anchor="end" dominant-baseline="auto" font-size="11px"
                                                     font-family="Helvetica, Arial, sans-serif" font-weight="900"
@@ -321,17 +360,20 @@
                                                 <clipPath id="gridRectMask78g4scc">
                                                     <rect width="321.5" height="224.99336844889322" x="0" y="0"
                                                         rx="0" ry="0" opacity="1" stroke-width="0"
-                                                        stroke="none" stroke-dasharray="0" fill="#fff"></rect>
+                                                        stroke="none" stroke-dasharray="0" fill="#fff">
+                                                    </rect>
                                                 </clipPath>
                                                 <clipPath id="gridRectBarMask78g4scc">
                                                     <rect width="330.5" height="233.99336844889322" x="-4.5" y="-4.5"
                                                         rx="0" ry="0" opacity="1" stroke-width="0"
-                                                        stroke="none" stroke-dasharray="0" fill="#fff"></rect>
+                                                        stroke="none" stroke-dasharray="0" fill="#fff">
+                                                    </rect>
                                                 </clipPath>
                                                 <clipPath id="gridRectMarkerMask78g4scc">
                                                     <rect width="321.5" height="224.99336844889322" x="0" y="0"
                                                         rx="0" ry="0" opacity="1" stroke-width="0"
-                                                        stroke="none" stroke-dasharray="0" fill="#fff"></rect>
+                                                        stroke="none" stroke-dasharray="0" fill="#fff">
+                                                    </rect>
                                                 </clipPath>
                                                 <clipPath id="forecastMask78g4scc"></clipPath>
                                                 <clipPath id="nonForecastMask78g4scc"></clipPath>
@@ -340,40 +382,52 @@
                                                 stroke="#b6b6b6" stroke-dasharray="3" stroke-linecap="butt"
                                                 class="apexcharts-xcrosshairs" x="0" y="0" width="1"
                                                 height="224.99336844889322" fill="#b1b9c4" filter="none"
-                                                fill-opacity="0.9" stroke-width="1"></line>
+                                                fill-opacity="0.9" stroke-width="1">
+                                            </line>
                                             <line x1="0" y1="224.99336844889322" x2="0"
                                                 y2="230.99336844889322" stroke="#e0e0e0" stroke-dasharray="0"
-                                                stroke-linecap="butt" class="apexcharts-xaxis-tick"></line>
+                                                stroke-linecap="butt" class="apexcharts-xaxis-tick">
+                                            </line>
                                             <line x1="32.15" y1="224.99336844889322" x2="32.15"
                                                 y2="230.99336844889322" stroke="#e0e0e0" stroke-dasharray="0"
-                                                stroke-linecap="butt" class="apexcharts-xaxis-tick"></line>
+                                                stroke-linecap="butt" class="apexcharts-xaxis-tick">
+                                            </line>
                                             <line x1="64.3" y1="224.99336844889322" x2="64.3"
                                                 y2="230.99336844889322" stroke="#e0e0e0" stroke-dasharray="0"
-                                                stroke-linecap="butt" class="apexcharts-xaxis-tick"></line>
+                                                stroke-linecap="butt" class="apexcharts-xaxis-tick">
+                                            </line>
                                             <line x1="96.44999999999999" y1="224.99336844889322" x2="96.44999999999999"
                                                 y2="230.99336844889322" stroke="#e0e0e0" stroke-dasharray="0"
-                                                stroke-linecap="butt" class="apexcharts-xaxis-tick"></line>
+                                                stroke-linecap="butt" class="apexcharts-xaxis-tick">
+                                            </line>
                                             <line x1="128.6" y1="224.99336844889322" x2="128.6"
                                                 y2="230.99336844889322" stroke="#e0e0e0" stroke-dasharray="0"
-                                                stroke-linecap="butt" class="apexcharts-xaxis-tick"></line>
+                                                stroke-linecap="butt" class="apexcharts-xaxis-tick">
+                                            </line>
                                             <line x1="160.75" y1="224.99336844889322" x2="160.75"
                                                 y2="230.99336844889322" stroke="#e0e0e0" stroke-dasharray="0"
-                                                stroke-linecap="butt" class="apexcharts-xaxis-tick"></line>
+                                                stroke-linecap="butt" class="apexcharts-xaxis-tick">
+                                            </line>
                                             <line x1="192.9" y1="224.99336844889322" x2="192.9"
                                                 y2="230.99336844889322" stroke="#e0e0e0" stroke-dasharray="0"
-                                                stroke-linecap="butt" class="apexcharts-xaxis-tick"></line>
+                                                stroke-linecap="butt" class="apexcharts-xaxis-tick">
+                                            </line>
                                             <line x1="225.05" y1="224.99336844889322" x2="225.05"
                                                 y2="230.99336844889322" stroke="#e0e0e0" stroke-dasharray="0"
-                                                stroke-linecap="butt" class="apexcharts-xaxis-tick"></line>
+                                                stroke-linecap="butt" class="apexcharts-xaxis-tick">
+                                            </line>
                                             <line x1="257.2" y1="224.99336844889322" x2="257.2"
                                                 y2="230.99336844889322" stroke="#e0e0e0" stroke-dasharray="0"
-                                                stroke-linecap="butt" class="apexcharts-xaxis-tick"></line>
+                                                stroke-linecap="butt" class="apexcharts-xaxis-tick">
+                                            </line>
                                             <line x1="289.34999999999997" y1="224.99336844889322" x2="289.34999999999997"
                                                 y2="230.99336844889322" stroke="#e0e0e0" stroke-dasharray="0"
-                                                stroke-linecap="butt" class="apexcharts-xaxis-tick"></line>
+                                                stroke-linecap="butt" class="apexcharts-xaxis-tick">
+                                            </line>
                                             <line x1="321.49999999999994" y1="224.99336844889322" x2="321.49999999999994"
                                                 y2="230.99336844889322" stroke="#e0e0e0" stroke-dasharray="0"
-                                                stroke-linecap="butt" class="apexcharts-xaxis-tick"></line>
+                                                stroke-linecap="butt" class="apexcharts-xaxis-tick">
+                                            </line>
                                             <g class="apexcharts-grid">
                                                 <g class="apexcharts-gridlines-horizontal">
                                                     <line x1="0" y1="37.498894741482204" x2="321.5"
@@ -431,14 +485,15 @@
                                                         clip-path="url(#gridRectBarMask78g4scc)"
                                                         pathto="M 0 82.49756843126085C 11.2525 82.49756843126085 20.8975 0 32.15 0C 43.402499999999996 0 53.0475 179.9946947591146 64.3 179.9946947591146C 75.5525 179.9946947591146 85.19749999999999 59.99823158637156 96.44999999999999 59.99823158637156C 107.70249999999999 59.99823158637156 117.3475 179.9946947591146 128.6 179.9946947591146C 139.8525 179.9946947591146 149.4975 89.99734737955731 160.75 89.99734737955731C 172.0025 89.99734737955731 181.64749999999998 217.4935895005968 192.89999999999998 217.4935895005968C 204.15249999999997 217.4935895005968 213.79749999999999 104.99690527615019 225.04999999999998 104.99690527615019C 236.30249999999998 104.99690527615019 245.9475 179.9946947591146 257.2 179.9946947591146C 268.4525 179.9946947591146 278.09749999999997 59.99823158637156 289.34999999999997 59.99823158637156C 300.60249999999996 59.99823158637156 310.2475 164.99513686252172 321.5 164.99513686252172"
                                                         pathfrom="M 0 224.99336844889322 L 0 224.99336844889322 L 32.15 224.99336844889322 L 64.3 224.99336844889322 L 96.44999999999999 224.99336844889322 L 128.6 224.99336844889322 L 160.75 224.99336844889322 L 192.89999999999998 224.99336844889322 L 225.04999999999998 224.99336844889322 L 257.2 224.99336844889322 L 289.34999999999997 224.99336844889322 L 321.5 224.99336844889322"
-                                                        fill-rule="evenodd"></path>
+                                                        fill-rule="evenodd">
+                                                    </path>
                                                     <g class="apexcharts-series-markers-wrap apexcharts-hidden-element-shown"
                                                         data:realindex="0">
                                                         <g class="apexcharts-series-markers">
                                                             <path d="M 0, 0
-                                                m -0, 0
-                                                a 0,0 0 1,0 0,0
-                                                a 0,0 0 1,0 -0,0" fill="#008ffb" fill-opacity="1" stroke="#ffffff"
+                                                        m -0, 0
+                                                        a 0,0 0 1,0 0,0
+                                                        a 0,0 0 1,0 -0,0" fill="#008ffb" fill-opacity="1" stroke="#ffffff"
                                                                 stroke-opacity="0.9" stroke-linecap="butt"
                                                                 stroke-width="2" stroke-dasharray="0" cx="0"
                                                                 cy="0" shape="circle"
@@ -464,8 +519,8 @@
                                                         data:realindex="1">
                                                         <g class="apexcharts-series-markers">
                                                             <path d="M 0, 0
-                                                m -0, 0
-                                                a 0,0 0 1,0 0,0
+                                                        m -0, 0
+                                                        a 0,0 0 1,0 0,0
                                                 a 0,0 0 1,0 -0,0" fill="#00e396" fill-opacity="1" stroke="#ffffff"
                                                                 stroke-opacity="0.9" stroke-linecap="butt"
                                                                 stroke-width="2" stroke-dasharray="0" cx="0"
@@ -632,74 +687,117 @@
                                                     <tspan>30</tspan>
                                                     <title>30</title>
                                                 </text></g>
-                                            <g class="apexcharts-yaxis-title"><text x="32.525390625" y="142.4966842244466"
+                                            <g class="apexcharts-yaxis-title">
+                                                <text x="32.525390625" y="142.4966842244466"
                                                     text-anchor="end" dominant-baseline="auto" font-size="11px"
                                                     font-family="Helvetica, Arial, sans-serif" font-weight="900"
                                                     fill="#373d3f" class="apexcharts-text apexcharts-yaxis-title-text "
                                                     style="font-family: Helvetica, Arial, sans-serif;"
-                                                    transform="rotate(90 7.69140625 137.99668884277344)">Series B</text>
+                                                    transform="rotate(90 7.69140625 137.99668884277344)">Series B
+                                                </text>
                                             </g>
                                         </g>
                                         <rect width="0" height="0" x="0" y="0" rx="0" ry="0"
                                             opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0"
-                                            fill="#fefefe"></rect>
+                                            fill="#fefefe">
+                                        </rect>
                                     </svg>
                                     <div class="apexcharts-tooltip apexcharts-theme-light">
                                         <div class="apexcharts-tooltip-title"
-                                            style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;"></div>
+                                            style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
+                                        </div>
                                         <div class="apexcharts-tooltip-series-group apexcharts-tooltip-series-group-0"
-                                            style="order: 1;"><span class="apexcharts-tooltip-marker"
-                                                style="background-color: rgb(0, 143, 251);"></span>
+                                            style="order: 1;">
+                                            <span class="apexcharts-tooltip-marker"
+                                                style="background-color: rgb(0, 143, 251);">
+                                            </span>
                                             <div class="apexcharts-tooltip-text"
                                                 style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
-                                                <div class="apexcharts-tooltip-y-group"><span
-                                                        class="apexcharts-tooltip-text-y-label"></span><span
-                                                        class="apexcharts-tooltip-text-y-value"></span></div>
-                                                <div class="apexcharts-tooltip-goals-group"><span
-                                                        class="apexcharts-tooltip-text-goals-label"></span><span
-                                                        class="apexcharts-tooltip-text-goals-value"></span></div>
-                                                <div class="apexcharts-tooltip-z-group"><span
-                                                        class="apexcharts-tooltip-text-z-label"></span><span
-                                                        class="apexcharts-tooltip-text-z-value"></span></div>
+                                                <div class="apexcharts-tooltip-y-group">
+                                                    <span
+                                                        class="apexcharts-tooltip-text-y-label">
+                                                    </span>
+                                                    <span
+                                                        class="apexcharts-tooltip-text-y-value">
+                                                    </span>
+                                                </div>
+                                                <div class="apexcharts-tooltip-goals-group">
+                                                    <span
+                                                        class="apexcharts-tooltip-text-goals-label">
+                                                    </span>
+                                                    <span
+                                                        class="apexcharts-tooltip-text-goals-value">
+                                                    </span>
+                                                </div>
+                                                <div class="apexcharts-tooltip-z-group">
+                                                    <span
+                                                        class="apexcharts-tooltip-text-z-label">
+                                                    </span>
+                                                    <span
+                                                        class="apexcharts-tooltip-text-z-value">
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="apexcharts-tooltip-series-group apexcharts-tooltip-series-group-1"
-                                            style="order: 2;"><span class="apexcharts-tooltip-marker"
-                                                style="background-color: rgb(0, 227, 150);"></span>
+                                            style="order: 2;">
+                                            <span class="apexcharts-tooltip-marker"
+                                                style="background-color: rgb(0, 227, 150);">
+                                            </span>
                                             <div class="apexcharts-tooltip-text"
                                                 style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
-                                                <div class="apexcharts-tooltip-y-group"><span
-                                                        class="apexcharts-tooltip-text-y-label"></span><span
-                                                        class="apexcharts-tooltip-text-y-value"></span></div>
-                                                <div class="apexcharts-tooltip-goals-group"><span
-                                                        class="apexcharts-tooltip-text-goals-label"></span><span
-                                                        class="apexcharts-tooltip-text-goals-value"></span></div>
-                                                <div class="apexcharts-tooltip-z-group"><span
-                                                        class="apexcharts-tooltip-text-z-label"></span><span
-                                                        class="apexcharts-tooltip-text-z-value"></span></div>
+                                                <div class="apexcharts-tooltip-y-group">
+                                                    <span
+                                                        class="apexcharts-tooltip-text-y-label">
+                                                    </span>
+                                                    <span
+                                                        class="apexcharts-tooltip-text-y-value">
+                                                    </span>
+                                                </div>
+                                                <div class="apexcharts-tooltip-goals-group">
+                                                    <span
+                                                        class="apexcharts-tooltip-text-goals-label">
+                                                    </span>
+                                                    <span
+                                                        class="apexcharts-tooltip-text-goals-value">
+                                                    </span>
+                                                </div>
+                                                <div class="apexcharts-tooltip-z-group">
+                                                    <span
+                                                        class="apexcharts-tooltip-text-z-label">
+                                                    </span>
+                                                    <span
+                                                        class="apexcharts-tooltip-text-z-value">
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </div> 
                                     </div>
                                     <div
                                         class="apexcharts-xaxistooltip apexcharts-xaxistooltip-bottom apexcharts-theme-light">
                                         <div class="apexcharts-xaxistooltip-text"
-                                            style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;"></div>
+                                            style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
+                                        </div>
                                     </div>
                                     <div
                                         class="apexcharts-yaxistooltip apexcharts-yaxistooltip-0 apexcharts-yaxistooltip-left apexcharts-theme-light">
-                                        <div class="apexcharts-yaxistooltip-text"></div>
+                                        <div class="apexcharts-yaxistooltip-text">
+                                        </div>
                                     </div>
                                     <div
                                         class="apexcharts-yaxistooltip apexcharts-yaxistooltip-1 apexcharts-yaxistooltip-right apexcharts-theme-light">
-                                        <div class="apexcharts-yaxistooltip-text"></div>
+                                        <div class="apexcharts-yaxistooltip-text">
+                                        </div>
                                     </div>
                                     <div class="apexcharts-toolbar" style="top: 0px; right: 3px;">
-                                        <div class="apexcharts-menu-icon" title="Menu"><svg
+                                        <div class="apexcharts-menu-icon" title="Menu">
+                                            <svg
                                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24">
                                                 <path fill="none" d="M0 0h24v24H0V0z"></path>
                                                 <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
-                                            </svg></div>
+                                            </svg>
+                                        </div>
                                         <div class="apexcharts-menu">
                                             <div class="apexcharts-menu-item exportSVG" title="Download SVG">Download SVG
                                             </div>
@@ -710,7 +808,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
 
 
@@ -718,12 +816,14 @@
                             <div class="bg-white shadow-lg" id="chartpie" style="min-height: 353px;">
                                 <div id="apexchartsjq6jdc3zk"
                                     class="apexcharts-canvas apexchartsjq6jdc3zk apexcharts-theme-"
-                                    style="width: 484px; height: 353px;"><svg xmlns="http://www.w3.org/2000/svg"
+                                    style="width: 484px; height: 353px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
                                         version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" class="apexcharts-svg"
                                         xmlns:data="ApexChartsNS" transform="translate(0, 0)" width="484"
                                         height="353">
                                         <foreignObject x="0" y="0" width="484" height="353">
-                                            <div class="apexcharts-legend" xmlns="http://www.w3.org/1999/xhtml"></div>
+                                            <div class="apexcharts-legend" xmlns="http://www.w3.org/1999/xhtml">
+                                            </div>
                                             <style type="text/css">
                                                 .apexcharts-flip-y {
                                                     transform: scaleY(-1) translateY(-100%);
@@ -815,18 +915,18 @@
                                             <defs>
                                                 <clipPath id="gridRectMaskjq6jdc3zk">
                                                     <rect width="350" height="350" x="0" y="0" rx="0"
-                                                        ry="0" opacity="1" stroke-width="0" stroke="none"
-                                                        stroke-dasharray="0" fill="#fff"></rect>
+                                                        ry="0" opacity="1" stroke-width="0"
+                                                        stroke="none" stroke-dasharray="0" fill="#fff"></rect>
                                                 </clipPath>
                                                 <clipPath id="gridRectBarMaskjq6jdc3zk">
                                                     <rect width="356" height="356" x="-3" y="-3" rx="0"
-                                                        ry="0" opacity="1" stroke-width="0" stroke="none"
-                                                        stroke-dasharray="0" fill="#fff"></rect>
+                                                        ry="0" opacity="1" stroke-width="0"
+                                                        stroke="none" stroke-dasharray="0" fill="#fff"></rect>
                                                 </clipPath>
                                                 <clipPath id="gridRectMarkerMaskjq6jdc3zk">
                                                     <rect width="350" height="350" x="0" y="0" rx="0"
-                                                        ry="0" opacity="1" stroke-width="0" stroke="none"
-                                                        stroke-dasharray="0" fill="#fff"></rect>
+                                                        ry="0" opacity="1" stroke-width="0"
+                                                        stroke="none" stroke-dasharray="0" fill="#fff"></rect>
                                                 </clipPath>
                                                 <clipPath id="forecastMaskjq6jdc3zk"></clipPath>
                                                 <clipPath id="nonForecastMaskjq6jdc3zk"></clipPath>
@@ -940,8 +1040,8 @@
                                                             class="apexcharts-radialbar-hollow" fill="transparent">
                                                         </circle>
                                                         <g class="apexcharts-datalabels-group"
-                                                            transform="translate(0, 0) scale(1)" style="opacity: 1;"><text
-                                                                x="175" y="175" text-anchor="middle"
+                                                            transform="translate(0, 0) scale(1)" style="opacity: 1;">
+                                                            <text x="175" y="175" text-anchor="middle"
                                                                 dominant-baseline="auto" font-size="16px"
                                                                 font-family="Helvetica, Arial, sans-serif"
                                                                 font-weight="600" fill="#373d3f"
