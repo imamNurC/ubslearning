@@ -33,17 +33,17 @@ public function confirmPurchase(Request $request, $id_transaction)
     return redirect()->route('admin.dashboard')->with('message', 'Status transaksi berhasil diperbarui!');
 }
 
-public function rejectPurchase($id)
+public function rejectPurchase($id_transaction)
 {
-    $$transaction = Transaction::findOrFail($id);
+    $$transaction = Transaction::findOrFail($id_transaction);
     $transaction->update(['status' => 'rejected']);
 
     return redirect()->back()->with('success', 'Pembelian berhasil ditolak!');
 }
 
-public function update(Request $request, $id)
+public function update(Request $request, $id_transaction)
 {
-    $transaction = Transaction::findOrFail($id);
+    $transaction = Transaction::findOrFail($id_transaction);
 
     $transaction->status = $request->input('status');
     $transaction->save();

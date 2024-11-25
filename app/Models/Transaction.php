@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
+    protected $primaryKey = 'id_transaction';
+    
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'id_customer', 'id_customer');
