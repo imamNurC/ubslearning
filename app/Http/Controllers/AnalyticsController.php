@@ -41,7 +41,7 @@ class AnalyticsController extends Controller
                     now()->subDay()->format('D'),
                     now()->format('D'),
                 ],
-                'totals' => [5, 5, 8, 5, 8, 6, 4],
+                'totals' => [5, 5, 5, 5, 5, 5, 5],
             ];
         } else {
             // Use 'format('l')' to get day names (e.g., 'Monday', 'Tuesday', etc.)
@@ -53,7 +53,9 @@ class AnalyticsController extends Controller
             ];
         }
 
+        // $isAnalyticsPage = true;
         return view('dashboard_admin.dashboard_analytic', [
+            // 'isAnalyticsPage' => $isAnalyticsPage,
             'user_count' => $userCount,
             'content_count' => $contentCount,
             'sold_count' => $soldCount,

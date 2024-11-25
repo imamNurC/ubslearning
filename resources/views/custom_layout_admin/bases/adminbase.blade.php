@@ -15,9 +15,13 @@
         
 
 
+        
+        
+        @if (Route::is('alan'))
+            @include('custom_layout_admin.partials.analytic-scripts')
+        @endif
         @include('custom_layout_admin.partials.footer-scripts')
-
-                    
+        
         {{-- @include('custom_layout_admin.partials.header') --}}
         
         

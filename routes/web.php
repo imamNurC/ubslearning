@@ -58,7 +58,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         return view('dashboard_admin/dashboard_analytic');
     });
 
-    Route::get('/analytic', [AnalyticsController::class, 'index']);
+    Route::get('/analytic', [AnalyticsController::class, 'index'])->name('alan');
 });
 
 
