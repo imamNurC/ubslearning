@@ -20,40 +20,44 @@ class AnalyticsController extends Controller
 
         $transactions = DB::table('transaction')
             ->select(
-                DB::raw('DATE(created_at) as date'), 
-                DB ::raw('COUNT(*) as total')
+                DB::raw('DATE(created_at) as date'),
+                DB::raw('COUNT(*) as total')
             )
             ->where('created_at', '>=', now()->subDays(7))
             ->groupBy('date')
             ->orderBy('date', 'asc')
             ->get();
-        
+
+
+
         if ($transactions->isEmpty()) {
             $chartData = [
                 'dates' => [
-                    now()->subDays(6)->toDateString(),
-                    now()->subDays(5)->toDateString(),
-                    now()->subDays(4)->toDateString(),
-                    now()->subDays(3)->toDateString(),
-                    now()->subDays(2)->toDateString(),
-                    now()->subDay()->toDateString(),
-                    now()->toDateString(),
+                    now()->subDays(6)->format('D'),
+                    now()->subDays(5)->format('D'),
+                    now()->subDays(4)->format('D'),
+                    now()->subDays(3)->format('D'),
+                    now()->subDays(2)->format('D'),
+                    now()->subDay()->format('D'),
+                    now()->format('D'),
                 ],
-                'totals' => [5,10,7,15,8,6,12],
+                'totals' => [5, 5, 8, 5, 8, 6, 4],
             ];
         } else {
-        
+            // Use 'format('l')' to get day names (e.g., 'Monday', 'Tuesday', etc.)
             $chartData = [
-                'dates' => $transactions->pluck('date'),
+                'dates' => $transactions->pluck('date')->map(function ($date) {
+                    return \Carbon\Carbon::parse($date)->format('l');
+                }),
                 'totals' => $transactions->pluck('total'),
             ];
         }
 
-        return view('dashboard_admin.dashboard_analytic',[
-            'user_count' => $userCount, 
-            'content_count' => $contentCount, 
+        return view('dashboard_admin.dashboard_analytic', [
+            'user_count' => $userCount,
+            'content_count' => $contentCount,
             'sold_count' => $soldCount,
-            // 'chartData' => $chartData,
+            'chartData' => $chartData,
         ]);
     }
 }

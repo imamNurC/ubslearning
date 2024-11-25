@@ -125,12 +125,13 @@
 
                     <div class="bg-white shadow-lg p-4" id="chart">
                     </div>
+                    
                     <div class="col-span-12 mt-5">
 
                         {{-- LINECHART --}}
                         <div class="grid gap-2 grid-cols-1 lg:grid-cols-2">
-                            {{-- <div id="salesChart"></div>
-                             --}}
+                            <div class="bg-white shadow-lg p-4" id="saleschart"></div>
+                            
                             {{-- <div class="bg-white shadow-lg p-4" id="chartline" style="min-height: 365px;">
                                 <div id="apexcharts78g4scc" class="apexcharts-canvas apexcharts78g4scc apexcharts-theme-"
                                     style="width: 452px; height: 350px;">
