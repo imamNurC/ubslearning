@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'kta' => [
+            'driver' => 'session',
+            'provider' => 'ktas',
+        ],
     ],
 
     /*
@@ -64,7 +69,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Customer::class,
         ],
-        
+
+        'ktas' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Kta::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',

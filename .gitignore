@@ -22,12 +22,12 @@ yarn-error.log
 /.vscode
 /.zed
 ##############
-kta_layout/
-kta_modul/
-kta_auth/
-kta/
+# kta_layout/
+# kta_modul/
+# kta_auth/
+# kta/
 # /Kta.php
-app/Models/Kta.php
-database/migrations/2024_11_01_053510_create_kta_table.php
-routes/kta.php
-bootstrap/app.php
+# app/Models/Kta.php
+# database/migrations/2024_11_01_053510_create_kta_table.php
+# routes/kta.php
+# bootstrap/app.php

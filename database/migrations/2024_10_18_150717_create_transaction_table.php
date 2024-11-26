@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('transaction', function (Blueprint $table) {
-            $table->id('id_transaction'); 
-            $table->unsignedBigInteger('id_customer'); 
+        Schema::create('transactions', function (Blueprint $table) {
+            $table->id('id_transaction');
+            $table->unsignedBigInteger('id_customer');
             $table->string('name');
             $table->string('number_phone', 15);
             $table->string('email');
             $table->unsignedBigInteger('id_content');
             $table->string('content_name', 100);
             $table->integer('price');
+            $table->enum('status', ['pending', 'accepted', 'declined'])->default('pending');
             $table->timestamps();
-            
+
             //relasi
             $table->foreign('id_customer')->references('id_customer')->on('customers')->onDelete('cascade');
             $table->foreign('id_content')->references('id_content')->on('content')->onDelete('cascade');

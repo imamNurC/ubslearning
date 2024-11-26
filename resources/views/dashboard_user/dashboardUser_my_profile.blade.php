@@ -1,83 +1,150 @@
 @extends('custom_layout_users.bases.userbase')
-@section('content')
-<section class="w-full overflow-hidden dark:bg-gray-50">
-    <div class="flex flex-col">
-        <!-- Profile Image -->
-        <div class="flex flex-col items-center sm:w-[80%] xs:w-[90%] mx-auto mt-8">
-            <img src="https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw3fHxwZW9wbGV8ZW58MHwwfHx8MTcxMTExMTM4N3ww&ixlib=rb-4.0.3&q=80&w=1080" 
-                 alt="User Profile"
-                 class="rounded-md lg:w-[12rem] lg:h-[12rem] md:w-[10rem] md:h-[10rem] sm:w-[8rem] sm:h-[8rem] xs:w-[7rem] xs:h-[7rem] outline outline-2 outline-offset-2 outline-blue-500 mb-4" />
-        
-            <!-- FullName -->
-            <h1 class="text-center text-gray-800 dark:text-black lg:text-4xl md:text-3xl sm:text-3xl xs:text-xl font-serif">
-                Samuel Abera
-            </h1>
-        </div>
-        
 
-        <div
-            class="xl:w-[80%] lg:w-[90%] md:w-[90%] sm:w-[92%] xs:w-[90%] mx-auto flex flex-col gap-4 items-center relative lg:-top-8 md:-top-6 sm:-top-4 mt-7">
-            <!-- Detail -->
-            <div class="w-full my-auto py-6 flex flex-col justify-center gap-2">
-                <div class="w-full flex sm:flex-row xs:flex-col gap-2 justify-center">
-                    <div class="w-full">
-                        <dl class="text-gray-900 divide-y divide-gray-200 dark:text-black dark:divide-gray-700">
-                            <div class="flex flex-col pb-3">
-                                <dt class="mb-1 text-black md:text-lg dark:text-black">Name</dt>
-                                <dd class="text-lg font-semibold">Samuel</dd>
-                            </div>
-                            <div class="flex flex-col py-3">
-                                <dt class="mb-1 text-black md:text-lg dark:text-black">Username</dt>
-                                <dd class="text-lg font-semibold">Abera</dd>
-                            </div>
-                        </dl>
+@section('content')
+
+<style>
+/* efek transisi pesan  */
+#error-message, #success-message {
+    transition: opacity 0.5s ease-in-out;
+}
+
+</style>
+
+<div class="container mx-auto px-4 py-8">
+    @if ($errors->any())
+        <div id="error-message" class="bg-red-500 text-white p-4 mb-4 rounded">
+            @foreach ($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+    @elseif (session('success'))
+        <div id="success-message" class="bg-green-500 text-white p-4 mb-4 rounded">
+            {{ session('success') }}
+        </div>
+    @endif
+    <section class="w-full overflow-hidden mb-80">
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+            <div class="px-4 py-5 sm:px-6 flex items-center">
+                <!-- Foto Profil -->
+                <img src="{{ Storage::url($customer->image_path) }}" alt="Profile Picture" class="object-cover h-12 w-12 rounded-full mr-4">
+                
+                <!-- Judul dan Deskripsi -->
+                <div>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">
+                        {{ $customer->username }}
+                    </h3>
+                    <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                        This is some information about you
+                    </p>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 px-4 py-5 sm:p-0 mb-10">
+                <dl class="sm:divide-y sm:divide-gray-200">
+                    <!-- Data lainnya -->
+                    <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Full name</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $customer->name }}</dd>
                     </div>
-                    <div class="w-full">
-                        <dl class="text-gray-900 divide-y divide-gray-200 dark:text-black dark:divide-black">
-                            <div class="flex flex-col pt-3">
-                                <dt class="mb-1 text-black md:text-lg dark:text-black">Phone Number</dt>
-                                <dd class="text-lg font-semibold">+251913****30</dd>
-                            </div>
-                            <div class="flex flex-col pt-3">
-                                <dt class="mb-1 text-black md:text-lg dark:text-black">Email</dt>
-                                <dd class="text-lg font-semibold">samuelabera87@gmail.com</dd>
-                            </div>
-                        </dl>
+                    <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Phone number</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $customer->phone_number }}</dd>
                     </div>
+                    <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Email address</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $customer->email }}</dd>
+                    </div>
+                    <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Password</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-between items-center">
+                            <span id="password-display">{{ str_repeat('*', min(10, strlen($customer->password))) }}</span>
+                            <!-- Tombol Change Password -->
+                            <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded" onclick="openChangePassword()">Change Password</button>
+                        </dd>
+                    </div>                    
+                </dl>
+                
+                <div class="mt-20 flex justify-center">
+                    <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded" onclick="openModalProfile()">Update Profile</button>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+        
+    </section>
+</div>
 
-<div class=" mt-2 px-6 max-w-full bg-gray-900">
-    <div class="flex justify-center mb-6">
-        <div class="text-center sm:w-1/3">
-            <img src="image/Malaz_Solutions.png" alt="logo" class="w-32 bg-white mt-1 rounded-md">
-            <p class="text-left text-white">PT. PT Ceban </br>
-            Jl. Jalanin Aja Dulu No.99, Desa Gacor, Zeus, Bekasi 17510 
-            </p>
-        </div>
-        <div class="text-center sm:w-1/3">
-            <h3 class="text-white text-lg font-semibold mb-2">Pusat Bantuan</h3>
-            <ul class="space-y-2">
-                <li class="text-white hover:text-red-500 cursor-pointer font-semibold">FAQ</li>
-                <li class="text-white hover:text-red-500 cursor-pointer font-semibold">Hubungi Kami</li>
-                <li class="text-white hover:text-red-500 cursor-pointer font-semibold">Kebijakan Privasi</li>
-                <li class="text-white hover:text-red-500 cursor-pointer font-semibold">Syarat & Ketentuan</li>
-            </ul>
-        </div>
-        <div class="text-center sm:w-1/3">
-            <h3 class="text-white text-lg font-semibold mb-2">Follow us</h3>
-            <ul class="space-y-2">
-                <li class="text-white hover:text-red-500 cursor-pointer font-semibold">Facebook</li>
-                <li class="text-white hover:text-red-500 cursor-pointer font-semibold">Twitter</li>
-                <li class="text-white hover:text-red-500 cursor-pointer font-semibold">Instagram</li>
-                <li class="text-white hover:text-red-500 cursor-pointer font-semibold">YouTube</li>
-            </ul>
+<!-- Modal untuk Edit Profil -->
+<div id="editProfileModal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[70]">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+                Edit Profile
+            </h3>
+            <form action="{{ route('profile.update', $customer->username) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="col-span-2">
+                        <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" id="name" name="name" value="{{ old('name', $customer->name) }}" class="mt-1 block w-full" required>
+                    </div>
+                    <div class="col-span-2">
+                        <label for="image" class="block text-sm font-medium text-gray-700">Profile Picture</label>
+                        <label for="image" class="mt-1 inline-block bg-gray-200 text-gray-700 px-3 py-2 rounded cursor-pointer">
+                            Choose File
+                        </label>
+                        <input type="file" id="image" name="image" class="hidden" onchange="previewImage(event)">
+                        <img id="profile-preview" src="#" alt="Profile Picture" class="object-cover rounded-full w-24 h-24 mt-4" style="display: none;">
+                    </div>
+                </div>
+                
+                <div class="mt-4 flex justify-end">
+                    <button type="button" id="closeModalBtn" class="bg-gray-400 text-white px-4 py-2 rounded mr-2" onclick="closeModalProfile()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save Changes</button>
+                </div>
+            </form>
         </div>
     </div>
-    <hr class="border-gray-400 w-full">
-    <p class="text-center text-gray-200">Copyright &copy; 2024 - Malaz Solutions</p>
+</div>
+
+
+<!-- Modal untuk ganti password -->
+<div id="changePasswordModal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[70]">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+                Change Password
+            </h3>
+            <form action="{{ route('profile.changePassword', $customer->username) }}" method="POST">
+                @csrf
+                <div class="mb-4">
+                    <label for="old_password" class="block text-sm font-medium text-gray-700">Old Password</label>
+                    <input type="password" id="old_password" name="old_password" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
+                </div>
+                <div class="mb-4">
+                    <label for="new_password" class="block text-sm font-medium text-gray-700">New Password</label>
+                    <input type="password" id="new_password" name="new_password" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
+                </div>
+                <div class="mb-4">
+                    <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm New Password</label>
+                    <input type="password" id="confirm_password" name="new_password_confirmation" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
+                </div>
+                <div class="mt-4 flex justify-end">
+                    <button type="button" id="closeChangePasswordModal" class="bg-gray-400 text-white px-4 py-2 rounded mr-2" onclick="closeChangePassword()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save Changes</button>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
+
+
+
+
+
 @endsection
+
+
+

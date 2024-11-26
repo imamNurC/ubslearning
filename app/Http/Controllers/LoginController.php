@@ -32,20 +32,20 @@ class LoginController extends Controller
             if ($user->type == 'admin') {
                 return redirect()->intended('/dashboardAdmin');
             } elseif ($user->type == 'user') {
-                return redirect()->intended('/home');
+                return redirect()->route('home', ['username' => $user->username]);
             }
         }
 
         return back()->with('loginError', 'Login Failed!');
     }
 
-    public function logout() {
+    public function logout()
+    {
         Auth::logout();
 
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 
         return redirect('/login');
-
     }
 }

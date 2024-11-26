@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\UserMiddleware;
 use Illuminate\Support\ServiceProvider;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\MentorMiddleware;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,5 +25,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Route::aliasMiddleware('admin', AdminMiddleware::class);
         Route::aliasMiddleware('user', UserMiddleware::class);
+        Route::aliasMiddleware('mentor', MentorMiddleware::class);
     }
 }

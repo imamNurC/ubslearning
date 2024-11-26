@@ -16,4 +16,22 @@
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
 
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+
+<style>@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+body {
+  font-family: Roboto, sans-serif;
+}
+.fill: {
+  colors: ['#F44336', '#E91E63', '#9C27B0']
+}
+
+#chart {
+  width: 600px;
+  margin: 70px auto;
+}
+
 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css')</style>
