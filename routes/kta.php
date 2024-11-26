@@ -12,7 +12,7 @@ Route::group(['prefix' => 'kta'], function () {
 
 Route::get('/login-mentor', [MentorLoginController::class, 'index'])->name('login-mentor');
 Route::post('/login-mentor', [MentorLoginController::class, 'loginKta']);
-Route::get('/logout', [MentorLoginController::class, 'logoutMentor']);
+Route::get('/logoutMentor', [MentorLoginController::class, 'logoutMentor']);
 
 
 Route::middleware(['auth:kta', 'mentor'])->group(function () {

@@ -66,33 +66,43 @@
     </div>
 </div>
 
+
 <div id="modal-overlay" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[70]"></div>
 <div id="hs-scale-animation-modal" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="hs-scale-animation-modal-label">
     <div class="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
-      <div class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto">
-        <div class="items-center py-3 px-4 border-b">
-          <h3 id="hs-scale-animation-modal-label" class="font-bold text-gray-800 text-center">
-            Deskripsi Produk
-          </h3>
+        <div class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto">
+            <div class="items-center py-3 px-4 border-b">
+                <h3 id="hs-scale-animation-modal-label" class="font-bold text-gray-800 text-center">
+                    <span id="content-name">Nama Konten</span>
+                </h3>
+            </div>
+            <div class="p-4 overflow-y-auto">
+                <img id="content-image" src="" alt="Gambar Produk" class="w-full rounded-xl">
+                <p class="mt-2 text-gray-800">
+                    <strong>Harga:</strong> <span id="content-price"></span><br>
+                    <strong>Kategori:</strong> <span id="content-category"></span><br>
+                </p>
+                <div id="video-container" class="mt-4">
+                    {{-- Isi Video Nya --}}
+                </div>
+                <p class="mt-4 text-gray-600" id="content-description">
+                    Deskripsi panjang akan ditampilkan di sini.
+                </p>
+            </div>
+            <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t">
+                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-red-500 text-white shadow-sm hover:bg-red-600 focus:outline-none" onclick="closeModal()">
+                    Close
+                </button>
+                <button 
+                    type="button" 
+                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" 
+                >
+                    <a href="{{ route('purchaseForm.show', ['username' => Auth::user()->username]) }}">
+                    Beli Konten
+                    </a>
+                </button>
+
+            </div>
         </div>
-        <div class="p-4 overflow-y-auto">
-            <img src="image/geda.jpeg" alt="Pencitraan" class="w-full rounded-xl">
-          <p class="mt-1 text-gray-800">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas alias esse corrupti, animi labore reprehenderit doloremque impedit ipsum autem. Enim alias illum totam minus dolorem obcaecati. Neque sint blanditiis provident.</br>
-            -lorem</br>
-            -lorem</br>
-            -lorem</br>
-            -lorem</br>
-            -lorem</br>
-        </div>
-        <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t">
-            <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-red-500 text-white shadow-sm hover:bg-red-600 focus:outline-none focus:bg-gray-50" onclick="closeModalBeli()">
-                Close
-            </button>
-            <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700">
-                Beli Konten
-            </button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>

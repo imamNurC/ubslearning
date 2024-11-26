@@ -16,9 +16,9 @@ class AnalyticsController extends Controller
     {
         $userCount = Customer::count();
         $contentCount = Content::count();
-        $soldCount = DB::table('transaction')->count();
+        $soldCount = DB::table('transactions')->count();
 
-        $transactions = DB::table('transaction')
+        $transactions = DB::table('transactions')
             ->select(
                 DB::raw('DATE(created_at) as date'),
                 DB::raw('COUNT(*) as total')

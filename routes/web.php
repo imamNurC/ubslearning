@@ -29,7 +29,7 @@ Route::get('/demo', function () {
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate']);
 
-Route::get('/logoutMentor', [LoginController::class, 'logout']);
+Route::get('/logout', [LoginController::class, 'logout']);
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard_user/dashboardUser');

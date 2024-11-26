@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-    use HasFactory;
+    protected $primaryKey = 'id_transaction';
+
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'id_customer', 'id_customer');
@@ -19,8 +20,12 @@ class Transaction extends Model
     }
 
     protected $fillable = [
-        'id_customer', 'name', 'number_phone', 'email',
-        'id_content', 'content_name', 'price'
+        'id_customer',
+        'name',
+        'number_phone',
+        'email',
+        'id_content',
+        'content_name',
+        'price'
     ];
-    
 }
