@@ -20,7 +20,7 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 
-<style>@import url(https://fonts.googleapis.com/css?family=Roboto);
+<style>@import url(https://fonts.googleapis.com/css?family=Poppins);
 
 body {
   font-family: Roboto, sans-serif;
