@@ -5,40 +5,40 @@
             data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
         }],
         chart: {
-        height: 350,
-        type: 'line',
-        zoom: {
-            enabled: false
-        }
+            height: 350,
+            type: 'line',
+            zoom: {
+                enabled: false
+            }
         },
         dataLabels: {
-        enabled: false
+            enabled: false
         },
         stroke: {
-        curve: 'straight'
+            curve: 'straight'
         },
         title: {
-        text: 'Product Trends by Month',
-        align: 'left'
+            text: 'Product Trends by Month',
+            align: 'left'
         },
         grid: {
-        row: {
-            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
-        },
+            row: {
+                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                opacity: 0.5
+            },
         },
         xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
         }
-       };
+    };
 
-       var chart = new ApexCharts(document.querySelector("#chart"), options);
-       chart.render();
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
 </script>
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const chartData = @json($chartData);
 
         const options = {
@@ -46,7 +46,7 @@
                 name: 'Transactions',
                 data: chartData.totals
             }],
-            
+
             chart: {
                 height: 350,
 
@@ -63,7 +63,11 @@
             },
             title: {
                 text: 'Transactions Over the Last 7 Days',
-                align: 'center'
+                align: 'center',
+                style: {
+                    fontWeight: 'bold',
+                    fontFamily: 'Poppins'
+                },
             },
             grid: {
                 row: {
@@ -72,9 +76,14 @@
                 },
             },
             xaxis: {
-                categories: chartData.dates,  // Now this will contain day names like 'Monday', 'Tuesday', etc.
+                categories: chartData
+                .dates, // Now this will contain day names like 'Monday', 'Tuesday', etc.
                 title: {
-                    text: 'Day'
+                    text: 'Day',
+                    style: {
+                        fontWeight: 'bold',
+                        fontFamily: 'Poppins',
+                    },
                 },
             },
             yaxis: {
@@ -83,22 +92,61 @@
                     text: 'Number of Transactions',
                     style: {
                         fontSize: '14px', // Adjust the font size if necessary
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        fontFamily: 'Poppins',
                     },
                 },
                 labels: {
-                    formatter: function (value) {
+                    formatter: function(value) {
                         return value.toFixed(0);
                     }
                 },
-                title: {
-                    offsetX: 0, // Move title to the left if needed
-                    offsetY: 5, // Adjust the vertical position of the title if it's cropped
-                }
+                // title: {
+                //     offsetX: 0, // Move title to the left if needed
+                //     offsetY: 5, // Adjust the vertical position of the title if it's cropped
+                // }
             }
         };
 
         const chart = new ApexCharts(document.querySelector("#saleschart"), options);
+        chart.render();
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const userCount = {{ $user_count }};
+        const contentCount = {{ $content_count }};
+        const soldCount = {{ $sold_count }};
+        const chartData = @json($chartData);
+        // Konfigurasi ApexCharts untuk radial bar chart
+        const options = {
+            chart: {
+                type: 'radialBar',
+                height: 350,
+                width: 350,
+            },
+            series: [userCount, contentCount, soldCount],
+            labels: ['Users', 'Content', 'Transactions'],
+            colors: ['#60a5fa', '#facc15', '#db2777'],
+            plotOptions: {
+                radialBar: {
+                    dataLabels: {
+                        total: {
+                            show: true,
+                            label: 'Total',
+                            formatter: function() {
+                                return (userCount + contentCount + soldCount).toString();
+                            },
+                        },
+                    },
+                },
+            },
+        };
+
+        // Render chart
+        const chart = new ApexCharts(document.querySelector("#radialChart"), options);
         chart.render();
     });
 </script>
