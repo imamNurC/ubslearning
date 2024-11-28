@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('nama_kelas', 50);
             $table->text('deskripsi_kelas')->nullable();
             $table->timestamps();
+
+            $table->unsignedInteger('kta_id')->nullable();  // Menggunakan unsignedBigInteger
+            $table->foreign('kta_id')->references('id_kta')->on('kta')->onDelete('cascade');
         });
     }
 

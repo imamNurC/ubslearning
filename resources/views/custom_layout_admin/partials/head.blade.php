@@ -19,6 +19,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
+<link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
 
 <style>@import url(https://fonts.googleapis.com/css?family=Roboto);
 

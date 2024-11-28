@@ -12,14 +12,14 @@
         }
         },
         dataLabels: {
-        enabled: false
+            enabled: false
         },
         stroke: {
-        curve: 'straight'
+            curve: 'straight'
         },
         title: {
-        text: 'Product Trends by Month',
-        align: 'left'
+            text: 'Product Trends by Month',
+            align: 'left'
         },
         grid: {
         row: {
@@ -28,7 +28,7 @@
         },
         },
         xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
         }
        };
 

@@ -45,6 +45,11 @@ class Kta extends Authenticatable
         return $this->hasMany(Content::class, 'kta_id');
     }
 
+    public function kelas()
+    {
+        return $this->hasMany(Kelas::class, 'kta_id');
+    }
+
 
     // Optionally, you can add timestamps if your table includes created_at and updated_at columns
     public $timestamps = false; // Set to false if you don't have these columns

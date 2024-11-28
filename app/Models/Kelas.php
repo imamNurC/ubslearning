@@ -24,6 +24,10 @@ class Kelas extends Model
         return $this->hasMany(Content::class, 'kelas_id');
     }
 
+    public function kta()
+    {
+        return $this->belongsTo(Kta::class, 'kta_id');
+    }
     // // Define the inverse of the relationship with KTA (Kta has many Kelas)
     // public function kta()
     // {

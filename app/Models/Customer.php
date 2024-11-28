@@ -22,6 +22,12 @@ class Customer extends Authenticatable
         'phone_number',
         'email',
         'password',
+        'nama_provinsi',
+        'nama_kab_kota',
+        'nama_kecamatan',
+        'nama_kelurahan',
+        'longitude',
+        'latitude',
         'created_at',
         'updated_at',
     ];

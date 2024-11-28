@@ -9,7 +9,7 @@
         }
 </style>
 
-<form action="/register" method="POST">
+<form id="registerForm" action="/register" method="POST">
 @csrf
     <div class="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5">
   <div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:1000px">
@@ -22,76 +22,160 @@
                   <h1 class="font-bold text-3xl text-gray-900">REGISTER</h1>
                   <p>Enter your information to register</p>
               </div>
-              <div>
-                  <div class="flex -mx-3">
-                      <div class="w-full px-3 mb-5">
-                          <label for="" class="text-xs font-semibold px-1">Name</label>
-                          <div class="flex">
-                              <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
-                              <input type="text" name="name" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500 @error('name') border-red-500 @enderror" placeholder="John" required value="{{ old('name') }}">
-                            </div>
-                            @error('name')
-                                <span class="text-red-500">{{ $message }}</span>
-                            @enderror
-                      </div>
-                  </div>
+              <div class="flex -mx-3">
+                <div class="w-full px-3 mb-5">
+                    <label for="" class="text-xs font-semibold px-1">Name</label>
+                    <div class="flex">
+                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                            <i class="mdi mdi-account-outline text-gray-400 text-lg"></i>
+                        </div>
+                        <input type="text" name="name" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500 @error('name') border-red-500 @enderror" placeholder="John" required value="{{ old('name') }}">
+                    </div>
+                    @error('name')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+            <div class="flex -mx-3">
+                <div class="w-full px-3 mb-5">
+                    <label for="" class="text-xs font-semibold px-1">Username</label>
+                    <div class="flex">
+                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                            <i class="mdi mdi-account-outline text-gray-400 text-lg"></i>
+                        </div>
+                        <input type="text" name="username" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500 @error('username') border-red-500 @enderror" placeholder="John123" required value="{{ old('username') }}">
+                    </div>
+                    @error('username')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+            <div class="flex -mx-3">
+                <div class="w-full px-3 mb-5">
+                    <label for="" class="text-xs font-semibold px-1">Phone Number</label>
+                    <div class="flex">
+                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                            <i class="mdi mdi-phone-outline text-gray-400 text-lg"></i> <!-- Adjusted icon to phone -->
+                        </div>
+                        <input type="text" name="phone_number" id="phoneNumber" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500 no-spinner @error('phone_number') border-red-500 @enderror" placeholder="0812-3456-7890" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="13" required value="{{ old('phone_number') }}">
+                    </div>
+                    @error('phone_number')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+            <div class="flex -mx-3">
+                <div class="w-full px-3 mb-5">
+                    <label for="" class="text-xs font-semibold px-1">Email</label>
+                    <div class="flex">
+                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                            <i class="mdi mdi-email-outline text-gray-400 text-lg"></i>
+                        </div>
+                        <input type="email" name="email" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500 @error('email') border-red-500 @enderror" placeholder="johnsmith@example.com" required value="{{ old('email') }}">
+                    </div>
+                    @error('email')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="flex -mx-3">
+                <div class="w-full px-3 mb-5">
+                    <label for="province" class="text-xs font-semibold px-1">Pilih Provinsi</label>
+                    <select name="id_provinsi" id="province" class="w-full py-2 rounded-lg border-2 border-gray-200" onchange="getRegencies()" required>
+                        <option value="">Select Province</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="flex -mx-3">
+                <div class="w-full px-3 mb-5">
+                    <label for="regency" class="text-xs font-semibold px-1">Pilih Kabupaten/Kota</label>
+                    <select name="id_kabKota" id="regency" class="w-full py-2 rounded-lg border-2 border-gray-200" onchange="getDistricts()" required>
+                        <option value="">Select Kab/kota</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="flex -mx-3">
+                <div class="w-full px-3 mb-5">
+                    <label for="district" class="text-xs font-semibold px-1">Pilih Kecamatan</label>
+                    <select name="id_kecamatan" id="district" class="w-full py-2 rounded-lg border-2 border-gray-200" onchange="getVillages()" required>
+                        <option value="">Select District</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="flex -mx-3">
+                <div class="w-full px-3 mb-5">
+                    <label for="village" class="text-xs font-semibold px-1">Pilih kelurahan</label>
+                    <select name="id_kelurahan" id="village" class="w-full py-2 rounded-lg border-2 border-gray-200" required>
+                        <option value="">Select Village</option>
+                    </select>
+                </div>
+            </div>
+            
+
+            <div class="flex -mx-3">
+                <div class="w-full px-3 mb-5">
+                    <label for="password" class="text-xs font-semibold px-1">Password</label>
+                    <div class="relative">
+                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center absolute left-0 top-0 mt-2">
+                            <i class="mdi mdi-lock-outline text-gray-400 text-lg"></i>
+                        </div>
+                        <input type="password" name="password" id="password" class="w-full pl-10 pr-10 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500 @error('password') border-red-500 @enderror" placeholder="************" maxlength="12" required value="{{ old('password') }}">
+                        <button type="button" id="togglePassword" class="absolute right-0 top-0 mt-2 mr-3 text-gray-500">
+                            <i class="mdi mdi-eye-outline"></i>
+                        </button>
+                    </div>
+                    <span class="text-xs text-gray-400 opacity-70">Max 12 digits</span>
+                    @error('password')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="flex -mx-3">
+                <div class="w-full px-3 mb-12">
+                    <label for="password_confirmation" class="text-xs font-semibold px-1">Confirm Password</label>
+                    <div class="relative">
+                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center absolute left-0 top-0 mt-2">
+                            <i class="mdi mdi-lock-outline text-gray-400 text-lg"></i>
+                        </div>
+                        <input type="password" name="password_confirmation" id="password_confirmation" class="w-full pl-10 pr-10 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500 @error('password_confirmation') border-red-500 @enderror" placeholder="************" maxlength="12" required value="{{ old('password_confirmation') }}">
+                        <button type="button" id="togglePasswordConfirm" class="absolute right-0 top-0 mt-2 mr-3 text-gray-500">
+                            <i class="mdi mdi-eye-outline"></i>
+                        </button>
+                    </div>
+                    <span class="text-xs text-gray-400 opacity-70">Max 12 digits</span>
+                    @error('password_confirmation')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+
+            {{-- <div class="flex -mx-3">
+                <label for="password_confirmation" class="text-xs font-semibold px-1">Confirm Password</label>
+                <div class="relative">
+                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center absolute left-0 top-0 mt-2">
+                        <i class="mdi mdi-lock-outline text-gray-400 text-lg"></i>
+                    </div>
+                    <input type="password" name="password_confirmation" id="password_confirmation" class="w-full pl-10 pr-10 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500 @error('password_confirmation') border-red-500 @enderror" placeholder="************" maxlength="12" required value="{{ old('password_confirmation') }}">
+                    <button type="button" id="togglePasswordConfirm" class="absolute right-0 top-0 mt-2 mr-3 text-gray-500">
+                        <i class="mdi mdi-eye-outline"></i>
+                    </button>
+                </div>
+                <span class="text-xs text-gray-400 opacity-70">Max 12 digits</span>
+                @error('password_confirmation')
+                    <span class="text-red-500">{{ $message }}</span>
+                @enderror
+            </div> --}}
                   <div class="flex -mx-3">
                     <div class="w-full px-3 mb-5">
-                        <label for="" class="text-xs font-semibold px-1">Username</label>
-                        <div class="flex">
-                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
-                            <input type="text" name="username" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500  @error('name') border-red-500 @enderror" placeholder="John123" required value="{{ old('username') }}">
-                        </div>
-                            @error('username')
-                                <span class="text-red-500">{{ $message }}</span>
-                            @enderror
+                        <button type="button" onclick="getLocationAndSubmit()" class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">REGISTER NOW</button>
                     </div>
                 </div>
-                <div class="flex -mx-3">
-                    <div class="w-full px-3 mb-5">
-                        <label for="" class="text-xs font-semibold px-1">Phone Number</label>
-                        <div class="flex">
-                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
-                            <input type="text" name="phone_number" id="phoneNumber" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500 no-spinner  @error('name') border-red-500 @enderror" placeholder="0812-3456-7890" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="13" required value="{{ old('phone_number') }}">
-                        </div>
-                            @error('phone_number')
-                                <span class="text-red-500">{{ $message }}</span>
-                            @enderror
-                    </div>
-                </div>
-                  <div class="flex -mx-3">
-                      <div class="w-full px-3 mb-5">
-                          <label for="" class="text-xs font-semibold px-1">Email</label>
-                          <div class="flex">
-                              <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
-                              <input type="email" name="email" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500  @error('name') border-red-500 @enderror" placeholder="johnsmith@example.com" required value="{{ old('email') }}">
-                          </div>
-                            @error('email')
-                                <span class="text-red-500">{{ $message }}</span>
-                            @enderror
-                      </div>
-                  </div>
-                  <div class="flex -mx-3">
-                    <div class="w-full px-3 mb-12">
-                        <label for="password" class="text-xs font-semibold px-1">Password</label>
-                        <div class="relative">
-                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center absolute left-0 top-0 mt-2"><i class="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                            <input type="password" name="password" id="password" class="w-full pl-10 pr-10 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500  @error('name') border-red-500 @enderror" placeholder="************" maxlength="12" required value="{{ old('password') }}">
-                            <button type="button" id="togglePassword" class="absolute right-0 top-0 mt-2 mr-3 text-gray-500">
-                                <i class="mdi mdi-eye-outline"></i>
-                            </button>
-                        </div>
-                        <span class="text-xs text-gray-400 opacity-70">Maksimal 12 digit</span>
-                             @error('password')
-                                <span class="text-red-500">{{ $message }}</span>
-                            @enderror
-                    </div>
-                </div>
-                  <div class="flex -mx-3">
-                      <div class="w-full px-3 mb-5">
-                          <button type="submit" class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">REGISTER NOW</button>
-                      </div>
-                  </div>
               </div>
           </div>
       </div>
@@ -102,19 +186,3 @@
 
 @endsection
 
-<script>
-
-document.addEventListener('DOMContentLoaded', function() {
-        const togglePasswordButton = document.getElementById('togglePassword');
-        const passwordInput = document.getElementById('password');
-
-        togglePasswordButton.addEventListener('click', function() {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.innerHTML = type === 'password' 
-                ? '<i class="mdi mdi-eye-outline"></i>' 
-                : '<i class="mdi mdi-eye-off-outline"></i>';
-        });
-    });
-
-</script>
