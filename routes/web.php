@@ -28,7 +28,6 @@ Route::get('/demo', function () {
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate']);
-
 Route::get('/logout', [LoginController::class, 'logout']);
 
 // Route::get('/dashboard', function () {
@@ -42,10 +41,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     });
 
     Route::get('/content-manage', [ContentManageController::class, 'index']);
-
     Route::post('/content-manage', [ContentManageController::class, 'store']);
     Route::post('/content-manage/update/{id_content}', [ContentManageController::class, 'update'])->name('content.update');
-
     Route::delete('/content-manage/delete/{id_content}', [ContentManageController::class, 'delete'])->name('content.delete');
     // Route::get('/content-manage', function () {
     //     return view('dashboard_admin/dashboard_content_manage');
@@ -63,6 +60,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     });
 
     Route::get('/analytic', [AnalyticsController::class, 'index'])->name('alan');
+    Route::get('kta/register', 'App\Http\Controllers\kta\MentorRegistController@index');
+    Route::post('kta/register', 'App\Http\Controllers\kta\MentorRegistController@register')->name('kta.register');
 });
 
 

@@ -36,12 +36,25 @@ class LoginController extends Controller
             }
         }
 
+
+
+        if (Auth::guard('kta')->attempt($credentials)) {
+            $request->session()->regenerate();
+
+            $user = Auth::guard('kta')->user();
+
+            if ($user->type == 'mentor') {
+                return redirect()->intended('/anggota-kta'); // Arahkan ke halaman yang sesuai
+            }
+        }
+
         return back()->with('loginError', 'Login Failed!');
     }
 
     public function logout()
     {
         Auth::logout();
+        Auth::guard('kta')->logout();
 
         request()->session()->invalidate();
         request()->session()->regenerateToken();
