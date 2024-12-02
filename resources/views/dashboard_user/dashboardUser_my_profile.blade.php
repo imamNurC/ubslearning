@@ -64,7 +64,7 @@
                 </dl>
                 
                 <div class="mt-20 flex justify-center">
-                    <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded" onclick="openModalProfile()">Update Profile</button>
+                    <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded" onclick="openModal()">Update Profile</button>
                 </div>
             </div>
         </div>
@@ -97,7 +97,7 @@
                 </div>
                 
                 <div class="mt-4 flex justify-end">
-                    <button type="button" id="closeModalBtn" class="bg-gray-400 text-white px-4 py-2 rounded mr-2" onclick="closeModalProfile()">
+                    <button type="button" id="closeModalBtn" class="bg-gray-400 text-white px-4 py-2 rounded mr-2" onclick="closeModal()">
                         Cancel
                     </button>
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save Changes</button>
@@ -142,9 +142,82 @@
 
 
 
+<script>
+    // Fungsi untuk membuka modal
+    function openModal() {
+        const modal = document.getElementById('editProfileModal');
+        modal.classList.remove('hidden');
+    }
 
+    // Fungsi untuk menutup modal
+    function closeModal() {
+        resetPreview();
+        const modal = document.getElementById('editProfileModal');
+        modal.classList.add('hidden');
+    }
+
+    // Fungsi untuk membuka modal Change Password
+    function openChangePassword() {
+        const modal = document.getElementById('changePasswordModal');
+        modal.classList.remove('hidden'); // Menghapus class hidden untuk menampilkan modal
+    }
+
+    // Fungsi untuk menutup modal Change Password
+    function closeChangePassword() {
+        const modal = document.getElementById('changePasswordModal');
+        modal.classList.add('hidden'); // Menambahkan kembali class hidden untuk menyembunyikan modal
+    }
+
+    //preview image di modal
+    function previewImage(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            // Menampilkan preview gambar setelah dipilih
+            var imgPreview = document.getElementById('profile-preview');
+            imgPreview.src = e.target.result;
+            imgPreview.style.display = 'block'; // Menampilkan elemen gambar
+        }
+
+        // Membaca file sebagai URL
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+
+     // Fungsi untuk mereset preview gambar saat modal ditutup
+     function resetPreview() {
+    var imgPreview = document.getElementById('profile-preview');
+    var inputFile = document.getElementById('image');
+    
+    // Sembunyikan gambar preview dan reset input file
+    imgPreview.style.display = 'none'; // Menyembunyikan gambar preview
+    inputFile.value = '';  // Reset file input
+    }
+
+    // Script untuk menghilangkan pesan setelah 3 detik
+    setTimeout(() => {
+        const errorMessage = document.getElementById('error-message');
+        const successMessage = document.getElementById('success-message');
+
+        if (errorMessage) {
+            errorMessage.style.opacity = '0'; // Buat elemen memudar
+            setTimeout(() => {
+                errorMessage.style.display = 'none'; // Hilangkan elemen sepenuhnya
+            }, 500); // Waktu untuk animasi memudar
+        }
+
+        if (successMessage) {
+            successMessage.style.opacity = '0'; // Buat elemen memudar
+            setTimeout(() => {
+                successMessage.style.display = 'none'; // Hilangkan elemen sepenuhnya
+            }, 500); // Waktu untuk animasi memudar
+        }
+    }, 3000);
+
+</script>
 
 @endsection
-
 
 

@@ -2,7 +2,7 @@
     <html lang="en">
     <head>
         @include('custom_layout_users.partials.head')
-        
+        <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <body>
         @include('custom_layout_users.partials.sides')

@@ -7,6 +7,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\ContentManageController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserManageController;
 
 Route::get('/', function () {
@@ -84,6 +85,11 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/purchase-form/{username}', [CustomerController::class, 'showPurchaseForm'])->name('purchaseForm.show');
     Route::post('/purchase', [CustomerController::class, 'PurchaseStore'])->name('purchase.store');
     Route::post('/save-product-to-session', [CustomerController::class, 'saveProductToSession']);
+    Route::get('/check-transaction-status/{transactionId}', [TransactionController::class, 'checkStatus']);
+    Route::post('/update-transaction-status/{transactionId}/{status}', [TransactionController::class, 'updateStatus']);
+    Route::post('/wa', [TransactionController::class, 'generateWhatsAppUrl']);
+
+
 
     Route::get('/get-content-description/{id}', function ($id) {
         $product = App\Models\Content::find($id);

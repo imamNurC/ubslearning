@@ -145,16 +145,16 @@ class CustomerController extends Controller
             'price' => 'required|integer',
             // 'date' => 'required|date',
             // 'time' => 'required|date_format:H:i',
-            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // $path = $request->file('image')->store('transactions', 'public');
+        $path = $request->file('image')->store('transactions', 'public');
 
-        // if ($request->hasFile('image')) {
-        //     $imagePath = $request->file('image')->store('public/images');
-        // } else {
-        //     $imagePath = null; // Jika tidak ada gambar, simpan null
-        // }
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('public/images');
+        } else {
+            $imagePath = null; // Jika tidak ada gambar, simpan null
+        }
 
         // Simpan transaksi
         $transaction = new Transaction();
