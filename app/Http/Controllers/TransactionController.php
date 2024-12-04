@@ -9,24 +9,51 @@ Carbon::setLocale('id');
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
 
-    public function checkStatus($transactionId)
+    public function checkStatus($id_customer, $id_content)
     {
-        $transaction = Transaction::findOrFail($transactionId);
+        $transaction = DB::table('transactions')->where('id_customer', $id_customer)->where('id_content', $id_content)->first();
+        // dd($transaction);
         return response()->json([
             'status' => $transaction->status
         ]);
     }
 
-    public function updateStatus($transactionId, $status)
+    public function updateSemuaDeclinedStatusReset($id_customer, $id_content, $status)
     {
-        $transaction = Transaction::findOrFail($transactionId);
-        $transaction->status = $status; // Set to 'declined' or 'accepted'
-        $transaction->save();
-        return response()->json(['success' => true]);
+        // Update semua transaksi dengan id_customer dan id_content yang sesuai
+        $updatedRows = DB::table('transactions')
+            ->where('id_customer', $id_customer)
+            ->where('id_content', $id_content)
+            ->update(['status' => $status]);
+
+        // Cek jika ada yang terupdate
+        if ($updatedRows > 0) {
+            return response()->json(['success' => true, 'updated' => $updatedRows]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'No transactions found to update.']);
+        }
+    }
+
+
+    public function updateSemuaAcceptedStatusReset(Request $request)
+    {
+        $validated = $request->validate([
+            'id_customer' => 'required|integer',
+            'id_content' => 'required|integer',
+            'status' => 'required|string'
+        ]);
+
+        DB::table('transactions')
+            ->where('id_customer', $validated['id_customer'])
+            ->where('id_content', $validated['id_content'])
+            ->update(['status' => $validated['status']]);
+
+        return response()->json(['message' => 'Status updated successfully']);
     }
 
 
@@ -34,7 +61,7 @@ class TransactionController extends Controller
     public function generateWhatsAppUrl(Request $request)
     {
         // dd($request->all());
-        $phone = "+6283892616049"; // Nomor WhatsApp tujuan
+        $phone = "+6283892616049";
         $judul = $request->input('judul_konten');
         $oleh = $request->input('oleh');
         $harga = $request->input('price');

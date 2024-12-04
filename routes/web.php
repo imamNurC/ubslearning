@@ -85,9 +85,10 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/purchase-form/{username}', [CustomerController::class, 'showPurchaseForm'])->name('purchaseForm.show');
     Route::post('/purchase', [CustomerController::class, 'PurchaseStore'])->name('purchase.store');
     Route::post('/save-product-to-session', [CustomerController::class, 'saveProductToSession']);
-    Route::get('/check-transaction-status/{transactionId}', [TransactionController::class, 'checkStatus']);
-    Route::post('/update-transaction-status/{transactionId}/{status}', [TransactionController::class, 'updateStatus']);
+    Route::get('/check-transaction-status/{idCust}/{idCont}', [TransactionController::class, 'checkStatus']);
     Route::post('/wa', [TransactionController::class, 'generateWhatsAppUrl']);
+    Route::post('/declined-status/{idCust}/{idCont}/{status}', [TransactionController::class, 'updateSemuaDeclinedStatusReset']);
+    Route::post('/accepted-status', [TransactionController::class, 'updateSemuaAcceptedStatusReset']);
 
 
 

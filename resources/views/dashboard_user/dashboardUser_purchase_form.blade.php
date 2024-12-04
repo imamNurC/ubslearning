@@ -37,7 +37,6 @@
     }
   </style>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   
   <div class="min-h-screen bg-gray-100 p-0 sm:p-12">
     <div class="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
@@ -200,11 +199,11 @@
                 name="image"
                 id="image"
                 accept="image/*"
-                required
+                {{-- required --}}
                 class="pt-3 pb-2 pr-12 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:text-gray-700 file:cursor-pointer"
                 
             />
-            <label for="image" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Upload Gambar</label>
+            <label for="image" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Upload Bukti pembayaran</label>
             <span class="text-sm text-red-600 hidden" id="image-error">Gambar wajib diunggah</span>
         </div>
         
@@ -339,18 +338,15 @@ $(document).ready(function() {
     const minutes = String(currentTime.getMinutes()).padStart(2, '0');
     $timeInput.val(`${hours}:${minutes}`);
 
-    
-
-
-
 });
 
 // Function to show the modal
-function showModal(transactionId) {
+function showModal(idCust, idCont) {
     const $modal = $('#modal');
     const $countdownElement = $('#countdown');
     const $qrContainer = $('#qr-container');
     const $successChecklist = $('#success-checklist');
+    const $failChecklist = $('#fail-checklist');
     const $modalDescription = $('#modal-description');
     const $qrisImage = $('#qris-image');
     let countdownTime = 5 * 60; // 5 minutes in seconds
@@ -359,30 +355,59 @@ function showModal(transactionId) {
     // Show the modal
     $modal.removeClass('hidden');
     $successChecklist.addClass('hidden'); // Hide success checklist initially
+    $failChecklist.addClass('hidden'); // Hide success checklist initially
 
     // Function to check the transaction status
     function checkTransactionStatus() {
         $.ajax({
-            url: `/check-transaction-status/${transactionId}`, // API endpoint to check the status
+            url: `/check-transaction-status/${idCust}/${idCont}`, // API endpoint to check the status
             method: 'GET',
             success: function(response) {
                 if (response.status === 'accepted') {
                     clearInterval(countdownInterval); // Stop the countdown
                     $countdownElement.text('00:00');
-                    // Show success checklist and hide other elements
                     $qrContainer.addClass('hidden');
                     $successChecklist.removeClass('hidden');
-                    $modalDescription.text('Pembayaran berhasil diterima!, cek halaman konten secara berkala atau hubungi admin');
-                    // alert('Pembayaran diterima!'); // Notify user
+
+                    $.ajax({
+                      url: '/accepted-status', // API endpoint untuk memperbarui status
+                      method: 'POST',
+                      data: {
+                          _token: $('meta[name="csrf-token"]').attr('content'),
+                          id_customer: '{{ session('customer.id_customer') }}', // Mengirim id_customer dari session
+                          id_content: '{{ session('contentData.id') }}', // Mengirim id_content dari session
+                          status: 'accepted' // Status yang ingin di-update
+                      },
+                      success: function(response) {
+                          console.log('Status berhasil diperbarui menjadi accepted');
+                      },
+                      error: function(xhr, status, error) {
+                          console.log('Gagal memperbarui status:', error); // Menampilkan error jika gagal
+                      }
+                  });
+                    $modalDescription.text('Pembayaran berhasil diterima! cek halaman konten secara berkala');
                     $('#refresh-status').hide();
-                    // Optionally, close modal after success
-                    // $modal.addClass('hidden');
+                    
                 } else if (response.status === 'declined') {
                     clearInterval(countdownInterval); // Stop the countdown
                     $countdownElement.text('00:00');
-                    alert('Pembayaran ditolak.'); // Notify user
-                    // Optionally, close modal after declined
-                    $modal.addClass('hidden');
+                    $qrContainer.addClass('hidden');
+                    $failChecklist.removeClass('hidden');
+
+                    $.ajax({
+                      url: `/declined-status/${idCust}/${idCont}/declined`, // API endpoint to decline the status
+                      method: 'POST',
+                      data: {
+                          _token: $('meta[name="csrf-token"]').attr('content')
+                      },
+                      success: function() {
+                          // alert('Waktu habis, transaksi ditolak.');
+                          // $modal.addClass('hidden'); // Close the modal
+                      }
+                  });
+                  $modalDescription.text('Pembayaran Di tolak!, cek lagi pesanan anda atau hubungi admin');
+                  $('#refresh-status').hide();
+
                 } else if (response.status === 'pending') {
                     console.log('Status masih pending, menunggu pembayaran.');
                 }
@@ -402,9 +427,8 @@ function showModal(transactionId) {
         if (countdownTime <= 0) {
             clearInterval(countdownInterval); // Stop the countdown when time is up
             $countdownElement.text('00:00');
-            // Automatically update the status to declined when time ends
             $.ajax({
-                url: `/update-transaction-status/${transactionId}/declined`, // API endpoint to decline the status
+                url: `/declined-status/${idCust}/${idCont}/declined`, // API endpoint to decline the status
                 method: 'POST',
                 data: {
                     _token: $('meta[name="csrf-token"]').attr('content')
@@ -451,7 +475,7 @@ function showModal(transactionId) {
                 console.log(response);
                 // const idCustomerValue = $('#id_customer').val();
                 if (response.success) {
-                    showModal(response.data.id_transaction);
+                  showModal(response.data.id_customer, response.data.id_content);
                     // alert('Transaksi berhasil!');
                 } else {
                     alert('Terjadi kesalahan.');
