@@ -484,9 +484,8 @@ function showModal(idCust, idCont) {
         }
     }, 1000);
 
-    // Refresh status button
     $('#refresh-status').click(function() {
-        checkTransactionStatus(); // Check transaction status on button click
+        checkTransactionStatus();  
     });
 
     // Button to close the modal

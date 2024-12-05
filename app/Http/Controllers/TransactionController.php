@@ -94,12 +94,19 @@ class TransactionController extends Controller
 
         $hari = Carbon::parse($tanggal)->translatedFormat('l');
         $formattedDate = Carbon::parse($tanggal)->format('d-m-Y');
+        // dd($formattedDate);
 
-        $text = "Haloo, ini adalah konten yang saya pesan dengan detail :\n\n";
-        $text .= "Judul Konten: $judul\n";
-        $text .= "Oleh: $oleh\n";
-        $text .= "Harga: $harga\n";
-        $text .= "Tanggal Pemesanan: $hari, $formattedDate, pada $waktu\n\n";
+        $tags = 1;
+        $text = "#00-" .  $tags . Carbon::parse($tanggal)->format('dmY') . "\n";
+        $text .= "Halo, ini adalah konten yang saya pesan dengan detail :\n\n";
+
+        $text .= "==========================================\n";
+        $text .= "Judul                           : $judul\n";
+        $text .= "Oleh                            : $oleh\n";
+        $text .= "Harga                           : $harga\n";
+        $text .= "Tanggal Pemesanan: $hari, $formattedDate, pada $waktu\n";
+        $text .= "==========================================\n\n";
+
 
         $text .= "Harap tunggu pesan ini akan ditanggapi paling lambat 5 menit yaa.";
 
