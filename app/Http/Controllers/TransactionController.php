@@ -16,7 +16,29 @@ class TransactionController extends Controller
 
     public function checkStatus($id_customer, $id_content)
     {
-        $transaction = DB::table('transactions')->where('id_customer', $id_customer)->where('id_content', $id_content)->first();
+        $transaction = DB::table('transactions')
+            ->where('id_customer', $id_customer)
+            ->where('id_content', $id_content)
+            ->orderBy('created_at', 'desc')
+            ->first();
+        // dd($transaction);
+        return response()->json([
+            'status' => $transaction->status
+        ]);
+    }
+
+    public function checkAccepted($id_customer, $id_content, $status)
+    {
+        if ($status == null) {
+            return response()->json([]);
+        }
+
+        $transaction = DB::table('transactions')
+            ->where('id_customer', $id_customer)
+            ->where('id_content', $id_content)
+            ->where('status', $status)
+            ->orderBy('created_at', 'desc')
+            ->first();
         // dd($transaction);
         return response()->json([
             'status' => $transaction->status
@@ -29,6 +51,7 @@ class TransactionController extends Controller
         $updatedRows = DB::table('transactions')
             ->where('id_customer', $id_customer)
             ->where('id_content', $id_content)
+            ->orderBy('created_at', 'desc')
             ->update(['status' => $status]);
 
         // Cek jika ada yang terupdate
@@ -51,6 +74,7 @@ class TransactionController extends Controller
         DB::table('transactions')
             ->where('id_customer', $validated['id_customer'])
             ->where('id_content', $validated['id_content'])
+            ->orderBy('created_at', 'desc')
             ->update(['status' => $validated['status']]);
 
         return response()->json(['message' => 'Status updated successfully']);

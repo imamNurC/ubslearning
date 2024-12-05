@@ -214,6 +214,14 @@
         >
           Konfirmasi Pembelian
         </button>
+
+        <button
+          id="btnDisable"
+          {{-- type="submit" --}}
+          class="w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-gray-500 hover:bg-gray-600 hover:shadow-lg focus:outline-none"
+        >
+          sudah langganan Konten ini 
+        </button>
       </form>
     </div>
   </div>
@@ -227,15 +235,34 @@
 
 $(document).ready(function() {
     // Button click event for validation and showing modal
-    $('#button').click(function () {
-        toggleError(); // Fungsi validasi
-          const hasError = $('.text-red-600:not(.hidden)').length > 0;
 
-          // If there is no error, show the modal
-          if (!hasError) {
-              // showModal(transactionId);
-          }    
+
+
+    const idCust = $('#id-customer').val()
+    const idCont = $('#id-content').val()
+
+    // console.log(idCust,idCont);
+    $.ajax({
+            url: `/check-accepted-req/${idCust}/${idCont}/accepted`, // API endpoint to check the status
+            method: 'GET',
+            success: function(response) {
+              $('#button').prop('disabled', true);
+              $('#button').hide();
+              $('#btnDisable').show();
+              $('#btnDisable').prop('disabled', true);
+            }
     });
+    
+    $('#btnDisable').hide();
+    // $('#button').click(function () {
+    //     toggleError(); // Fungsi validasi
+    //       const hasError = $('.text-red-600:not(.hidden)').length > 0;
+
+    //       // If there is no error, show the modal
+    //       if (!hasError) {
+    //           // showModal(transactionId);
+    //       }    
+    // });
 
     $('#wa-wa').on('click', function (e) {
       e.preventDefault(); // Mencegah pengiriman form default
@@ -354,6 +381,7 @@ function showModal(idCust, idCont) {
 
     // Show the modal
     $modal.removeClass('hidden');
+    $('#close-modal').hide();
     $successChecklist.addClass('hidden'); // Hide success checklist initially
     $failChecklist.addClass('hidden'); // Hide success checklist initially
 
@@ -379,7 +407,16 @@ function showModal(idCust, idCont) {
                           status: 'accepted' // Status yang ingin di-update
                       },
                       success: function(response) {
-                          console.log('Status berhasil diperbarui menjadi accepted');
+                        $('#close-modal').show();
+                        $('#cancel-modal').hide();
+                        $('#close-modal').click(function() {
+                          $modal.addClass('hidden');
+                          $('#button').hide();
+                          $('#btnDisable').show();
+                          $('#btnDisable').prop('disabled', true);
+                        })
+
+
                       },
                       error: function(xhr, status, error) {
                           console.log('Gagal memperbarui status:', error); // Menampilkan error jika gagal
@@ -401,8 +438,12 @@ function showModal(idCust, idCont) {
                           _token: $('meta[name="csrf-token"]').attr('content')
                       },
                       success: function() {
-                          // alert('Waktu habis, transaksi ditolak.');
-                          // $modal.addClass('hidden'); // Close the modal
+                        $('#close-modal').show();
+                        $('#cancel-modal').hide();
+                        $('#close-modal').click(function() {
+                          $modal.addClass('hidden');
+                          
+                        })
                       }
                   });
                   $modalDescription.text('Pembayaran Di tolak!, cek lagi pesanan anda atau hubungi admin');
@@ -449,8 +490,19 @@ function showModal(idCust, idCont) {
     });
 
     // Button to close the modal
-    $('#close-modal').click(function() {
+    $('#cancel-modal').click(function() {
         clearInterval(countdownInterval); // Stop the countdown if the modal is closed
+        $.ajax({
+          url: `/declined-status/${idCust}/${idCont}/declined`, // API endpoint to decline the status
+          method: 'POST',
+          data: {
+              _token: $('meta[name="csrf-token"]').attr('content')
+          },
+          success: function() {
+              alert('canceled') 
+          }
+        });
+        
         $modal.addClass('hidden');
     });
 }
@@ -459,7 +511,7 @@ function showModal(idCust, idCont) {
     // Mechanism for submitting purchase form data to admin notification
     $('#form').submit(function (e) {
         e.preventDefault();
-
+        
         const formData = new FormData(this);
 
         const priceValue = parseInt($('#price').val().trim(), 10);

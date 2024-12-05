@@ -86,6 +86,7 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::post('/purchase', [CustomerController::class, 'PurchaseStore'])->name('purchase.store');
     Route::post('/save-product-to-session', [CustomerController::class, 'saveProductToSession']);
     Route::get('/check-transaction-status/{idCust}/{idCont}', [TransactionController::class, 'checkStatus']);
+    Route::get('/check-accepted-req/{idCust}/{idCont}/{status}', [TransactionController::class, 'checkAccepted']);
     Route::post('/wa', [TransactionController::class, 'generateWhatsAppUrl']);
     Route::post('/declined-status/{idCust}/{idCont}/{status}', [TransactionController::class, 'updateSemuaDeclinedStatusReset']);
     Route::post('/accepted-status', [TransactionController::class, 'updateSemuaAcceptedStatusReset']);

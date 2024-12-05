@@ -172,5 +172,12 @@
         >
             Tutup
         </button>
+
+        <button
+            id="cancel-modal"
+            class="w-full px-4 py-2 text-white bg-pink-500 rounded-xl hover:bg-pink-600"
+        >
+            Batal
+        </button>
     </div>
 </div>
