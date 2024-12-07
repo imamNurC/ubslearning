@@ -19,6 +19,12 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('nama_provinsi')->nullable();;
+            $table->string('nama_kab_kota')->nullable();;
+            $table->string('nama_kecamatan')->nullable();;
+            $table->string('nama_kelurahan')->nullable();;
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
             $table->string('image_path')->nullable();
             $table->timestamps();
         });

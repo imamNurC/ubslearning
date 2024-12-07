@@ -131,9 +131,7 @@ input:-webkit-autofill {
           togglePasswordButton.addEventListener('click', function() {
               const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
               passwordInput.setAttribute('type', type);
-              this.innerHTML = type === 'password' 
-                  ? '<i class="mdi mdi-eye-outline"></i>' 
-                  : '<i class="mdi mdi-eye-off-outline"></i>';
+              this.innerHTML = type === 'password' ?   '<i class="mdi mdi-eye-off-outline"></i>' : '<i class="mdi mdi-eye-outline"></i>';
           });
       });
     

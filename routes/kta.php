@@ -5,14 +5,11 @@ use App\Http\Controllers\kta\MentorLoginController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::group(['prefix' => 'kta'], function () {
-    Route::get('/register', 'App\Http\Controllers\kta\MentorRegistController@index');
-    Route::post('/register', 'App\Http\Controllers\kta\MentorRegistController@register')->name('kta.register');
-});
 
-Route::get('/login-mentor', [MentorLoginController::class, 'index'])->name('login-mentor');
-Route::post('/login-mentor', [MentorLoginController::class, 'loginKta']);
-Route::get('/logoutMentor', [MentorLoginController::class, 'logoutMentor']);
+
+// Route::get('/login', [MentorLoginController::class, 'index'])->name('login-mentor');
+// Route::post('/login', [MentorLoginController::class, 'loginKta']);
+// Route::get('/logout', [MentorLoginController::class, 'logoutMentor']);
 
 
 Route::middleware(['auth:kta', 'mentor'])->group(function () {

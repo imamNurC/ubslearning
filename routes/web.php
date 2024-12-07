@@ -7,6 +7,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\ContentManageController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserManageController;
 
 Route::get('/', function () {
@@ -28,7 +29,6 @@ Route::get('/demo', function () {
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate']);
-
 Route::get('/logout', [LoginController::class, 'logout']);
 
 // Route::get('/dashboard', function () {
@@ -42,10 +42,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     });
 
     Route::get('/content-manage', [ContentManageController::class, 'index']);
-
     Route::post('/content-manage', [ContentManageController::class, 'store']);
     Route::post('/content-manage/update/{id_content}', [ContentManageController::class, 'update'])->name('content.update');
-
     Route::delete('/content-manage/delete/{id_content}', [ContentManageController::class, 'delete'])->name('content.delete');
     // Route::get('/content-manage', function () {
     //     return view('dashboard_admin/dashboard_content_manage');
@@ -63,6 +61,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     });
 
     Route::get('/analytic', [AnalyticsController::class, 'index'])->name('alan');
+    Route::get('kta/register', 'App\Http\Controllers\kta\MentorRegistController@index');
+    Route::post('kta/register', 'App\Http\Controllers\kta\MentorRegistController@register')->name('kta.register');
 });
 
 
@@ -85,6 +85,13 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/purchase-form/{username}', [CustomerController::class, 'showPurchaseForm'])->name('purchaseForm.show');
     Route::post('/purchase', [CustomerController::class, 'PurchaseStore'])->name('purchase.store');
     Route::post('/save-product-to-session', [CustomerController::class, 'saveProductToSession']);
+    Route::get('/check-transaction-status/{idCust}/{idCont}', [TransactionController::class, 'checkStatus']);
+    Route::get('/check-accepted-req/{idCust}/{idCont}/{status}', [TransactionController::class, 'checkAccepted']);
+    Route::post('/wa', [TransactionController::class, 'generateWhatsAppUrl']);
+    Route::post('/declined-status/{idCust}/{idCont}/{status}', [TransactionController::class, 'updateSemuaDeclinedStatusReset']);
+    Route::post('/accepted-status', [TransactionController::class, 'updateSemuaAcceptedStatusReset']);
+
+
 
     Route::get('/get-content-description/{id}', function ($id) {
         $product = App\Models\Content::find($id);
