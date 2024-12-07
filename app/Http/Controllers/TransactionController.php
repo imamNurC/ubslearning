@@ -29,9 +29,7 @@ class TransactionController extends Controller
 
     public function checkAccepted($id_customer, $id_content, $status)
     {
-        if ($status == null) {
-            return response()->json([]);
-        }
+
 
         $transaction = DB::table('transactions')
             ->where('id_customer', $id_customer)
@@ -40,6 +38,12 @@ class TransactionController extends Controller
             ->orderBy('created_at', 'desc')
             ->first();
         // dd($transaction);
+
+        if ($status == null || $status == 'declined') {
+            return response()->json([
+                'status' => $transaction->status
+            ], 404);
+        }
         return response()->json([
             'status' => $transaction->status
         ]);

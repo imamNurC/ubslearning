@@ -245,15 +245,21 @@ $(document).ready(function() {
     $.ajax({
             url: `/check-accepted-req/${idCust}/${idCont}/accepted`, // API endpoint to check the status
             method: 'GET',
+            async :false,
             success: function(response) {
-              $('#button').prop('disabled', true);
-              $('#button').hide();
-              $('#btnDisable').show();
-              $('#btnDisable').prop('disabled', true);
-            }
+              console.log(response);
+              
+              if (response.status == 'accepted') {
+                  $('#btnDisable').show();
+                  $('#button').prop('disabled', true);
+                  $('#button').hide();
+                  $('#btnDisable').prop('disabled', true);
+              }
+
+            } 
     });
     
-    $('#btnDisable').hide();
+    // $('#btnDisable').hide();
     // $('#button').click(function () {
     //     toggleError(); // Fungsi validasi
     //       const hasError = $('.text-red-600:not(.hidden)').length > 0;
@@ -366,6 +372,8 @@ $(document).ready(function() {
     $timeInput.val(`${hours}:${minutes}`);
 
 });
+
+
 
 // Function to show the modal
 function showModal(idCust, idCont) {
