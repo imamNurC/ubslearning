@@ -21,7 +21,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
 
-<style>@import url(https://fonts.googleapis.com/css?family=Roboto);
+<style>@import url(https://fonts.googleapis.com/css?family=Poppins);
 
 body {
   font-family: Roboto, sans-serif;

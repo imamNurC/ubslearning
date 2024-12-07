@@ -41,7 +41,7 @@ class AnalyticsController extends Controller
                     now()->subDay()->format('D'),
                     now()->format('D'),
                 ],
-                'totals' => [5, 5, 5, 5, 5, 5, 5],
+                'totals' => [5, 4, 2, 3, 1, 5, 6],
             ];
         } else {
             // Use 'format('l')' to get day names (e.g., 'Monday', 'Tuesday', etc.)

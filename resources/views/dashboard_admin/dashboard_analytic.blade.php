@@ -6,7 +6,7 @@
                 <div class="grid grid-cols-12 col-span-12 gap-6 xxl:col-span-9">
                     <div class="col-span-12 mt-8">
                         <div class="flex items-center h-10 intro-y">
-                            <h2 class="mr-5 text-lg font-medium truncate">Dashboard</h2>
+                            <h2 class="mr-5 text-lg font-medium truncate">Analytical Page</h2>
                         </div>
                         <div class="grid grid-cols-9 gap-7 mt-5">
                             <a class="transform  hover:scale-105 transition duration-300 shadow-xl rounded-lg col-span-12 sm:col-span-6 xl:col-span-3 intro-y bg-white"
@@ -123,14 +123,14 @@
                         </div>
                     </div>
 
-                    <div class="bg-white shadow-lg p-4" id="chart">
-                    </div>
+                    {{-- <div class="bg-white shadow-lg p-4" id="chart">
+                    </div> --}}
                     
                     <div class="col-span-12 mt-5">
 
                         {{-- LINECHART --}}
-                        <div class="grid gap-2 grid-cols-1 lg:grid-cols-2">
-                            <div class="bg-white shadow-lg p-4" id="saleschart"></div>
+                        <div class="grid gap-7 lg:grid-cols-2">
+                            <div class="bg-white shadow-xl rounded-lg p-4" id="saleschart"></div>
                             
                             {{-- <div class="bg-white shadow-lg p-4" id="chartline" style="min-height: 365px;">
                                 <div id="apexcharts78g4scc" class="apexcharts-canvas apexcharts78g4scc apexcharts-theme-"
@@ -814,8 +814,32 @@
 
 
                             {{-- CHARTPIE --}}
-                            <div class="bg-white shadow-lg" id="chartpie" style="min-height: 353px;">
-                                <div id="apexchartsjq6jdc3zk"
+                            <div class="bg-white shadow-xl rounded-lg" style="display: flex; align-items: center; gap: 20px;">
+                                <div id="radialChart"></div>
+                                <div>
+                                    <ul style="list-style: none; padding: 0;">
+                                        <li style="display: flex; align-items: center; margin-bottom: 10px;">
+                                            <!-- SVG -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-blue-400 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <circle cx="12" cy="12" r="8" ></circle>
+                                            </svg>
+                                            <span>Users</span>
+                                        </li>
+                                        <li style="display: flex; align-items: center; margin-bottom: 10px;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-yellow-400 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <circle cx="12" cy="12" r="8" ></circle>
+                                            </svg>
+                                            <span>Content</span>
+                                        </li>
+                                        <li style="display: flex; align-items: center;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-pink-600 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <circle cx="12" cy="12" r="8" ></circle> 
+                                            </svg>
+                                            <span>Transaction</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                {{-- <div id="apexchartsjq6jdc3zk"
                                     class="apexcharts-canvas apexchartsjq6jdc3zk apexcharts-theme-"
                                     style="width: 484px; height: 353px;">
                                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -1066,7 +1090,7 @@
                                                 stroke-linecap="butt" class="apexcharts-ycrosshairs-hidden"></line>
                                         </g>
                                         <g class="apexcharts-datalabels-group" transform="translate(0, 0) scale(1)"></g>
-                                    </svg></div>
+                                    </svg></div> --}}
                             </div>
                         </div>
                     </div>
