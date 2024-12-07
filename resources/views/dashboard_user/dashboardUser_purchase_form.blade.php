@@ -37,6 +37,7 @@
     }
   </style>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   
   <div class="min-h-screen bg-gray-100 p-0 sm:p-12">
     <div class="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
@@ -168,6 +169,7 @@
             <input
               type="text"
               name="date"
+              id="date-order"
               placeholder=" "
               value="{{ date('Y-m-d') }}"
               class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
@@ -181,7 +183,7 @@
             <input
                 type="time"
                 name="time"
-                id="time"
+                id="time-order"
                 placeholder=" "
                 value="{{ date('H:i') }}"
                 class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
@@ -198,7 +200,9 @@
                 name="image"
                 id="image"
                 accept="image/*"
+                required
                 class="pt-3 pb-2 pr-12 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:text-gray-700 file:cursor-pointer"
+                
             />
             <label for="image" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Upload Gambar</label>
             <span class="text-sm text-red-600 hidden" id="image-error">Gambar wajib diunggah</span>
@@ -215,28 +219,250 @@
     </div>
   </div>
 
-  {{-- Ini modal untuk menunggu konfirmasi --}}
-  <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-800 bg-opacity-50">
-    <div class="bg-white rounded-lg shadow-lg w-96 p-6">
-        <h2 class="text-xl font-semibold mb-4 text-center">Konfirmasi Pembelian</h2>
-        <p class="text-gray-700 mb-6 text-center">
-            Silahkan Scan QRIS Dibawah Ini Lalu Lakukan Pembayaran Dalam :
-            <span id="countdown" class="font-bold text-red-500"></span>
-        </p>
-        <div class="flex justify-center mb-6">
-            <img src="{{ asset('image/contoh qris.jpg') }}" alt="Pencitraan QRIS" 
-                 class="w-auto h-48 object-contain rounded-xl">
-        </div>
-        <button
-            id="close-modal"
-            class="w-full px-4 py-2 text-white bg-pink-500 rounded hover:bg-pink-600"
-        >
-            Tutup
-        </button>
-    </div>
-</div>
-
+ 
   
 
 
+<script>
+'use strict'
+
+$(document).ready(function() {
+    // Button click event for validation and showing modal
+    $('#button').click(function () {
+        toggleError(); // Fungsi validasi
+          const hasError = $('.text-red-600:not(.hidden)').length > 0;
+
+          // If there is no error, show the modal
+          if (!hasError) {
+              // showModal(transactionId);
+          }    
+    });
+
+    $('#wa-wa').on('click', function (e) {
+      e.preventDefault(); // Mencegah pengiriman form default
+
+      // Ambil data dari form
+      let judul_konten = $('#content-name').val();
+      let oleh = $('#name').val();
+      let price = $('#price').val();
+      let date = $('#date-order').val();
+      let time = $('#time-order').val();
+
+      
+      // Kirim data ke server menggunakan AJAX
+      $.ajax({
+        url: '/wa', // Pastikan route ini benar
+        type: 'POST',
+        data: {
+          judul_konten: judul_konten,
+          oleh: oleh,
+          price: price,
+          dateOrd : date,
+          timeOrd : time,
+          _token: $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (response) {
+          // Cek apakah ada URL untuk WhatsApp
+          console.log(response);
+          
+          if (response.url) {
+            // Tampilkan URL atau buka modal
+            $('#result').html(`<a href="${response.url}" target="_blank">Klik di sini untuk membuka WhatsApp</a>`);
+            
+            // Tampilkan modal
+            $('#modal').removeClass('hidden');
+            window.open(response.url, '_blank');
+          } else {
+            alert('Tidak ada URL yang diterima');
+          }
+        },
+        error: function () {
+          alert('Terjadi kesalahan, coba lagi!');
+        }
+      });
+    });        
+
+
+    // Function to toggle error messages
+    function toggleError() {
+        const $inputs = $('input[required]');
+        const $imageInput = $('#image');
+        const $imageErrorMessage = $('#image-error');
+        let hasError = false;
+
+        $inputs.each(function() {
+            const $input = $(this);
+            const $label = $input.next();
+            const $errorMessage = $input.next().next();
+
+            // Debugging log for input and its value
+            // console.log(`Input: ${$input.attr('name')}, Value: '${$input.val().trim()}'`);
+
+            if ($input.attr('id') === 'id-transaction') {
+                return;
+            }
+
+            if ($input.val().trim() === '') {
+                $errorMessage.removeClass('hidden');
+                $input.addClass('border-red-600');
+                $label.addClass('text-red-600');
+                hasError = true;
+            } else {
+                $errorMessage.addClass('hidden');
+                $input.removeClass('border-red-600');
+                $label.removeClass('text-red-600');
+            }
+        });
+
+        // Validate image input
+        if ($imageInput[0].files.length === 0) {
+            $imageErrorMessage.removeClass('hidden');
+            $imageInput.addClass('border-red-600');
+            hasError = true;
+        } else {
+            $imageErrorMessage.addClass('hidden');
+            $imageInput.removeClass('border-red-600');
+        }
+
+        // Debugging log for error status
+        if (hasError) {
+            console.log('Ada error, periksa input yang kosong atau tidak valid.');
+        } else {
+            console.log('Form sudah valid, tidak ada error.');
+        }
+    }
+
+    // Set local time to the time input
+    const $timeInput = $('#time');
+    const currentTime = new Date();
+    const hours = String(currentTime.getHours()).padStart(2, '0');
+    const minutes = String(currentTime.getMinutes()).padStart(2, '0');
+    $timeInput.val(`${hours}:${minutes}`);
+
+    
+
+
+
+});
+
+// Function to show the modal
+function showModal(transactionId) {
+    const $modal = $('#modal');
+    const $countdownElement = $('#countdown');
+    const $qrContainer = $('#qr-container');
+    const $successChecklist = $('#success-checklist');
+    const $modalDescription = $('#modal-description');
+    const $qrisImage = $('#qris-image');
+    let countdownTime = 5 * 60; // 5 minutes in seconds
+    let countdownInterval;
+
+    // Show the modal
+    $modal.removeClass('hidden');
+    $successChecklist.addClass('hidden'); // Hide success checklist initially
+
+    // Function to check the transaction status
+    function checkTransactionStatus() {
+        $.ajax({
+            url: `/check-transaction-status/${transactionId}`, // API endpoint to check the status
+            method: 'GET',
+            success: function(response) {
+                if (response.status === 'accepted') {
+                    clearInterval(countdownInterval); // Stop the countdown
+                    $countdownElement.text('00:00');
+                    // Show success checklist and hide other elements
+                    $qrContainer.addClass('hidden');
+                    $successChecklist.removeClass('hidden');
+                    $modalDescription.text('Pembayaran berhasil diterima!, cek halaman konten secara berkala atau hubungi admin');
+                    // alert('Pembayaran diterima!'); // Notify user
+                    $('#refresh-status').hide();
+                    // Optionally, close modal after success
+                    // $modal.addClass('hidden');
+                } else if (response.status === 'declined') {
+                    clearInterval(countdownInterval); // Stop the countdown
+                    $countdownElement.text('00:00');
+                    alert('Pembayaran ditolak.'); // Notify user
+                    // Optionally, close modal after declined
+                    $modal.addClass('hidden');
+                } else if (response.status === 'pending') {
+                    console.log('Status masih pending, menunggu pembayaran.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText); // Show error in the console
+            }
+        });
+    }
+
+    // Start countdown
+    countdownInterval = setInterval(function() {
+        const minutes = Math.floor(countdownTime / 60);
+        const seconds = countdownTime % 60;
+        $countdownElement.text(`${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`);
+
+        if (countdownTime <= 0) {
+            clearInterval(countdownInterval); // Stop the countdown when time is up
+            $countdownElement.text('00:00');
+            // Automatically update the status to declined when time ends
+            $.ajax({
+                url: `/update-transaction-status/${transactionId}/declined`, // API endpoint to decline the status
+                method: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function() {
+                    alert('Waktu habis, transaksi ditolak.');
+                    $modal.addClass('hidden'); // Close the modal
+                }
+            });
+        } else {
+            countdownTime--;
+        }
+    }, 1000);
+
+    // Refresh status button
+    $('#refresh-status').click(function() {
+        checkTransactionStatus(); // Check transaction status on button click
+    });
+
+    // Button to close the modal
+    $('#close-modal').click(function() {
+        clearInterval(countdownInterval); // Stop the countdown if the modal is closed
+        $modal.addClass('hidden');
+    });
+}
+
+
+    // Mechanism for submitting purchase form data to admin notification
+    $('#form').submit(function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+
+        const priceValue = parseInt($('#price').val().trim(), 10);
+        formData.set('price', priceValue);
+
+        $.ajax({
+            url: '{{ route('purchase.store') }}',
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log(response);
+                // const idCustomerValue = $('#id_customer').val();
+                if (response.success) {
+                    showModal(response.data.id_transaction);
+                    // alert('Transaksi berhasil!');
+                } else {
+                    alert('Terjadi kesalahan.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText); // Display any error received from the server
+            }
+        });
+    });
+
+
+</script>
 @endsection
