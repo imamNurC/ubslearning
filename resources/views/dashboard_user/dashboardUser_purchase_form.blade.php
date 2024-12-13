@@ -237,7 +237,9 @@
 $(document).ready(function() {
     // Button click event for validation and showing modal
 
-
+    // const priceValue = parseFloat($('#price').val().trim(), 10);
+    // const integerPriceValue = Math.round(priceValue);
+    // console.log(priceValue);
 
     const idCust = $('#id-customer').val()
     const idCont = $('#id-content').val()
@@ -513,10 +515,12 @@ function showModal(idCust, idCont) {
         e.preventDefault();
         
         const formData = new FormData(this);
-
-        const priceValue = parseInt($('#price').val().trim(), 10);
-        formData.set('price', priceValue);
-
+        const priceText = $('#price').val().trim();
+        const priceValue = parseFloat(priceText.replace(',', ''));
+        const integerPriceValue = parseInt(priceValue, 10);
+        formData.set('price', integerPriceValue);
+        console.log(integerPriceValue)
+        
         $.ajax({
             url: '{{ route('purchase.store') }}',
             method: 'POST',
