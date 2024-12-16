@@ -22,21 +22,21 @@
             <!-- Teks -->
             <div class="w-full md:w-1/2 mb-6 md:mb-0">
                 <h1 class="text-3xl md:text-5xl font-bold mb-4 text-white text-center md:text-left">
-                    Jangan Semangat!<br> Teruslah Malas!
+                    Jangan Malas!<br> Teruslah Semangat!
                 </h1>
                 <p class="text-white mb-6 font-semibold text-center md:text-left">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, dolorum. Vitae corrupti, quam atque laudantium fugiat veniam quo iure sed sit doloribus perspiciatis unde eaque ab nam assumenda. Non, ipsa!
                 </p>
                 <div class="flex justify-center md:justify-start">
-                    <button class="w-full max-w-xs bg-blue-400 text-white px-5 py-2 rounded-2xl hover:bg-orange-400 font-semibold">
+                    {{-- <button class="w-full max-w-xs bg-blue-400 text-white px-5 py-2 rounded-2xl hover:bg-orange-400 font-semibold">
                         Daftar!
-                    </button>
+                    </button> --}}
                 </div>
             </div>
     
             <!-- Gambar -->
             <div class="w-full md:w-1/2">
-                <img src="{{ asset('image/geda.jpeg') }}" alt="Pencitraan" class="w-full h-auto object-cover rounded-xl">
+                <img src="{{ asset('image/Logo.png') }}" alt="Pencitraan" class="w-full h-auto object-cover rounded-xl">
             </div>
         </div>
     </div>

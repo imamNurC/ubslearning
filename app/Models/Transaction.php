@@ -26,6 +26,7 @@ class Transaction extends Model
         'email',
         'id_content',
         'content_name',
-        'price'
+        'price',
+        'image_path',
     ];
 }

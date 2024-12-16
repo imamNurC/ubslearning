@@ -24,10 +24,68 @@ class CustomerController extends Controller
     }
 
     public function showMyContent($username)
-    {
-        $customer = Customer::where('username', $username)->firstOrFail();
-        return view('dashboard_user/dashboardUser_my_content', compact('customer'));
+{
+    $customer = Customer::where('username', $username)->firstOrFail(); // Ambil customer berdasarkan username
+    $userId = $customer->id_customer; // Dapatkan ID dari customer yang ditemukan
+
+    // Ambil transaksi terbaru dengan karakteristik unik untuk customer tersebut
+    $purchasedContents = Transaction::where('id_customer', $userId)
+        ->where('status', 'accepted')
+        ->orderBy('created_at', 'desc') // Urutkan berdasarkan data terbaru
+        ->get(['id_content', 'content_name', 'image_path'])
+        ->unique('content_name'); // Hapus duplikat berdasarkan 'content_name'
+
+    return view('dashboard_user.dashboardUser_my_content', compact('customer', 'purchasedContents'));
+}
+
+public function showContent($username, Request $request)
+{
+    // Cari pelanggan berdasarkan username
+    $customer = Customer::where('username', $username)->firstOrFail();
+    $userId = $customer->id_customer;
+
+    // Ambil ID konten dari URL
+    $id_content = $request->route('id_content');
+
+    // Cari transaksi yang sesuai
+    $transaction = Transaction::where('id_customer', $userId)
+        ->where('id_content', $id_content)
+        ->where('status', 'accepted') // Pastikan statusnya "accepted"
+        ->first();
+
+    // Jika transaksi tidak ditemukan, beri pesan error
+    if (!$transaction) {
+        return redirect()->back()->with('error', 'Konten tidak ditemukan atau tidak diizinkan.');
     }
+
+    // Ambil data konten berdasarkan ID konten
+    $content = Content::findOrFail($id_content);
+
+    // Simpan ID konten ke session (opsional, jika memang diperlukan)
+    session(['current_content_id' => $id_content]);
+
+    // Kirim data ke view
+    return view('dashboard_user.dashboardUser_content', compact('customer', 'content'));
+}
+
+
+public function storeSession(Request $request)
+{
+    $request->validate([
+        'username' => 'required|string',
+        'id_content' => 'required|integer',
+    ]);
+
+    // Simpan data ke dalam session
+    session(['username' => $request->username, 'id_content' => $request->id_content]);
+
+    // dd(session()->all());
+    // Mengembalikan respon JSON sebagai tanda keberhasilan
+    return response()->json(['session_id' => session()->getId()], 200);
+}
+
+
+
 
     public function updateProfile(Request $request, $username)
     {
@@ -144,6 +202,7 @@ class CustomerController extends Controller
             'id_content' => 'required|exists:content,id_content',
             'content_name' => 'required|string|max:100',
             'price' => 'required|integer',
+            // 'image_path' => 'required|string|max:255',
             // 'date' => 'required|date',
             // 'time' => 'required|date_format:H:i',
             // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -166,6 +225,7 @@ class CustomerController extends Controller
         $transaction->id_content = $request->id_content;
         $transaction->content_name = $request->content_name;
         $transaction->price = $request->price;
+        $transaction->image_path = $request->image_path;
         $transaction->status = 'pending'; // status default
         // $transaction->date = $request->date;
         // $transaction->time = $request->time;

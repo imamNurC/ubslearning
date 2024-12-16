@@ -117,7 +117,7 @@
             <span id="countdown" class="font-bold text-red-500"></span>
         </p>
         <div id="qr-container" class="flex justify-center mb-6">
-            <img id="qris-image" src="{{ asset('image/contoh qris.jpg') }}" alt="Pencitraan QRIS" class="w-auto h-48 object-contain rounded-xl">
+            <img id="qris-image" src="{{ asset('image/contoh QRIS.png') }}" alt="Pencitraan QRIS" class="w-auto h-48 object-contain rounded-xl">
         </div>
 
         <!-- Success Checklist Container -->

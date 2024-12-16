@@ -194,19 +194,19 @@
         </div>
         </div>
   
-        <div class="relative z-0 w-full mb-5">
+        {{-- <div class="relative z-0 w-full mb-5">
             <input
                 type="file"
                 name="image"
                 id="image"
                 accept="image/*"
                 {{-- required --}}
-                class="pt-3 pb-2 pr-12 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:text-gray-700 file:cursor-pointer"
-                
-            />
+                {{-- class="pt-3 pb-2 pr-12 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:text-gray-700 file:cursor-pointer" --}}
+                 
+            {{-- />
             <label for="image" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Upload Bukti pembayaran</label>
             <span class="text-sm text-red-600 hidden" id="image-error">Gambar wajib diunggah</span>
-        </div>
+        </div> --}}
         
         <button
           id="button"
