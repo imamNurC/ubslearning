@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Content;
 use App\Models\Transaction;
+use Illuminate\Auth\Events\Validated;
+use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -192,7 +194,7 @@ public function storeSession(Request $request)
     public function PurchaseStore(Request $request)
     {
         // $customer = Customer::where('username', $username)->firstOrFail();
-
+        
         // Validasi data
         $validated = $request->validate([
             'id_customer' => 'required|exists:customers,id_customer',
@@ -202,11 +204,15 @@ public function storeSession(Request $request)
             'id_content' => 'required|exists:content,id_content',
             'content_name' => 'required|string|max:100',
             'price' => 'required|integer',
+            'content_img' => 'required|string',
             // 'image_path' => 'required|string|max:255',
             // 'date' => 'required|date',
             // 'time' => 'required|date_format:H:i',
             // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+
+        // dd($validated);
 
         // $path = $request->file('image')->store('transactions', 'public');
 
@@ -216,7 +222,21 @@ public function storeSession(Request $request)
         //     $imagePath = null; // Jika tidak ada gambar, simpan null
         // }
 
-        // Simpan transaksi
+        // Mendapatkan URL dari input
+        $contentImg = $request->content_img;
+        // Parse URL untuk memisahkan bagian-bagian URL
+            $parsedUrl = parse_url($contentImg);
+            dd($parsedUrl);
+
+            // Memeriksa apakah URL mengandung '/storage/' pada path
+            if (isset($parsedUrl['path']) && strpos($parsedUrl['path'], '/storage/') === 0) {
+                // Menghapus bagian '/storage/' dari path
+                $imagePath = substr($parsedUrl['path'], strlen('/storage/'));
+            } else {
+                // Jika tidak ada '/storage/', simpan URL seperti apa adanya
+                $imagePath = $contentImg;
+            }
+        
         $transaction = new Transaction();
         $transaction->id_customer = $request->id_customer;
         $transaction->name = $request->name;
@@ -225,14 +245,14 @@ public function storeSession(Request $request)
         $transaction->id_content = $request->id_content;
         $transaction->content_name = $request->content_name;
         $transaction->price = $request->price;
-        $transaction->image_path = $request->image_path;
+        $transaction->image_path = $imagePath;  // Menyimpan imagePath yang sudah diperiksa
         $transaction->status = 'pending'; // status default
         // $transaction->date = $request->date;
         // $transaction->time = $request->time;
         // $transaction->image_path = $imagePath; // jika gambar diupload
         $transaction->save();
 
-        session()->forget(['product_name', 'product_price', 'product_category', 'product_description', 'product_image']);
+        session()->forget(['product_name', 'product_price', 'product_category', 'product_description', 'product_image', 'product_image_path']);
         return response()->json(['success' => true, 'data' => $transaction]);
         // Redirect atau return response
         return view('dashboard_user.dashboardUser_purchase_form', compact('customer'));

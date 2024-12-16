@@ -144,7 +144,7 @@
               class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
             />
             {{-- {{ dd(session('contentData.image')) }} --}}
-            <img src="{{ session('contentData.image') }}" class="w-full h-full object-cover rounded-lg">
+            <img src="{{ session('contentData.image') }}" class="w-full h-full object-cover rounded-lg content_img">
             <label for="content-name" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Content Name</label>
             <span class="text-sm text-red-600 hidden" id="error">Content Name is required</span>
           </div>
@@ -243,6 +243,8 @@ $(document).ready(function() {
 
     const idCust = $('#id-customer').val()
     const idCont = $('#id-content').val()
+    
+    
 
     // console.log(idCust,idCont);
     $.ajax({
@@ -518,13 +520,15 @@ function showModal(idCust, idCont) {
         const priceText = $('#price').val().trim();
         const priceValue = parseFloat(priceText.replace(',', ''));
         const integerPriceValue = parseInt(priceValue, 10);
+        const image = $('.content_img').attr("src")
         formData.set('price', integerPriceValue);
+        formData.set('content_img', image)
         console.log(integerPriceValue)
-        
+        console.log(image)
         $.ajax({
             url: '{{ route('purchase.store') }}',
             method: 'POST',
-            data: formData,
+            data: formData, image,
             processData: false,
             contentType: false,
             success: function(response) {

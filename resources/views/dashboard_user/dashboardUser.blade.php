@@ -233,6 +233,7 @@
             image: button.getAttribute('data-image')
         };
 
+        // console.log(contentData.image);
 
         // Ambil data dari tombol
         const name = button.getAttribute('data-name');
