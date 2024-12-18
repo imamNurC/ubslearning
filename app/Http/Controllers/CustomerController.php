@@ -42,14 +42,11 @@ class CustomerController extends Controller
 
     public function showContent($username, Request $request)
     {
-        // Cari pelanggan berdasarkan username
         $customer = Customer::where('username', $username)->firstOrFail();
         $userId = $customer->id_customer;
 
-        // Ambil ID konten dari URL
         $id_content = $request->route('id_content');
 
-        // Cari transaksi yang sesuai
         $transaction = Transaction::where('id_customer', $userId)
             ->where('id_content', $id_content)
             ->where('status', 'accepted') // Pastikan statusnya "accepted"

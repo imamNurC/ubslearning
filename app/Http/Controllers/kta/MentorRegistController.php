@@ -58,7 +58,7 @@ class MentorRegistController extends Controller
 
 
         // Redirect or respond as needed
-        return redirect()->route('/dashboardAdmin')->with('success', 'Registration successful!');
+        return view('dashboard_admin.dashboard');
     }
 
     public function listMembers()

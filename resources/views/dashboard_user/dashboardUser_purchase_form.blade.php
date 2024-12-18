@@ -41,6 +41,9 @@
   
   <div class="min-h-screen bg-gray-100 p-0 sm:p-12">
     <div class="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
+      <a href="javascript:history.back()" class="text-black-500 hover:text-blue-700 mb-4 inline-block">
+        &larr; Kembali
+      </a>
       <h1 class="text-2xl font-bold mb-8">Form Pembelian</h1>
       <form id="form" action="{{ route('purchase.store') }}" method="POST" novalidate>
         @csrf

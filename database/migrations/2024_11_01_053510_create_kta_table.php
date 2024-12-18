@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('kta', function (Blueprint $table) {
             $table->increments('id_kta');
             $table->string('nama_kta', 30);
-            $table->string('foto_kta', 30);
+            $table->string('foto_kta');
             $table->string('type')->default('mentor');
             $table->string('nickname_kta', 30);
             $table->string('nohp_kta', 15);
