@@ -1,38 +1,61 @@
 @extends('custom_layout_admin.bases.adminbase')
 @section('content')
 
-
-{{-- kotak konfirmasi pembelian --}}
-<div class="p-4 bg-yellow-100 border-l-4 border-yellow-500 rounded-md">
-    <h3 class="text-lg font-bold">Notifikasi Transaksi</h3>
-    @if ($pendingTransactions->isEmpty())
-        <p class="text-gray-600">Tidak ada transaksi yang perlu dikonfirmasi.</p>
-    @else
-        @foreach ($pendingTransactions as $transaction)
-            <div class="flex items-center justify-between my-2 p-2 bg-white shadow-sm rounded-md">
-                <div>
-                    <p class="text-gray-700 font-medium">{{ $transaction->name }}</p>
-                    <p class="text-sm text-gray-500">{{ $transaction->content_name }}</p>
-                </div>
-                <div>
-                    <form method="POST" action="{{ route('admin.transactions.update', $transaction->id_transaction) }}">
-                        @csrf
-                        @method('PUT')
-                        <input type="hidden" name="status" value="accepted">
-                        <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-md">Konfirmasi</button>
-                    </form>
-                    
-                    <form method="POST" action="{{ route('admin.transactions.update', $transaction->id_transaction) }}">
-                        @csrf
-                        @method('PUT')
-                        <input type="hidden" name="status" value="declined">
-                        <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-md">Tolak</button>
-                    </form>
-                    
-                </div>
-            </div>
-        @endforeach
+{{-- Tombol untuk membuka modal notifikasi dengan badge angka --}}
+<div class="relative inline-block">
+    <button 
+        class="px-4 py-2 mt-2 ml-2 bg-blue-500 text-white rounded-md"
+        onclick="document.getElementById('notificationModal').classList.remove('hidden')">
+        Transaksi
+    </button>
+    @if($pendingTransactions->count() > 0)
+        <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+            {{ $pendingTransactions->count() }}
+        </span>
     @endif
+</div>
+
+{{-- Modal untuk daftar notifikasi --}}
+<div id="notificationModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-6 rounded-md shadow-lg w-11/12 max-w-2xl">
+        <div class="flex justify-between items-center border-b pb-2">
+            <h3 class="text-lg font-bold">Notifikasi Transaksi</h3>
+            <button onclick="document.getElementById('notificationModal').classList.add('hidden')" class="text-gray-500">&times;</button>
+        </div>
+
+        <div class="mt-4">
+            @if ($pendingTransactions->isEmpty())
+                <p class="text-gray-600">Tidak ada transaksi yang perlu dikonfirmasi.</p>
+            @else
+                @foreach ($pendingTransactions as $transaction)
+                    <div class="flex items-center justify-between my-2 p-2 bg-yellow-100 shadow-sm rounded-md">
+                        <div>
+                            <p class="text-gray-700 font-medium">{{ $transaction->name }}</p>
+                            <p class="text-sm text-gray-500">{{ $transaction->content_name }}</p>
+                        </div>
+                        <div>
+                            <form method="POST" action="{{ route('admin.transactions.update', $transaction->id_transaction) }}" class="inline-block">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="status" value="accepted">
+                                <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-md">Konfirmasi</button>
+                            </form>
+                            <form method="POST" action="{{ route('admin.transactions.update', $transaction->id_transaction) }}" class="inline-block">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="status" value="declined">
+                                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-md">Tolak</button>
+                            </form>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+        </div>
+
+        <div class="mt-4 text-right">
+            <button onclick="document.getElementById('notificationModal').classList.add('hidden')" class="px-4 py-2 bg-gray-500 text-white rounded-md">Tutup</button>
+        </div>
+    </div>
 </div>
 
 @if (session('message'))
@@ -41,10 +64,6 @@
     </div>
 @endif
 
-
-
-
-        
 <div class="flex flex-col mt-8">
     <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
         <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
@@ -92,6 +111,5 @@
         </div>
     </div>
 </div>
-
 
 @endsection
