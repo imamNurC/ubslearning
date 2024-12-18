@@ -51,6 +51,10 @@ class LoginController extends Controller
         if ($user->type === 'user') {
             return redirect()->route('home', ['username' => $user->username]);
         }
+        // if (!$user->is_active) {
+        //     return redirect()->route('activation.verify', ['username' => $user->username]);
+        // }
+        // return redirect()->route('home', ['username' => $user->username]);
 
         if ($user->type === 'mentor') {
             return redirect()->intended('/anggota-kta');

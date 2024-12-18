@@ -73,6 +73,8 @@ Route::middleware(['auth', 'user'])->group(function () {
     // Route::get('/home', function () {
     //     return view('dashboard_user/dashboardUser');
     // });
+    Route::get('/activate/{username}', ['App\Http\Controllers\ActivationEmailController@verifyActivation'])
+        ->name('activation.verify')->middleware('signed');
 
     Route::get('/home/{username}', [ContentManageController::class, 'products'])->name('home');
     Route::get('/my-content/{username}', [CustomerController::class, 'showMyContent'])->name('my-content');

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email');
             $table->unsignedBigInteger('id_content');
             $table->string('content_name', 100);
+            $table->string('image_path');
             $table->integer('price');
             $table->enum('status', ['pending', 'accepted', 'declined'])->default('pending');
             $table->timestamps();

@@ -32,3 +32,11 @@ yarn-error.log
 # routes/kta.php
 # bootstrap/app.php
 database/seeders/DatabaseSeeder.php
+
+**/caddy
+frankenphp
+frankenphp-worker.php
+
+**/caddy
+frankenphp
+frankenphp-worker.php

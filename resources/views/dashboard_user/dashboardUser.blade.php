@@ -232,7 +232,7 @@
             price: button.getAttribute('data-price'),
             image: button.getAttribute('data-image')
         };
-
+        
 
         // Ambil data dari tombol
         const name = button.getAttribute('data-name');
@@ -241,6 +241,7 @@
         const description = button.getAttribute('data-description');
         const image = button.getAttribute('data-image');
         const youtubeUrl = button.getAttribute('data-youtube');
+
         
 
         const videoId = youtubeUrl.split('v=')[1].split('&')[0];
