@@ -40,30 +40,27 @@ class CustomerController extends Controller
         return view('dashboard_user.dashboardUser_my_content', compact('customer', 'purchasedContents'));
     }
 
-    public function showContent($username, Request $request)
+    public function showContent($username, $slug, Request $request)
     {
         $customer = Customer::where('username', $username)->firstOrFail();
         $userId = $customer->id_customer;
 
-        $id_content = $request->route('id_content');
+        $content = Content::where('slug', $slug)->firstOrFail(); // Use firstOrFail() to trigger 404 if not found
 
         $transaction = Transaction::where('id_customer', $userId)
-            ->where('id_content', $id_content)
-            ->where('status', 'accepted') // Pastikan statusnya "accepted"
+            ->where('id_content', $content->id_content)
+            ->where('status', 'accepted') // Ensure the status is "accepted"
             ->first();
 
-        // Jika transaksi tidak ditemukan, beri pesan error
         if (!$transaction) {
-            return redirect()->back()->with('error', 'Konten tidak ditemukan atau tidak diizinkan.');
+            return redirect()->back()->with('error', 'Content not found or not permitted.');
         }
 
-        // Ambil data konten berdasarkan ID konten
-        $content = Content::findOrFail($id_content);
+        session(['slug' => $content->slug]);
 
-        // Simpan ID konten ke session (opsional, jika memang diperlukan)
-        session(['current_content_id' => $id_content]);
+        session(['current_content_id' => $content->id_content]);
 
-        // Kirim data ke view
+
         return view('dashboard_user.dashboardUser_content', compact('customer', 'content'));
     }
 
@@ -72,14 +69,12 @@ class CustomerController extends Controller
     {
         $request->validate([
             'username' => 'required|string',
-            'id_content' => 'required|integer',
+            'slug' => 'required|string',  // Validate slug instead of id_content
         ]);
 
-        // Simpan data ke dalam session
-        session(['username' => $request->username, 'id_content' => $request->id_content]);
+        session(['username' => $request->username, 'slug' => $request->slug]);
 
-        // dd(session()->all());
-        // Mengembalikan respon JSON sebagai tanda keberhasilan
+        // Return a success response
         return response()->json(['session_id' => session()->getId()], 200);
     }
 

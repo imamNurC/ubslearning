@@ -92,7 +92,7 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::post('/wa', [TransactionController::class, 'generateWhatsAppUrl']);
     Route::post('/declined-status/{idCust}/{idCont}/{status}', [TransactionController::class, 'updateSemuaDeclinedStatusReset']);
     Route::post('/accepted-status', [TransactionController::class, 'updateSemuaAcceptedStatusReset']);
-    Route::get('/show-content/{username}/{id_content}', [CustomerController::class, 'showContent'])->name('show.content');
+    Route::get('/show-content/{username}/{slug}', [CustomerController::class, 'showContent'])->name('show.content');
     Route::post('/store-session', [CustomerController::class, 'storeSession'])->name('store.session');
 
 

@@ -6,10 +6,20 @@ use App\Models\Access;
 use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class Content extends Model
 {
     use HasFactory;
+
+    protected static function booted()
+    {
+        static::saving(function ($content) {
+            if (!$content->slug) {
+                $content->slug = Str::slug($content->content_name);
+            }
+        });
+    }
 
     protected $table = 'content';
     protected $primaryKey = 'id_content';
