@@ -87,26 +87,30 @@ class ContentManageController extends Controller
 
 
         $data2 = DB::table('transactions')
-            ->select('id_customer', DB::raw('MAX(created_at) as latest_transaction'))
+            ->select('id_customer', 'created_at')
             ->where('id_customer', $getIdCust)
-            ->groupBy('id_customer')
+            ->orderByDesc('created_at')
             ->get();
 
         // Ambil semua id_customer dari $data2 (yang terkait dengan transaksi)
         $idCustomersToExclude = $data2->pluck('id_customer');
 
 
-        // dd($idCustomersToExclude);
+
 
         // Ambil data dari tabel content yang tidak memiliki transaksi dengan id_customer tersebut
         $data = DB::table('content') // Ganti 'content' dengan nama tabel yang sesuai
             ->whereNotIn('id_content', function ($query) use ($idCustomersToExclude) {
-                $query->select('id_content')
+
+                $query->select('id_content',)
                     ->from('transactions')
+                    ->where('status', 'accepted')
                     ->whereIn('id_customer', $idCustomersToExclude); // Mengambil transaksi berdasarkan id_customer
+                // dd($query);
             })
             ->orderBy('created_at', 'desc')
             ->paginate(5);
+
         // dd($data);
 
 
