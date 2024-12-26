@@ -23,27 +23,16 @@ ubs learning adalah platform opensource pembelajaran berskala kampus yang bertuj
 -   Composer >= 14.0
 
 ```
-# 1. Clone repository proyek
 git clone <this repo>
-# 2. Masuk ke dalam direktori proyek
 cd nama-folder-repo
-# 3. Install dependencies PHP dengan Composer
 composer install
-# 4. Salin file .env.example menjadi .env
 cp .env.example .env
-# 5. Buat storage link untuk Laravel
 php artisan storage:link
-# 6. Install dependencies frontend dengan npm
 npm install
-# 7. Jalankan migrasi database untuk membuat struktur tabel
 php artisan migrate
-# 8. Seed database dengan data awal (jika ada)
 php artisan db:seed
-# 9. Jalankan migrasi lagi (opsional) jika ada perubahan lebih lanjut
 php artisan migrate
-# 10. Jalankan server pengembangan Laravel
 php artisan serve
-
 ```
 
 ## License
