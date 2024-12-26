@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Customer;
-
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 
@@ -48,7 +48,7 @@ class RegisterController extends Controller
         $validatedData['password'] = Hash::make($validatedData['password']);
 
         // Create customer
-        Customer::create([
+        $user = Customer::create([
             //kolom target
             'name' => $validatedData['name'],
             'username' => $validatedData['username'],
@@ -63,7 +63,8 @@ class RegisterController extends Controller
             'longitude' => $validatedData['longitude'] ?? null,  // Store longitude, if available
         ]);
 
+        event(new Registered($user));
         // Redirect to login page with success message
-        return redirect('/login')->with('success', 'Registration Successful!');
+        return redirect()->route('verification.notice')->with('success', 'Register success! Please verify your email.');
     }
 }

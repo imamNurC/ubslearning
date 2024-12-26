@@ -9,6 +9,9 @@ use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\ContentManageController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserManageController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -66,15 +69,30 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 
+Route::get('/email/verify', function () {
+    return view('emails.activation');
+})->middleware('auth')->name('verification.notice');
+
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/login');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 
 //dashboard user
-Route::middleware(['auth', 'user'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     // Route::get('/home', function () {
     //     return view('dashboard_user/dashboardUser');
     // });
-    Route::get('/activate/{username}', ['App\Http\Controllers\ActivationEmailController@verifyActivation'])
-        ->name('activation.verify')->middleware('signed');
 
     Route::get('/home/{username}', [ContentManageController::class, 'products'])->name('home');
     Route::get('/my-content/{username}', [CustomerController::class, 'showMyContent'])->name('my-content');

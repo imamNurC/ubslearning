@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('phone_number');
             $table->string('email')->unique();
-            $table->boolean('is_active')->default(false);
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('nama_provinsi')->nullable();;
             $table->string('nama_kab_kota')->nullable();;
             $table->string('nama_kecamatan')->nullable();;
