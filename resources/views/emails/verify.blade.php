@@ -43,11 +43,6 @@
             padding-bottom: 1rem;
         }
 
-        .content__header .text-red-500 {
-            color: #f56565;
-            font-size: 0.875rem; /* smaller text */
-            font-weight: bold;
-        }
 
         .content__header img {
             max-width: 200px;
@@ -76,7 +71,7 @@
 
         .content__body a {
             display: inline-block;
-            background-color: #e53e3e; /* red-500 */
+            background-color: #ec7a1c; /* red-500 */
             color: white;
             font-size: 0.875rem; /* small text */
             font-weight: 600;
@@ -157,16 +152,13 @@
           <div class="mail__content">
       
             <div class="content__header">
-              <div class="text-red-500">
-                  Malaz Solutions
-              </div>
               
+              <h2>E-mail Confirmation <br> Malaz Solutions</h2>
               <!-- Menambahkan gambar (imageUrl) di sini -->
               <div class="my-4">
                   <img src="{{ $imageUrl }}" alt="Logo Aplikasi" class="max-w-[200px] mx-auto">
               </div>
       
-              <h1>E-mail Confirmation</h1>
             </div>
       
             <div class="content__body">
