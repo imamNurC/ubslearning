@@ -48,7 +48,7 @@ class RegisterController extends Controller
         $validatedData['password'] = Hash::make($validatedData['password']);
 
         // Create customer
-        $user = Customer::create([
+        Customer::create([
             //kolom target
             'name' => $validatedData['name'],
             'username' => $validatedData['username'],
@@ -63,7 +63,7 @@ class RegisterController extends Controller
             'longitude' => $validatedData['longitude'] ?? null,  // Store longitude, if available
         ]);
 
-        event(new Registered($user));
+        // event(new Registered($user));
         // Redirect to login page with success message
         return redirect()->route('verification.notice')->with('success', 'Register success! Please verify your email.');
     }

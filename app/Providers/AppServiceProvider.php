@@ -29,10 +29,12 @@ class AppServiceProvider extends ServiceProvider
         Route::aliasMiddleware('user', UserMiddleware::class);
         Route::aliasMiddleware('mentor', MentorMiddleware::class);
         VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
+            $imageUrl = 'https://raw.githubusercontent.com/imamNurC/ubslearning/refs/heads/main/public/image/Logo.png';
+
             return (new MailMessage)
-                ->subject('Verify Email Address')
-                ->line('Click the button below to verify your email address.')
-                ->action('Verify Email Address', $url);
+                ->from('support@domain.com', 'Malaz Solutions')
+                ->subject('Verifikasi email address')
+                ->view('emails.verify', ['url' => $url, 'imageUrl' => $imageUrl]);
         });
     }
 }
