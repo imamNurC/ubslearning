@@ -15,19 +15,25 @@
 
 ubs learning adalah platform opensource pembelajaran berskala kampus yang bertujuan sebagai sarana penyedia video dan sarana edukasi, kami membuka untuk orang yang ingin menjual kelas di platform ini dan menjual konten konten edukasi dengan biaya yang terjangkau
 
-## Cara kontribusi dan penggunaan
+## Cara Running di lokal
 
 -   laravel >= 10
 -   PHP >= 8.0
 -   node >= 18.0.0
 -   Composer >= 14.0
--
 
 ```
-1. git clone <this repo>
-2. composer
+git clone <this repo>
+cd nama-folder-repo
+composer install
+cp .env.example .env
+php artisan storage:link
+npm install
+php artisan migrate
+php artisan db:seed
+php artisan migrate
+php artisan serve
 ```
 
 ## License
-
 @2024 Malaz Solutions All Right reserved
