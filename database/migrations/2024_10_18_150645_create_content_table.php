@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('price');
             $table->string('youtube_url');
             $table->string('kategori');
+            $table->text('transcription')->nullable();
             $table->text('deskripsi');
             $table->text('deskripsi_panjang')->nullable();
             $table->string('image_path')->nullable();

@@ -8,31 +8,72 @@ use App\Models\Customer;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class ContentManageController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $search = $request->get('search');
-        $data = Content::query()
-            ->when($search, function ($query) use ($search) {
-                return $query->where('content_name', 'like', "%{$search}%")
-                    ->orWhere('kategori', 'like', "%{$search}%");
-            })
-            ->paginate(5);
+        return view('dashboard_admin.dashboard_content_manage');
+    }
 
-        if ($request->ajax()) {
-            return view('dashboard_admin.dashboard_content_manage', compact('data'))->render();
+
+    public function dataSrc(Request $request)
+    {
+        // Ambil nilai pencarian dari request
+        $search = $request->get('search')['value'] ?? "";  // Untuk pencarian kustom
+
+        // Tentukan jumlah data per halaman (misalnya 5)
+        $perPage = $request->get('length') ?: 5;
+
+        // Tentukan halaman yang diminta
+        $page = $request->get('start') / $perPage;
+
+        // Buat query untuk mengambil data dengan pencarian dan paginasi
+        $query = Content::query();
+
+        // Jika ada pencarian, filter berdasarkan nama konten atau kategori
+        if ($search) {
+            $query->where('content_name', 'like', "%{$search}%")
+                ->orWhere('kategori', 'like', "%{$search}%");
         }
 
-        return view('dashboard_admin.dashboard_content_manage', compact('data'));
+        // Ambil data berdasarkan pagination
+        $data = $query->skip($page * $perPage)->take($perPage)->get();
+
+        // Hitung jumlah total data tanpa filter
+        $totalData = Content::count();
+
+        // Hitung jumlah total data yang terfilter
+        $totalFiltered = $query->count();
+
+        // Format data yang akan dikembalikan sebagai JSON
+        return response()->json([
+            'draw' => $request->get('draw'),
+            'recordsTotal' => $totalData,
+            'recordsFiltered' => $totalFiltered,
+            'data' => $data->map(function ($content) {
+                return [
+                    'id_content' => $content->id_content,
+                    'content_name' => $content->content_name,
+                    'price' => $content->price,
+                    'count_view' => $content->count_view,
+                    'count_buy' => $content->count_buy,
+                    'youtube_url' => $content->youtube_url,
+                    'kategori' => $content->kategori,
+                    'deskripsi' => $content->deskripsi,
+                    'deskripsi_panjang' => $content->deskripsi_panjang,
+                ];
+            })
+        ]);
     }
+
+
 
 
     public function store(Request $request)
     {
-        // dd($request->all());
         Log::info('Eksekusi fungsi store dimulai', ['input' => $request->all()]);
 
         try {
@@ -64,14 +105,47 @@ class ContentManageController extends Controller
         }
 
         try {
-            Content::create($validatedData);
+            // Simpan data content ke database
+            $content = Content::create($validatedData);
             Log::info('Data berhasil diinsert ke dalam database', ['data' => $validatedData]);
+
+            // Proses video YouTube dan ambil transkripsi
+            $transcription = $this->processYouTubeVideo($validatedData['youtube_url']);
+            // dd($transcription);
+            // Jika transkripsi berhasil, update record dengan hasil transkripsi
+            if ($transcription) {
+                $content->transcription = $transcription;
+                $content->save();
+                Log::info('Transkripsi berhasil disimpan', ['transcription' => $transcription]);
+            } else {
+                Log::warning('Tidak ada transkripsi yang ditemukan');
+            }
         } catch (\Exception $e) {
             Log::error('Gagal menginsert data', ['error' => $e->getMessage()]);
             return redirect('/content-manage')->with('error', 'Insert Gagal!');
         }
 
         return redirect('/content-manage')->with('success', 'Insert Successful!');
+    }
+
+    private function processYouTubeVideo($youtubeUrl)
+    {
+        // dd($youtubeUrl);
+        // Kirim URL YouTube ke API Python untuk diproses
+        $response = Http::post('http://127.0.0.1:5000/process_video', [
+            'youtube_url' => $youtubeUrl,
+        ]);
+        // dd($response);
+
+        // Periksa apakah request berhasil
+        if ($response->successful()) {
+            $data = $response->json();
+            return $data['transcription'] ?? null;
+        } else {
+            // Jika gagal, bisa log error dan kembalikan pesan kesalahan
+            Log::error('Gagal memproses video YouTube', ['response' => $response->body()]);
+            return null;
+        }
     }
 
 
@@ -150,6 +224,7 @@ class ContentManageController extends Controller
 
     public function update(Request $request, $id_content)
     {
+        // dd($request->all());
         // Validasi input
         $validatedData = $request->validate([
             'content_name' => 'required|max:255',
@@ -158,7 +233,7 @@ class ContentManageController extends Controller
             'kategori' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'deskripsi_panjang' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // tambahkan validasi untuk gambar baru
+            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // tambahkan validasi untuk gambar baru
         ]);
 
         $content = Content::findOrFail($id_content);

@@ -27,3 +27,4 @@
     </div>
     <p class="text-center text-gray-200">Copyright &copy; 2024 - Malaz Solutions</p>
 </div>
+

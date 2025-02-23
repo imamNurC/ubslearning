@@ -1,8 +1,9 @@
 @extends('custom_layout_users.bases.userbase')
 @section('content')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
 <body class="font-poppins bg-gray-50">
     @csrf
+    <section class="w-full overflow-hidden mb-80">
     <div class="container mx-auto px-4 py-4">
         <h2 class="text-center text-3xl font-bold mb-4"> Daftar Konten Terbeli</h2>
         <div class="flex flex-col mt-4">
@@ -48,6 +49,7 @@
             </div>
         </div>
     </div>
+    </section>
 
     <script>
         $(document).ready(function() {

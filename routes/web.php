@@ -44,6 +44,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
         return view('dashboard_admin/dashboard');
     });
 
+    // Route untuk menampilkan halaman view pertama kali (HTML)
+    // Route::get('/content-manage-view', [ContentManageController::class, 'view'])->name('content.view');
+    // Route untuk pengambilan data dalam format JSON (untuk DataTables)
+    Route::get('/content-manage/data', [ContentManageController::class, 'dataSrc'])->name('content.data');
     Route::get('/content-manage', [ContentManageController::class, 'index']);
     Route::post('/content-manage', [ContentManageController::class, 'store']);
     Route::post('/content-manage/update/{id_content}', [ContentManageController::class, 'update'])->name('content.update');
