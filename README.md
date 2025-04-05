@@ -35,5 +35,46 @@ php artisan migrate
 php artisan serve
 ```
 
+## Standar cara maintenance lokal
+```
+Maintain Existing LMS UBS 
+
+===========================================
+Optimization bootstrap cache files
+
+1. php artisan optimize:clear
+
+Blade Template cached & compiled views
+1.  php artisan view:cache
+2.  php artisan view:clear
+3.  php artisan config:cache
+4.  php artisan config:clear
+5.  php artisan route:clear
+
+===========================================
+
+Re-build existing databases and fill seeds values
+1. php artisan migrate:fresh
+2. php artisan db:seed
+	OR
+3. php artisan migrate:fresh --seed
+
+Fill the seeder existing Structures for Users
+1. php artisan migrate:refresh
+
+If any changes on migrations
+1. php artisan migrate
+
+===========================================
+Development running if any FE changes
+1. Open double terminal
+2. first : npm run dev; second: php artisan serve
+
+Build for ready production 
+1. npm run build
+
+
+``` 
+
 ## License
 @2024 Malaz Solutions All Right reserved
